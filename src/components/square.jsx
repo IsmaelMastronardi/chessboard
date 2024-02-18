@@ -1,19 +1,26 @@
 import { useDrag, useDrop } from "react-dnd";
 import { selectPieceIcon } from "../gameLogic.js/pieces";
+import { movePiece } from "../redux/slices/boardSlice";
+import { useDispatch } from "react-redux";
 
 
-
-const Square = ({value, isDark }) => {
+const Square = ({value, isDark, index }) => {
   const bgColor = isDark ? 'bg-green-500' : 'bg-white';
+  const dispatch = useDispatch();
+
+  const handleDrop = (oldPost, newPos) => {
+    dispatch(movePiece(oldPost, newPos));
+  }
 
   const [, drag] = useDrag({
-    type: 'PIECE', // Specify a unique type for your draggable piece
-    item: { value: value }, // Pass any additional data you want to associate with the dragged item
+    type: 'PIECE',
+    item: { index: index },
   });
 
   const [, drop] = useDrop({
-    accept: 'PIECE', // Specify the type of draggable items that can be dropped
-    drop: (item) => console.log(`Dropped piece with value ${item.value} onto Square with value ${value}`),
+    accept: 'PIECE',
+    drop: (item) => 
+    handleDrop(item.value, value),
   });
   
   const piece = selectPieceIcon(value);

@@ -13,7 +13,7 @@ const Board = () => {
 
         return (
           <div key={index} className="col-span-1">
-            <Square value={square} isDark={isDark} />
+            <Square value={square} isDark={isDark} index={index}/>
           </div>
         );
       })}
