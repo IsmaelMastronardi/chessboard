@@ -209,10 +209,10 @@ const convertToFen = (board) => {
   return(result.join(''))
 }
 
-// console.log(convertToBoard(initialPostion));
+
 let board = convertToBoard(initialPostion);
 console.log(convertToFen(board))
 
-// match(/.{1,8}/g);
+
 
 
