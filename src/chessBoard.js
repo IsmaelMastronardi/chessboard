@@ -1,170 +1,12 @@
-// let fullBoard = Array(64).fill(0)
-
-// let blackPawnBoard = Array(64).fill(0);
-// let blackRookBoard = Array(64).fill(0);
-// let blackBishopBoard = Array(64).fill(0);
-// let blackKnightBoard = Array(64).fill(0);
-// let blackQueenBoard = Array(64).fill(0);
-// let blackKingBoard = Array(64).fill(0);
-
-// let whitePawnBoard = Array(64).fill(0);
-// let whiteRookBoard = Array(64).fill(0);
-// let whiteBishopBoard = Array(64).fill(0);
-// let whiteKnightBoard = Array(64).fill(0);
-// let whiteQueenBoard = Array(64).fill(0);
-// let whiteKingBoard = Array(64).fill(0);
-
-
-// function setSquare(board, index) {
-//   board[index] = 1;
-//   fullBoard[index] = 1;
-// }
-
-// function populateBoard(board, indexes){
-//   indexes.forEach(el => {
-//     setSquare(board, el)
-//   });
-// }
-
-// function displayBoard(bitboard) {
-//   for (let rank = 0; rank <= 7; rank++) {
-//     let row = "";
-//     for (let file = 0; file < 8; file++) {
-//       const index = rank * 8 + file;
-//       row += bitboard[index] + " ";
-//     }
-//     console.log(row);
-//   }
-// }
-
-// populateBoard(blackPawnBoard, [8,9,10,11,12,13,14,15]);
-// populateBoard(blackRookBoard, [0,7]);
-// populateBoard(blackKnightBoard, [1,6]);
-// populateBoard(blackBishopBoard, [2,5]);
-// populateBoard(blackQueenBoard, [3]);
-// populateBoard(blackKingBoard, [4]);
-
-// populateBoard(whitePawnBoard, [48,49,50,51,52,53,54,55]);
-// populateBoard(whiteRookBoard, [56, 63]);
-// populateBoard(whiteKnightBoard, [57,62]);
-// populateBoard(whiteBishopBoard, [58,61]);
-// populateBoard(whiteQueenBoard, [59]);
-// populateBoard(whiteKingBoard, [60]);
-
-
-// displayBoard(fullBoard);
-
-
-// class Board {
-//   constructor(){
-//     this.board = Array(64).fill(0)
-//     this.moveList  = null
-//   }
-
-//   setSquare(square){ 
-//     this.board[square] === 0 ? this.board[square] = 1 : this.board[square] = 0
-//   }
-
-//   clearSquare(square){
-//     this.board[square] = 0
-//   }
-
-//   isSquareEmpty(square){
-//     return this.board[square] === 0
-//   }
-
-//   generateMoves(){
-//     return
-//   }
-
-//   displayBoard() {
-//     for (let rank = 0; rank <= 7; rank++) {
-//       let row = "";
-//       for (let file = 0; file < 8; file++) {
-//         const index = rank * 8 + file;
-//         row += this.board[index] + " ";
-//       }
-//       console.log(row);
-//     }
-//   }
-// }
-
-// class WhitePawnBoard extends Board{
-
-//   generateMoves(){
-    
-//   }
-// }
-
-// const myBoard = new WhitePawnBoard();
-// myBoard.setSquare(0)
-// myBoard.displayBoard()
-
-
-// class Board {
-//   constructor(){
-//     this.board = Array(64).fill(0)
-//   }
-
-//   setSquare(square, value){ 
-//    this.board[square] = value
-//   }
-
-//   clearSquare(square){
-//     this.board[square] = 0
-//   }
-
-//   isSquareEmpty(square){
-//     return this.board[square] === 0
-//   }
-
-//   generateMoves(){
-//     return
-//   }
-
-//   displayBoard() {
-//     for (let rank = 0; rank <= 7; rank++) {
-//       let row = "";
-//       for (let file = 0; file < 8; file++) {
-//         const index = rank * 8 + file;
-//         row += this.board[index] + " ";
-//       }
-//       console.log(row);
-//     }
-//   }
-// }
-
-// const populateBoard = (board, indexes, val) => {
-//   indexes.forEach((el) => {
-//     board.setSquare(el, val)
-//   })
-// }
-
-// export const myBoard = new Board();
-// populateBoard(myBoard, [8,9,10,11,12,13,14,15], -1);
-// populateBoard(myBoard, [0,7], -2);
-// populateBoard(myBoard, [1,6], -3);
-// populateBoard(myBoard, [2,5], -4);
-// populateBoard(myBoard, [3], -5);
-// populateBoard(myBoard, [4], -6);
-
-// populateBoard(myBoard, [48,49,50,51,52,53,54,55], 1);
-// populateBoard(myBoard, [56, 63], 2);
-// populateBoard(myBoard, [57,62], 3);
-// populateBoard(myBoard, [58,61], 4);
-// populateBoard(myBoard, [59], 5);
-// populateBoard(myBoard, [60], 6);
-
-// myBoard.displayBoard();
-
-const initialPostion = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+/* eslint-disable no-unused-vars */
+const initialPostion = "rnbqkbnr/pppppppp/8/1p6/8/8/PPPPPPPP/RNBQKBNR";
 
 const convertToBoard = (fen) => {
   const result = [];
   const rows = fen.split('/');
   rows.forEach((row) => {
     let temp = [];
-    row.split(' ').forEach((char) =>{
+    row.split('').forEach((char) =>{
       if(isNaN(Number(char)) ){
         temp.push(char);
       }
@@ -209,9 +51,156 @@ const convertToFen = (board) => {
   return(result.join(''))
 }
 
+const getPieceColor = (piece) => {
+  return piece === piece.toUpperCase() ? true : false;
+}
+
+const moveVertical = (board, position) => {
+  let result = [];
+  let splitBoard = board.split('');
+  let piece = splitBoard[position];
+  let color = getPieceColor(piece);
+  let down = position - 8;
+  let up = position + 8;
+  while(up < 64){
+    if(splitBoard[up] === '0'){
+      result.push(up);
+      up += 8;
+    }
+    else if(getPieceColor(splitBoard[up]) !== color){
+      result.push(up);
+      break;
+    }
+    else{
+      break;
+    }
+  }
+  while(down > 0){
+    if(splitBoard[down] === '0'){
+      result.push(down);
+      down -= 8;
+    }
+    else if(getPieceColor(splitBoard[down]) !== color){
+      result.push(down);
+      break;
+    }
+    else{
+      break;
+    }
+  }
+  return result;
+}
+
+const moveHorizontal = (board, position) => {
+  let result = [];
+  let splitBoard = board.split('');
+  let piece = splitBoard[position];
+  let color = getPieceColor(piece);
+  let right = position + 1;
+  let left = position - 1;
+  let limitRight = Math.floor(position/8) * 8 + 8;
+  let limitLeft = Math.floor(position/8) * 8;
+  while(right < limitRight){
+    if(splitBoard[right] === '0'){
+      result.push(right);
+      right += 1;
+    }
+    else if(getPieceColor(splitBoard[right]) !== color){
+      result.push(right);
+      break;
+    }
+    else{
+      break;
+    }
+  }
+  while(left > limitLeft){
+    if(splitBoard[left] === '0'){
+      result.push(left);
+      left -= 1;
+    }
+    else if(getPieceColor(splitBoard[left]) !== color){
+      result.push(left);
+      break;
+    }
+    else{
+      break;
+    }
+  }
+
+  return result;
+}
+
+const moveDiagonal = (board, position) => {
+  let result = [];
+  let splitBoard = board.split('');
+  let piece = splitBoard[position];
+  let color = getPieceColor(piece);
+  let rightUp = position + 9;
+  let rightDown = position - 7;
+  let leftUp = position + 7;
+  let leftDown = position - 9;
+  let row = Math.floor(position/8);
+
+  while(rightUp < 64 && rightUp % 8 !== 0 && row < Math.floor(rightUp/8)){
+    if(splitBoard[rightUp] === '0'){
+      result.push(rightUp);
+      rightUp += 9;
+    }
+    else if(getPieceColor(splitBoard[rightUp]) !== color){
+      result.push(rightUp);
+      break;
+    }
+    else{
+      break;
+    }
+  }
+  while(rightDown > 0 && (rightDown + 7) % 8 !== 0 && row > Math.floor(rightDown/8)){
+    if(splitBoard[rightDown] === '0'){
+      result.push(rightDown);
+      rightDown -= 7;
+    }
+    else if(getPieceColor(splitBoard[rightDown]) !== color){
+      result.push(rightDown);
+      break;
+    }
+    else{
+      break;
+    }
+  }
+  while(leftUp < 64 && (leftUp - 7) % 8 !== 0 && row < Math.floor(leftUp/8)){
+    console.log(leftUp);
+    if(splitBoard[leftUp] === '0'){
+      result.push(leftUp);
+      leftUp += 7;
+    }
+    else if(getPieceColor(splitBoard[leftUp]) !== color){
+      result.push(leftUp);
+      break;
+    }
+    else{
+      break;
+    }
+  }
+  while(leftDown > 0 && (leftDown + 9) % 8 !== 0 && row > Math.floor(leftDown/8)){
+    if(splitBoard[leftDown] === '0'){
+      result.push(leftDown);
+      leftDown -= 9;
+    }
+    else if(getPieceColor(splitBoard[leftDown]) !== color){
+      result.push(leftDown);
+      break;
+    }
+    else{
+      break;
+    }
+  }
+  return result;
+
+}
 
 let board = convertToBoard(initialPostion);
-console.log(convertToFen(board))
+console.log(board);
+console.log(moveDiagonal(board, 25 ));
 
 
 
