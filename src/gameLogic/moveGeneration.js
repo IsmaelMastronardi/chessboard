@@ -130,47 +130,135 @@ const knightMoves = (board, row, col) => {
   return result;
 }
 
-const directionSafetyScan = (board, row, col, rowDirection, colDirection) => {
+// const directionSafetyScan = (board, row, col, rowDirection, colDirection) => {
+//   let newRow = row + rowDirection;
+//   let newCol = col + colDirection;
+//   let result = [];
+//   const piece = board[row][col];
+//   const color = getPieceColor(piece);
+
+//   let allyCount = 0;
+//   let pinnedPiece = []
+//   let possiblePinnedPiece = []
+//   let inCheck = false
+//   while(newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8){
+//     if(board[newRow][newCol] === '0'){
+//       newRow += rowDirection;
+//       newCol += colDirection;
+//     }
+//     else if(color === getPieceColor(board[newRow][newCol])){
+//       allyCount += 1;
+//       if(allyCount === 1){
+//         possiblePinnedPiece = [newRow, newCol];
+//       }
+//       else{
+//         possiblePinnedPiece = [];
+//         break;
+//       }
+//     }
+//     else if(color !== getPieceColor(board[newRow][newCol])){
+ 
+//     }
+//     else{
+//       break;
+//     }
+//   }
+//   return result
+// }
+
+const attackDirection = (board, row, col, rowDirection, colDirection) => {
   let newRow = row + rowDirection;
   let newCol = col + colDirection;
-  let result = [];
+  let attackedSquares = [];
+  let pinnedPiece = {};
+  let posiblePin = []
+  let pinnedCount = 0;
   const piece = board[row][col];
-  const color = getPieceColor(piece);
-
-  let allyCount = 0;
-  let pinnedPiece = []
-  let possiblePinnedPiece = []
-  let inCheck = false
+  const color = piece === piece.toLowerCase() ? 'black' : 'white';
   while(newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8){
-    if(board[newRow][newCol] === '0'){
+    console.log(newRow, newCol, board[newRow][newCol])
+    if(board[newRow][newCol] === '0' && pinnedCount === 0){
+      console.log('first')
+      attackedSquares.push([newRow, newCol]);
       newRow += rowDirection;
       newCol += colDirection;
     }
-    else if(color === getPieceColor(board[newRow][newCol])){
-      allyCount += 1;
-      if(allyCount === 1){
-        possiblePinnedPiece = [newRow, newCol];
+    else if((board[newRow][newCol] === 'k' || board[newRow][newCol] === 'K') && getPieceColor(board[newRow][newCol]) !== color){
+      console.log('second')
+      attackedSquares.push([newRow, newCol]);
+      newRow += rowDirection;
+      newCol += colDirection;
+      if(pinnedCount === 1) {
+        pinnedPiece = {piece: posiblePin, pinDirection: [rowDirection, colDirection], pinType: 'soft'};
       }
-      else{
-        possiblePinnedPiece = [];
+    }
+    else if(!(board[newRow][newCol] === 'k' || board[newRow][newCol] === 'K') && color !== getPieceColor(board[newRow][newCol])){
+      if(pinnedCount === 0){
+        console.log('third')
+        posiblePin = [newRow, newCol];
+        pinnedCount += 1;
+      }
+      else if(pinnedCount === 1){
+        console.log('fourth')
+        pinnedPiece = [];
         break;
       }
-    }
-    else if(color !== getPieceColor(board[newRow][newCol])){
-      if(allyCount === 0){
-        
-        result.push([newRow, newCol]);
-      }
-      break;
+      console.log('fifth')
+      attackedSquares.push([newRow, newCol]);
+      newRow += rowDirection;
+      newCol += colDirection;
+
     }
     else{
+      console.log('sixth')
       break;
     }
   }
+  let result = {attackedSquares, pinnedPiece,}
   return result
+};
+
+const directions = [
+  [1, 0],
+  [-1, 0],
+  [0, 1],
+  [0, -1],
+  [1, 1],
+  [-1, -1],
+  [1, -1],
+  [-1, 1]
+];
+
+const attackedSquaresCheck = (board, color) =>{
+  let attackedSquares = new Set()
+  let pinnedPieces = {}
+  board.forEach((row, rowIndex) => {
+    row.forEach((piece, colIndex) => {
+      if(getPieceColor(piece) !== color){
+        directions.map((direction) => {
+          let result = attackDirection(board, rowIndex, colIndex, direction[0], direction[1])
+          attackedSquares = new Set([...attackedSquares, ...result.attackedSquares])
+          console.log(result)
+          if(result.pinnedPiece.piece){
+            const key = `${result.pinnedPiece.piece[0]}${result.pinnedPiece.piece[1]}`;
+            if (!pinnedPieces[key]) {
+              pinnedPieces[key] = { pinDirection: result.pinnedPiece.pinDirection, pinType: result.pinnedPiece.pinType };
+            }
+            else{
+              pinnedPieces[key].pinType = 'hard'
+            }
+          }
+          return null;
+        })
+      }
+    })
+  })
+
+  let result = {attackedSquares, pinnedPieces}
+  return result;
 }
 
 
 const boardString = "rnbqkbnrpppppppp00000000000000000000000000000000PPPPPPPPRNBQKBNR";
 const board = parseBoard(boardString);
-console.log(knightMoves(board, 2, 1));
+console.log(attackedSquaresCheck(board, 'black'));
