@@ -1,4 +1,4 @@
-const { kingMoves } = require("./moves");
+const { kingMoves, callMoves } = require("./moves");
 const { attackedSquaresCheck } = require("./attacks");
 const { parseBoard, getPieceColor } = require("./helpers");
 
@@ -19,25 +19,25 @@ const generateMoves = (board, allyColor) => {
   let attacksAndPins = attackedSquaresCheck(board, allyColor);
   let attackBaord = attacksAndPins.attacksBoard;
   let pinnedPieces = attacksAndPins.pinnedPieces;
+  let checkingPieceDirection = attacksAndPins.checkingPieceDirection;
   console.log(attacksAndPins)
   let moves = [];
   let kingPosition = searchKing(board, allyColor)
-  
+  console.log(kingPosition);  
 
   if(attackBaord[kingPosition[0]][kingPosition[1]] === '2'){
-    moves.push(...kingMoves(board, kingPosition[0], kingPosition[1]));
+    moves = kingMoves(board, kingPosition[0], kingPosition[1]);
     if(moves.length === 0){
       return 'checkmate';
     };
-    return moves;
   }
   else if(attackBaord[kingPosition[0]][kingPosition[1]] === '1'){
-
+   moves = callMoves(board, allyColor, pinnedPieces, true, );
   }
   else{
-    return moves;
+    moves = callMoves(board, allyColor, pinnedPieces);
   }
-
+  return moves;
 }
 // '3k4/3n4/8/8/8/8/3Q4/3K4'
 

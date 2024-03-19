@@ -1,25 +1,52 @@
 const { getPieceColor } = require('./helpers');
 
+const callMoves = (board, allyColor, pinnedPieces, inCheck = false, checkDirection) => {
+  let moves = {};
+  board.forEach((row, rowIndex) => {
+    row.forEach((piece, colIndex) => {
+      if (getPieceColor(piece) === allyColor && piece !== '0') {
+        if(inCheck && pinnedPieces[`${rowIndex}${colIndex}`]?.pinType === 'hard') return null;
+        if(inCheck){
+
+        }
+        moves[`${rowIndex}${colIndex}`] = getPieceMoves(board, rowIndex, colIndex, pinnedPieces);
+      }
+    });
+  });
+  return moves;
+}
+
 const getPieceMoves = (board, row, col, pinnedPieces) => {
   const piece = board[row][col];
-  if(pinnedPieces[`${row}${col}`]){
-    if()
+  if(pinnedPieces[`${row}${col}`]?.pinType === 'hard'){
+    return [];
   }
-  switch (piece.toLowerCase()) {
-    case 'p':
-      return pawnMoves(board, row, col);
-    case 'r':
-      return rookMoves(board, row, col);
-    case 'n':
-      return knightMoves(board, row, col);
-    case 'b':
-      return bishopMoves(board, row, col);
-    case 'q':
-      return queenMoves(board, row, col);
-    case 'k':
-      return kingMoves(board, row, col);
-    default:
-      return [];
+  else {
+    switch (piece.toLowerCase()) {
+      case 'p':
+        return pawnMoves(board, row, col);
+      case 'r':
+        if(pinnedPieces[`${row}${col}`]?.pinType === 'soft'){
+          return rookMoves(board, row, col, pinnedPieces[`${row}${col}`].pinDirection);
+        }
+        return rookMoves(board, row, col);
+      case 'n':
+        return knightMoves(board, row, col);
+      case 'b':
+        if(pinnedPieces[`${row}${col}`]?.pinType === 'soft'){
+          return bishopMoves(board, row, col, pinnedPieces[`${row}${col}`].pinDirection);
+        }
+        return bishopMoves(board, row, col);
+      case 'q':
+        if(pinnedPieces[`${row}${col}`]?.pinType === 'soft'){
+          return queenMoves(board, row, col, pinnedPieces[`${row}${col}`].pinDirection);
+        }
+        return queenMoves(board, row, col);
+      case 'k':
+        return kingMoves(board, row, col);
+      default:
+        return [];
+    }
   }
 }
 
@@ -32,7 +59,7 @@ const moveDirection = (board, row, col, rowDirection, colDirection) => {
   let newCol = col + colDirection;
   let result = [];
   const piece = board[row][col];
-  const color = piece === piece.toLowerCase() ? 'black' : 'white';
+  const color = getPieceColor(piece);
 
   while(newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8){
     if(board[newRow][newCol] === '0'){
@@ -51,28 +78,46 @@ const moveDirection = (board, row, col, rowDirection, colDirection) => {
   return result
 }
 
-const rookMoves = (board, row, col) => {
+const rookMoves = (board, row, col, pinDirection = '') => {
   const result = [];
-  result.push(...moveDirection(board, row, col, 1, 0));
-  result.push(...moveDirection(board, row, col, -1, 0));
-  result.push(...moveDirection(board, row, col, 0, 1));
-  result.push(...moveDirection(board, row, col, 0, -1));
+  if(!pinDirection === ''){
+    result.push(...moveDirection(board, row, col, pinDirection.charAt(0), pinDirection.charAt(1)));
+    result.push(...moveDirection(board, row, col, Number(pinDirection.charAt(0)) * -1, Number(pinDirection.charAt(1)) * -1));
+  }
+  else {
+    result.push(...moveDirection(board, row, col, 1, 0));
+    result.push(...moveDirection(board, row, col, -1, 0));
+    result.push(...moveDirection(board, row, col, 0, 1));
+    result.push(...moveDirection(board, row, col, 0, -1));
+  }
   return result;
 }
 
-const bishopMoves = (board, row, col) => {
+const bishopMoves = (board, row, col, pinDirection = '') => {
   const result = [];
-  result.push(...moveDirection(board, row, col, 1, 1));
-  result.push(...moveDirection(board, row, col, -1, -1));
-  result.push(...moveDirection(board, row, col, 1, -1));
-  result.push(...moveDirection(board, row, col, -1, 1));
+  if(!pinDirection === ''){
+    result.push(...moveDirection(board, row, col, pinDirection.charAt(0), pinDirection.charAt(1)));
+    result.push(...moveDirection(board, row, col, Number(pinDirection.charAt(0)) * -1, Number(pinDirection.charAt(1)) * -1));
+  }
+  else {
+    result.push(...moveDirection(board, row, col, 1, 1));
+    result.push(...moveDirection(board, row, col, -1, -1));
+    result.push(...moveDirection(board, row, col, 1, -1));
+    result.push(...moveDirection(board, row, col, -1, 1));
+  }
   return result;
 }
 
-const queenMoves = (board, row, col) => {
+const queenMoves = (board, row, col, pinDirection = '') => {
   const result = [];
-  result.push(...rookMoves(board, row, col));
-  result.push(...bishopMoves(board, row, col));
+  if(!pinDirection === ''){
+    result.push(...moveDirection(board, row, col, pinDirection.charAt(0), pinDirection.charAt(1)));
+    result.push(...moveDirection(board, row, col, Number(pinDirection.charAt(0)) * -1, Number(pinDirection.charAt(1)) * -1));
+  }
+  else {
+    result.push(...rookMoves(board, row, col));
+    result.push(...bishopMoves(board, row, col));
+  }
   return result;
 }
 
@@ -125,6 +170,7 @@ const knightMoves = (board, row, col) => {
 }
 
 module.exports = {
+  callMoves,
   getPieceColor,
   getPieceMoves,
   kingMoves,
