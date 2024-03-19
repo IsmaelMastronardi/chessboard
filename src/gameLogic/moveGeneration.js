@@ -32,7 +32,7 @@ const generateMoves = (board, allyColor) => {
     };
   }
   else if(attackBaord[kingPosition[0]][kingPosition[1]] === '1'){
-   moves = callMoves(board, allyColor, pinnedPieces, true, );
+   moves = callMoves(board, allyColor, pinnedPieces, true, checkingPieceDirection);
   }
   else{
     moves = callMoves(board, allyColor, pinnedPieces);
@@ -42,6 +42,6 @@ const generateMoves = (board, allyColor) => {
 // '3k4/3n4/8/8/8/8/3Q4/3K4'
 
 // const boardString = "rnbqkbnrpppppppp00000000000000000000000000000000PPPPPPPPRNBQKBNR";
-const boardString = "0000k0000000n000000000000000000000000000000000000000Q0000000K0000";
+const boardString = "0000k00000000000000000000000000000000000000000000000Q0000000K0000";
 const board = parseBoard(boardString);
 generateMoves(board, 'black');

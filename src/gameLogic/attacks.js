@@ -130,10 +130,14 @@ const attackedSquaresCheck = (board, allyColor) =>{
         if(piece.toLowerCase() === 'p'){
           let result = pawnAttackSqures(rowIndex, colIndex, allyColor);
           result.forEach((square) => {
+            const attackedPiece = board[square[0]][square[1]];
             if(attacksBoard[square[0]][square[1]] ==='0'){
               attacksBoard[square[0]][square[1]] = '1';
+              if(attackedPiece === 'k' || attackedPiece === 'K'){
+                checkingPieceDirection = `${rowIndex}${colIndex}`;
+              }
             }
-            else if(attacksBoard[square[0]][square[1]] ==='1' && (board[square[0]][square[1] === 'k'] || board[square[0]][square[1] === 'K'])){
+            else if(attacksBoard[square[0]][square[1]] ==='1' && (attackedPiece === 'k' || attackedPiece === 'K')){
               attacksBoard[square[0]][square[1]] = '2';
               checkingPieceDirection = `${rowIndex}${colIndex}`;
             }
@@ -143,10 +147,14 @@ const attackedSquaresCheck = (board, allyColor) =>{
         else if(piece.toLowerCase() === 'n'){
           let result = knightAttackSquares(rowIndex, colIndex)
           result.forEach((square) => {
+            const attackedPiece = board[square[0]][square[1]];
             if(attacksBoard[square[0]][square[1]] ==='0'){
               attacksBoard[square[0]][square[1]] = '1';
+              if(attackedPiece === 'k' || attackedPiece === 'K'){
+                checkingPieceDirection = `${rowIndex}${colIndex}`;
+              }
             }
-            else if(attacksBoard[square[0]][square[1]] ==='1' && (board[square[0]][square[1] === 'k'] || board[square[0]][square[1] === 'K'])){
+            else if(attacksBoard[square[0]][square[1]] ==='1' && (attackedPiece === 'k' || attackedPiece === 'K')){
               attacksBoard[square[0]][square[1]] = '2';
               checkingPieceDirection = `${rowIndex}${colIndex}`;
             }
@@ -156,10 +164,14 @@ const attackedSquaresCheck = (board, allyColor) =>{
         else if(piece.toLowerCase() === 'k'){
           let result = kingAttackSquares(rowIndex, colIndex)
           result.forEach((square) => {
+            const attackedPiece = board[square[0]][square[1]];
             if(attacksBoard[square[0]][square[1]] ==='0'){
               attacksBoard[square[0]][square[1]] = '1';
+              if(attackedPiece === 'k' || attackedPiece === 'K'){
+                checkingPieceDirection = `${rowIndex}${colIndex}`;
+              }
             }
-            else if(attacksBoard[square[0]][square[1]] ==='1' && (board[square[0]][square[1] === 'k'] || board[square[0]][square[1] === 'K'])){
+            else if(attacksBoard[square[0]][square[1]] ==='1' && (attackedPiece === 'k' || attackedPiece === 'K')){
               attacksBoard[square[0]][square[1]] = '2';
               checkingPieceDirection = `${rowIndex}${colIndex}`;
             }
@@ -180,10 +192,14 @@ const attackedSquaresCheck = (board, allyColor) =>{
           directions.map((direction) => {
             let result = attackDirection(board, rowIndex, colIndex, direction[0], direction[1])
             result.attackedSquares.forEach((square) => {
+              const attackedPiece = board[square[0]][square[1]];
               if(attacksBoard[square[0]][square[1]] ==='0'){
                 attacksBoard[square[0]][square[1]] = '1';
+                if(attackedPiece === 'k' || attackedPiece === 'K'){
+                  checkingPieceDirection = `${rowIndex}${colIndex}`;
+                }
               }
-              else if(attacksBoard[square[0]][square[1]] ==='1' && (board[square[0]][square[1] === 'k'] || board[square[0]][square[1] === 'K'])){
+              else if(attacksBoard[square[0]][square[1]] ==='1' && (attackedPiece === 'k' || attackedPiece === 'K')){
                 attacksBoard[square[0]][square[1]] = '2';
                 checkingPieceDirection = `${rowIndex}${colIndex}`;
               }
