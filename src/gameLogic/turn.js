@@ -15,7 +15,7 @@ const searchKing = (board, color) => {
   return king;
 }
 
-const generateMoves = (board, allyColor) => {
+const calculatePosibleMoves = (board, allyColor) => {
   let attacksAndPins = attackedSquaresCheck(board.pieces, allyColor);
   let attackBaord = attacksAndPins.attacksBoard;
   let pinnedPieces = attacksAndPins.pinnedPieces;
@@ -40,4 +40,4 @@ const generateMoves = (board, allyColor) => {
 
 const initialPostion = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 const board = convertToBoard(initialPostion);
-generateMoves(board, 'black');
+calculatePosibleMoves(board, 'black');
