@@ -4,14 +4,14 @@ const getPieceColor = (piece) => {
   return piece === piece.toLowerCase() ? 'black' : 'white';
 }
 
-// const  parseBoard = (boardString) => {
-//   const board = [];
-//   for (let i = 0; i < 8; i++) {
-//       const row = boardString.substr(i * 8, 8);
-//       board.push(row.split(''));
-//   }
-//   return board;
-// }
+const  parseBoard = (boardString) => {
+  const board = [];
+  for (let i = 0; i < 8; i++) {
+      const row = boardString.substr(i * 8, 8);
+      board.push(row.split(''));
+  }
+  return board;
+}
 
 const transformFen = (fen) => {
   const result = [];
@@ -52,7 +52,6 @@ const convertToBoard = (fen) => {
   result.enPassant = splitedFen[3];
   result.halfMove = splitedFen[4];
   result.fullMove = splitedFen[5];
-  console.log(result)
   return result
 }
 
@@ -61,4 +60,5 @@ convertToBoard(initialPostion);
 module.exports = {
   getPieceColor,
   convertToBoard,
+  parseBoard,
 };
