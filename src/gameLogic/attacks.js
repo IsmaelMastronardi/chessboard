@@ -110,7 +110,7 @@ const kingAttackSquares = (row, col) => {
 const attackedSquaresCheck = (board, allyColor) =>{
   let attacksBoard = parseBoard('0000000000000000000000000000000000000000000000000000000000000000');
   let pinnedPieces = {}
-  let checkingPieceDirection = '';
+  let checkingPiecePosition = '';
   const verticalAndHorizontal = [
     [1, 0],
     [-1, 0],
@@ -134,12 +134,12 @@ const attackedSquaresCheck = (board, allyColor) =>{
             if(attacksBoard[square[0]][square[1]] ==='0'){
               attacksBoard[square[0]][square[1]] = '1';
               if(attackedPiece === 'k' || attackedPiece === 'K'){
-                checkingPieceDirection = `${rowIndex}${colIndex}`;
+                checkingPiecePosition = `${rowIndex}${colIndex}`;
               }
             }
             else if(attacksBoard[square[0]][square[1]] ==='1' && (attackedPiece === 'k' || attackedPiece === 'K')){
               attacksBoard[square[0]][square[1]] = '2';
-              checkingPieceDirection = `${rowIndex}${colIndex}`;
+              checkingPiecePosition = `${rowIndex}${colIndex}`;
             }
           });
           return null;
@@ -151,12 +151,12 @@ const attackedSquaresCheck = (board, allyColor) =>{
             if(attacksBoard[square[0]][square[1]] ==='0'){
               attacksBoard[square[0]][square[1]] = '1';
               if(attackedPiece === 'k' || attackedPiece === 'K'){
-                checkingPieceDirection = `${rowIndex}${colIndex}`;
+                checkingPiecePosition = `${rowIndex}${colIndex}`;
               }
             }
             else if(attacksBoard[square[0]][square[1]] ==='1' && (attackedPiece === 'k' || attackedPiece === 'K')){
               attacksBoard[square[0]][square[1]] = '2';
-              checkingPieceDirection = `${rowIndex}${colIndex}`;
+              checkingPiecePosition = `${rowIndex}${colIndex}`;
             }
           });
           return null;
@@ -168,12 +168,12 @@ const attackedSquaresCheck = (board, allyColor) =>{
             if(attacksBoard[square[0]][square[1]] ==='0'){
               attacksBoard[square[0]][square[1]] = '1';
               if(attackedPiece === 'k' || attackedPiece === 'K'){
-                checkingPieceDirection = `${rowIndex}${colIndex}`;
+                checkingPiecePosition = `${rowIndex}${colIndex}`;
               }
             }
             else if(attacksBoard[square[0]][square[1]] ==='1' && (attackedPiece === 'k' || attackedPiece === 'K')){
               attacksBoard[square[0]][square[1]] = '2';
-              checkingPieceDirection = `${rowIndex}${colIndex}`;
+              checkingPiecePosition = `${rowIndex}${colIndex}`;
             }
           });
           return null;
@@ -196,12 +196,11 @@ const attackedSquaresCheck = (board, allyColor) =>{
               if(attacksBoard[square[0]][square[1]] ==='0'){
                 attacksBoard[square[0]][square[1]] = '1';
                 if(attackedPiece === 'k' || attackedPiece === 'K'){
-                  checkingPieceDirection = `${rowIndex}${colIndex}`;
+                  checkingPiecePosition = `${rowIndex}${colIndex}`;
                 }
               }
               else if(attacksBoard[square[0]][square[1]] ==='1' && (attackedPiece === 'k' || attackedPiece === 'K')){
-                attacksBoard[square[0]][square[1]] = '2';
-                checkingPieceDirection = `${rowIndex}${colIndex}`;
+                attacksBoard[square[0]][square[1]] = '2'; 
               }
             });
             if(result.pinnedPiece.piece){
@@ -221,7 +220,7 @@ const attackedSquaresCheck = (board, allyColor) =>{
     })
   })
 
-  let result = {attacksBoard, pinnedPieces, checkingPieceDirection};
+  let result = {attacksBoard, pinnedPieces, checkingPiecePosition};
   return result;
 }
 
