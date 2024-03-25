@@ -12,38 +12,38 @@ export const whiteBishopIcon =  <svg xmlns="http://www.w3.org/2000/svg" viewBox=
 export const whiteQueenIcon = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-full h-full"><path d="M256 96a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm-95.2-8c-18.1 0-31.3 12.8-35.6 26.9c-8 26.2-32.4 45.2-61.2 45.2c-10 0-19.4-2.3-27.7-6.3c-7.6-3.7-16.7-3.3-24 1.2C.7 162.1-3.1 177.1 3.7 188.9L97.6 352H153l-83-144.1c40.5-2.2 75.3-25.9 93.1-59.8c22 26.8 55.4 43.9 92.8 43.9s70.8-17.1 92.8-43.9c17.8 34 52.6 57.7 93.1 59.8L359 352h55.4l93.9-163.1c6.8-11.7 3-26.7-8.6-33.8c-7.3-4.5-16.4-4.9-24-1.2c-8.4 4-17.7 6.3-27.7 6.3c-28.8 0-53.2-19-61.2-45.2C382.5 100.8 369.3 88 351.2 88c-14.5 0-26.3 8.5-32.4 19.3c-12.4 22-35.9 36.7-62.8 36.7s-50.4-14.8-62.8-36.7C187.1 96.5 175.4 88 160.8 88zM133.2 432H378.8l16.6 32H116.7l16.6-32zm283.7-30.7c-5.5-10.6-16.5-17.3-28.4-17.3h-265c-12 0-22.9 6.7-28.4 17.3L68.6 452.5c-3 5.8-4.6 12.2-4.6 18.7c0 22.5 18.2 40.8 40.8 40.8H407.2c22.5 0 40.8-18.2 40.8-40.8c0-6.5-1.6-12.9-4.6-18.7l-26.5-51.2z"/></svg>
 export const whiteKingIcon =  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="w-full h-full"><path d="M248 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V56H168c-13.3 0-24 10.7-24 24s10.7 24 24 24h32v40H59.6C26.7 144 0 170.7 0 203.6c0 8.2 1.7 16.3 4.9 23.8L59.1 352h52.3L49 208.2c-.6-1.5-1-3-1-4.6c0-6.4 5.2-11.6 11.6-11.6H224 388.4c6.4 0 11.6 5.2 11.6 11.6c0 1.6-.3 3.2-1 4.6L336.5 352h52.3l54.2-124.6c3.3-7.5 4.9-15.6 4.9-23.8c0-32.9-26.7-59.6-59.6-59.6H248V104h32c13.3 0 24-10.7 24-24s-10.7-24-24-24H248V24zM101.2 432H346.8l16.6 32H84.7l16.6-32zm283.7-30.7c-5.5-10.6-16.5-17.3-28.4-17.3H91.5c-12 0-22.9 6.7-28.4 17.3L36.6 452.5c-3 5.8-4.6 12.2-4.6 18.7C32 493.8 50.2 512 72.8 512H375.2c22.5 0 40.8-18.2 40.8-40.8c0-6.5-1.6-12.9-4.6-18.7l-26.5-51.2z"/></svg>
 
-export const selectPieceIcon = (val) => {
-  if(val < 0){
-    switch(val) {
-      case -1 :
+export const selectPieceIcon = (piece) => {
+  if(piece.toLowerCase() === piece){
+    switch(piece) {
+      case 'p' :
         return blackPawnIcon;
-      case -2 :
+      case 'r' :
         return blackRookIcon;
-      case -3 :
+      case 'n' :
         return blackKnightIcon;
-      case -4 :
+      case 'b' :
         return blackBishopIcon;
-      case -5 :
+      case 'q' :
         return blackQueenIcon;
-      case -6 :
+      case 'k' :
         return blackKingIcon;
       default : 
       return;
     }
   }
   else {
-    switch(val) {
-      case 1 :
+    switch(piece) {
+      case 'P' :
         return whitePawnIcon;
-      case 2 :
+      case 'R' :
         return whiteRookIcon;
-      case 3 :
+      case 'N' :
         return whiteKnightIcon;
-      case 4 :
+      case 'B' :
         return whiteBishopIcon;
-      case 5 :
+      case 'Q' :
         return whiteQueenIcon;
-      case 6 :
+      case 'K' :
         return whiteKingIcon;
       default : 
       return;

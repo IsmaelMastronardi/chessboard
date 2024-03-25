@@ -25,19 +25,23 @@ const calculatePosibleMoves = (board, allyColor) => {
 
   if(attackBaord[kingPosition[0]][kingPosition[1]] === '2'){
     moves = kingMoves(board, kingPosition[0], kingPosition[1]);
-    if(moves.length === 0){
+    if(moves.keys().length === 0){
       return 'checkmate';
     };
   }
   else if(attackBaord[kingPosition[0]][kingPosition[1]] === '1'){
    moves = handleCheck(board, attackBaord,kingPosition, allyColor, pinnedPieces, checkingPiecePosition);
+   if(moves.keys().length === 0){
+    return 'checkmate';
+  };
   }
   else{
-    moves = callMoves(board, allyColor, pinnedPieces);
+    moves = callMoves(board, allyColor, pinnedPieces, attackBaord);
   }
   return moves;
 }
 
-const initialPostion = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+const initialPostion = "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 1";
 const board = convertToBoard(initialPostion);
-calculatePosibleMoves(board, 'black');
+
+module.exports = { calculatePosibleMoves, searchKing };

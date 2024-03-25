@@ -12,12 +12,12 @@ const calculateCheckLine = (board, checkingPiecePosition, kingPosition) => {
   return checkLine;
 }
 
-const callMoves = (board, allyColor, pinnedPieces) => {
+const callMoves = (board, allyColor, pinnedPieces ,attackBaord) => {
   let moves = {};
   board.pieces.forEach((row, rowIndex) => {
     row.forEach((piece, colIndex) => {
       if (getPieceColor(piece) === allyColor && piece !== '0') {
-          moves[`${rowIndex}${colIndex}`] = getPieceMoves(board, rowIndex, colIndex, pinnedPieces);
+          moves[`${rowIndex}${colIndex}`] = getPieceMoves(board, rowIndex, colIndex, pinnedPieces, attackBaord);
       }
     });
   });
@@ -34,7 +34,7 @@ const handleCheck = (board, attackBaord,kingPosition, allyColor, pinnedPieces, c
   board.pieces.forEach((row, rowIndex) => {
     row.forEach((piece, colIndex) => {
       if (getPieceColor(piece) === allyColor && piece !== '0') {
-          moves[`${rowIndex}${colIndex}`] = getPieceMoves(board, rowIndex, colIndex, pinnedPieces, checkLine, checkingPiece, checkingPiecePosition);
+          moves[`${rowIndex}${colIndex}`] = getPieceMovesInCheck(board, rowIndex, colIndex, pinnedPieces, checkLine, checkingPiece, checkingPiecePosition);
       }
     });
   });
@@ -42,7 +42,7 @@ const handleCheck = (board, attackBaord,kingPosition, allyColor, pinnedPieces, c
 }
 
 
-const getPieceMoves = (board, row, col, pinnedPieces) => {
+const getPieceMoves = (board, row, col, pinnedPieces, attackBaord) => {
   const piece = board.pieces[row][col];
   if(pinnedPieces[`${row}${col}`]?.pinType === 'hard'){
     return [];
@@ -58,6 +58,8 @@ const getPieceMoves = (board, row, col, pinnedPieces) => {
         return rookMoves(board, row, col);
       case 'n':
         return knightMoves(board, row, col);
+      case 'k':
+        return kingMoves(board, row, col, attackBaord);
       case 'b':
         if(pinnedPieces[`${row}${col}`]?.pinType === 'soft'){
           return bishopMoves(board, row, col, pinnedPieces[`${row}${col}`].pinDirection);
