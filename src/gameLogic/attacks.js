@@ -17,14 +17,12 @@ const attackDirection = (board, row, col, rowDirection, colDirection) => {
     }
     else if((board[newRow][newCol] === 'k' || board[newRow][newCol] === 'K') && getPieceColor(board[newRow][newCol]) !== color){
       if(pinnedCount > 0){
+        pinnedPiece = {piece: posiblePin, pinDirection: `${rowDirection}${colDirection}` , pinType: 'soft'};
         break;
       }
       attackedSquares.push([newRow, newCol]);
       newRow += rowDirection;
       newCol += colDirection;
-      if(pinnedCount === 1) {
-        pinnedPiece = {piece: posiblePin, pinDirection: `${rowDirection}${colDirection}` , pinType: 'soft'};
-      }
     }
     else if(!(board[newRow][newCol] === 'k' || !board[newRow][newCol] === 'K') && color !== getPieceColor(board[newRow][newCol])){
       if(pinnedCount === 0){
