@@ -50,6 +50,9 @@ const getPieceMoves = (board, row, col, pinnedPieces, attackBaord) => {
   else {
     switch (piece.toLowerCase()) {
       case 'p':
+        if(pinnedPieces[`${row}${col}`]?.pinType === 'soft'){
+          return pawnMoves(board, row, col, pinnedPieces[`${row}${col}`].pinDirection);
+        }
         return pawnMoves(board, row, col);
       case 'r':
         if(pinnedPieces[`${row}${col}`]?.pinType === 'soft'){
@@ -116,28 +119,28 @@ const kingMoves = (board, row, col, attackBaord) => {
     const newCol = col + direction[1];
     if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
       if ((board.pieces[newRow][newCol] === '0' || color !== getPieceColor(board.pieces[newRow][newCol])) && attackBaord[newRow][newCol] !== '1') {
-        moves.push(`${newRow}${newCol}`);
+        moves.push([newRow, newCol]);
       }
     }
   });
   if(color === 'white' && board.castling.includes('K')){
     if(board.pieces[7][5] === '0' && board.pieces[7][6] === '0' && attackBaord[7][5] !== '1' && attackBaord[7][6] !== '1'){
-      moves.push(`${7}${6}`);
+      moves.push([7, 6]);
     } 
   }
   if(color === 'white' && board.castling.includes('Q')){
     if(board.pieces[7][1] === '0' && board.pieces[7][2] === '0' && board.pieces[7][3] === '0' && attackBaord[7][1] !== '1' && attackBaord[7][2] !== '1' && attackBaord[7][3] !== '1'){
-      moves.push(`${7}${2}`);
+      moves.push([7, 2]);
     } 
   }
   if(color === 'black' && board.castling.includes('k')){
     if(board.pieces[0][5] === '0' && board.pieces[0][6] === '0' && attackBaord[0][5] !== '1' && attackBaord[0][6] !== '1'){
-      moves.push(`${0}${6}`);
+      moves.push([0, 6]);
     } 
   }
   if(color === 'black' && board.castling.includes('q')){
     if(board.pieces[0][1] === '0' && board.pieces[0][2] === '0' && board.pieces[0][3] === '0' && attackBaord[0][1] !== '1' && attackBaord[0][2] !== '1' && attackBaord[0][3] !== '1'){
-      moves.push(`${0}${2}`);
+      moves.push([0, 2]);
     } 
   }
   return moves;
@@ -275,18 +278,18 @@ const queenMovesInCheck = (board, row, col, pinDirection = '', checkingPieceInde
   return result;
 }
 
-const pawnMoves = (board, row, col) => {
+const pawnMoves = (board, row, col, pinDirection = '') => {
   const result = [];
   const piece = board.pieces[row][col];
   const color = getPieceColor(piece);
   const direction = color === 'white' ? -1 : 1;
-  if(col + 1 < 8 &&  board.pieces[row + direction][col + 1] !== '0' && getPieceColor(board.pieces[row + direction][col + 1]) !== color){
+  if(col + 1 < 8 &&  board.pieces[row + direction][col + 1] !== '0' && getPieceColor(board.pieces[row + direction][col + 1]) !== color && (pinDirection === '' || pinDirection === `${direction}-1`)){
     result.push([row + direction, col + 1]);
   }
-  if(col - 1 > 0 && board.pieces[row + direction][col - 1] !== '0' && getPieceColor(board.pieces[row + direction][col - 1]) !== color){
+  if(col - 1 > 0 && board.pieces[row + direction][col - 1] !== '0' && getPieceColor(board.pieces[row + direction][col - 1]) !== color && (pinDirection === '' || pinDirection === `${direction}1`)){
     result.push([row + direction, col - 1]);
   }
-  if(board.pieces[row + direction][col] === '0'){
+  if(board.pieces[row + direction][col] === '0' && (pinDirection === '' || pinDirection === `${direction}0`)){
     result.push([row + direction, col]);
     if((color === 'white' && row === 6) || (color === 'black' && row === 1)){
       if(board.pieces[row + 2 * direction][col] === '0'){
