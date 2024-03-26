@@ -36,7 +36,7 @@ const attackDirection = (board, row, col, rowDirection, colDirection) => {
         newRow += rowDirection;
         newCol += colDirection;
       } else if (board[newRow][newCol].toLowerCase() === 'k') {
-        pinnedPiece = { piece: possiblePin, pinDirection: `${rowDirection}${colDirection}` };
+        pinnedPiece = { piece: possiblePin, pinDirection: [rowDirection, colDirection] };
         break;
       } else {
         break;
