@@ -187,3 +187,31 @@ describe('generate all posible, legal moves on one turn',() => {
     });
   });
 })
+
+describe('queen test', () => {
+  const board =
+        {
+          pieces: [
+            ['k', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', 'q', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', 'Q', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', 'K']
+          ],
+          turn: 'w',
+          castling: '',
+          enPassant: '-',
+          halfMove: '0',
+          fullMove: '1'
+        };
+  const  expectedMoves = {
+    '55': [[4, 4], [3, 3], [2, 2], [1, 1]],
+    '77': [[6, 7], [ 6, 6 ], [ 7, 6 ] ]
+  }
+  it('queen test', () => {
+    expect(calculatePosibleMoves(board, 'white')).toEqual(expectedMoves)
+  });
+});
