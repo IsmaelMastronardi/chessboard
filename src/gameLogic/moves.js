@@ -196,8 +196,8 @@ const moveDirectionInCheck = (board, row, col, rowDirection, colDirection, check
 const rookMoves = (board, row, col, pinDirection = '') => {
   const result = [];
   if(!pinDirection === ''){
-    result.push(...moveDirection(board, row, col, pinDirection.charAt(0), pinDirection.charAt(1)));
-    result.push(...moveDirection(board, row, col, Number(pinDirection.charAt(0)) * -1, Number(pinDirection.charAt(1)) * -1));
+    result.push(...moveDirection(board, row, col, pinDirection[0], pinDirection[0]));
+    result.push(...moveDirection(board, row, col, pinDirection[0] * -1, pinDirection[0] * -1));
   }
   else {
     result.push(...moveDirection(board, row, col, 1, 0));
@@ -211,8 +211,8 @@ const rookMoves = (board, row, col, pinDirection = '') => {
 const bishopMoves = (board, row, col, pinDirection = '') => {
   const result = [];
   if(!pinDirection === ''){
-    result.push(...moveDirection(board, row, col, pinDirection.charAt(0), pinDirection.charAt(1)));
-    result.push(...moveDirection(board, row, col, Number(pinDirection.charAt(0)) * -1, Number(pinDirection.charAt(1)) * -1));
+    result.push(...moveDirection(board, row, col, pinDirection[0], pinDirection[0]));
+    result.push(...moveDirection(board, row, col, pinDirection[0] * -1, pinDirection[0] * -1));
   }
   else {
     result.push(...moveDirection(board, row, col, 1, 1));
@@ -230,9 +230,10 @@ const queenMoves = (board, row, col, pinDirection = '') => {
     result.push(...bishopMoves(board, row, col));
   }
   else {
-    result.push(...moveDirection(board, row, col, pinDirection.charAt(0), pinDirection.charAt(1)));
-    result.push(...moveDirection(board, row, col, Number(pinDirection.charAt(0)) * -1, Number(pinDirection.charAt(1)) * -1));
+    result.push(...moveDirection(board, row, col, pinDirection[0], pinDirection[0]));
+    result.push(...moveDirection(board, row, col, pinDirection[0] * -1, pinDirection[0] * -1));
   }
+  console.log(result)
   return result;
 }
 
@@ -281,13 +282,13 @@ const pawnMoves = (board, row, col, pinDirection = '') => {
   const piece = board.pieces[row][col];
   const color = getPieceColor(piece);
   const direction = color === 'white' ? -1 : 1;
-  if(col + 1 < 8 &&  board.pieces[row + direction][col + 1] !== '0' && getPieceColor(board.pieces[row + direction][col + 1]) !== color && (pinDirection === '' || pinDirection === `${direction * -1}-1`)){
+  if(col + 1 < 8 &&  board.pieces[row + direction][col + 1] !== '0' && getPieceColor(board.pieces[row + direction][col + 1]) !== color && (pinDirection === '' || (pinDirection[0] === direction * -1 && pinDirection[1] === -1))){
     result.push([row + direction, col + 1]);
   }
-  if(col - 1 > 0 && board.pieces[row + direction][col - 1] !== '0' && getPieceColor(board.pieces[row + direction][col - 1]) !== color && (pinDirection === '' || pinDirection === `${direction * -1}1`)){
+  if(col - 1 > 0 && board.pieces[row + direction][col - 1] !== '0' && getPieceColor(board.pieces[row + direction][col - 1]) !== color && (pinDirection === '' || (pinDirection[0] === direction * -1 && pinDirection[1] === 1))){
     result.push([row + direction, col - 1]);
   }
-  if(board.pieces[row + direction][col] === '0' && (pinDirection === '' || pinDirection === `${direction * -1}0`)){
+  if(board.pieces[row + direction][col] === '0' && (pinDirection === '' || (pinDirection[0] === direction * -1 && pinDirection[0] === 0))){
     result.push([row + direction, col]);
     if((color === 'white' && row === 6) || (color === 'black' && row === 1)){
       if(board.pieces[row + 2 * direction][col] === '0'){
