@@ -22,7 +22,7 @@ const calculatePosibleMoves = (board, allyColor) => {
   let checkingPiecePosition = attacksAndPins.checkingPiecePosition;
   let moves = [];
   let kingPosition = searchKing(board.pieces, allyColor)
-
+  console.log(attacksAndPins)
   if(attackBaord[kingPosition[0]][kingPosition[1]] === '2'){
     moves = kingMoves(board, kingPosition[0], kingPosition[1]);
     console.log('doble check')
@@ -33,7 +33,6 @@ const calculatePosibleMoves = (board, allyColor) => {
   else if(attackBaord[kingPosition[0]][kingPosition[1]] === '1'){
    moves = handleCheck(board, attackBaord,kingPosition, allyColor, pinnedPieces, checkingPiecePosition);
    console.log('check')
-   console.log(moves);
    if(Object.keys(moves).length === 0){
     return 'checkmate';
   };
