@@ -60,6 +60,9 @@ const getPieceMoves = (board, row, col, pinnedPieces, attackBaord) => {
         }
         return rookMoves(board, row, col);
       case 'n':
+        if(pinnedPieces[`${row}${col}`]?.pinType === 'soft'){
+          return [];
+        }
         return knightMoves(board, row, col);
       case 'k':
         return kingMoves(board, row, col, attackBaord);
@@ -155,12 +158,12 @@ const moveDirection = (board, row, col, rowDirection, colDirection) => {
 
   while(newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8){
     if(board.pieces[newRow][newCol] === '0'){
-      result.push(`${newRow}${newCol}`);
+      result.push([newRow, newCol]);
       newRow += rowDirection;
       newCol += colDirection;
     }
     else if(color !== getPieceColor(board.pieces[newRow][newCol])){
-      result.push(`${newRow}${newCol}`);
+      result.push([newRow, newCol]);
       break;
     }
     else{
@@ -283,13 +286,13 @@ const pawnMoves = (board, row, col, pinDirection = '') => {
   const piece = board.pieces[row][col];
   const color = getPieceColor(piece);
   const direction = color === 'white' ? -1 : 1;
-  if(col + 1 < 8 &&  board.pieces[row + direction][col + 1] !== '0' && getPieceColor(board.pieces[row + direction][col + 1]) !== color && (pinDirection === '' || pinDirection === `${direction}-1`)){
+  if(col + 1 < 8 &&  board.pieces[row + direction][col + 1] !== '0' && getPieceColor(board.pieces[row + direction][col + 1]) !== color && (pinDirection === '' || pinDirection === `${direction * -1}-1`)){
     result.push([row + direction, col + 1]);
   }
-  if(col - 1 > 0 && board.pieces[row + direction][col - 1] !== '0' && getPieceColor(board.pieces[row + direction][col - 1]) !== color && (pinDirection === '' || pinDirection === `${direction}1`)){
+  if(col - 1 > 0 && board.pieces[row + direction][col - 1] !== '0' && getPieceColor(board.pieces[row + direction][col - 1]) !== color && (pinDirection === '' || pinDirection === `${direction * -1}1`)){
     result.push([row + direction, col - 1]);
   }
-  if(board.pieces[row + direction][col] === '0' && (pinDirection === '' || pinDirection === `${direction}0`)){
+  if(board.pieces[row + direction][col] === '0' && (pinDirection === '' || pinDirection === `${direction * -1}0`)){
     result.push([row + direction, col]);
     if((color === 'white' && row === 6) || (color === 'black' && row === 1)){
       if(board.pieces[row + 2 * direction][col] === '0'){
