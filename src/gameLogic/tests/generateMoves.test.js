@@ -182,7 +182,7 @@ describe('generate all posible, legal moves on one turn',() => {
         },
       ]
       pinTests.forEach(({board, expectedMoves}) => {
-        test('with a pin', () => {
+        test('in different positions', () => {
           expect(calculatePosibleMoves(board, 'white')).toEqual(expectedMoves);
         });
       });
@@ -287,7 +287,7 @@ describe('generate all posible, legal moves on one turn',() => {
         },
       ]
       pinTests.forEach(({board, expectedMoves}) => {
-        test('with a pin', () => {
+        test('in different positions', () => {
           expect(calculatePosibleMoves(board, 'black')).toEqual(expectedMoves);
         });
       });
