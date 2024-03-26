@@ -44,41 +44,36 @@ const handleCheck = (board, attackBaord,kingPosition, allyColor, pinnedPieces, c
 
 const getPieceMoves = (board, row, col, pinnedPieces, attackBaord) => {
   const piece = board.pieces[row][col];
-  if(pinnedPieces[`${row}${col}`]?.pinType === 'hard'){
-    return [];
-  }
-  else {
-    switch (piece.toLowerCase()) {
-      case 'p':
-        if(pinnedPieces[`${row}${col}`]?.pinType === 'soft'){
-          return pawnMoves(board, row, col, pinnedPieces[`${row}${col}`].pinDirection);
-        }
-        return pawnMoves(board, row, col);
-      case 'r':
-        if(pinnedPieces[`${row}${col}`]?.pinType === 'soft'){
-          return rookMoves(board, row, col, pinnedPieces[`${row}${col}`].pinDirection);
-        }
-        return rookMoves(board, row, col);
-      case 'n':
-        if(pinnedPieces[`${row}${col}`]?.pinType === 'soft'){
-          return [];
-        }
-        return knightMoves(board, row, col);
-      case 'k':
-        return kingMoves(board, row, col, attackBaord);
-      case 'b':
-        if(pinnedPieces[`${row}${col}`]?.pinType === 'soft'){
-          return bishopMoves(board, row, col, pinnedPieces[`${row}${col}`].pinDirection);
-        }
-        return bishopMoves(board, row, col);
-      case 'q':
-        if(pinnedPieces[`${row}${col}`]?.pinType === 'soft'){
-          return queenMoves(board, row, col, pinnedPieces[`${row}${col}`].pinDirection);
-        }
-        return queenMoves(board, row, col);
-      default:
+  switch (piece.toLowerCase()) {
+    case 'p':
+      if(pinnedPieces[`${row}${col}`]){
+        return pawnMoves(board, row, col, pinnedPieces[`${row}${col}`].pinDirection);
+      }
+      return pawnMoves(board, row, col);
+    case 'r':
+      if(pinnedPieces[`${row}${col}`]){
+        return rookMoves(board, row, col, pinnedPieces[`${row}${col}`].pinDirection);
+      }
+      return rookMoves(board, row, col);
+    case 'n':
+      if(pinnedPieces[`${row}${col}`]){
         return [];
-    }
+      }
+      return knightMoves(board, row, col);
+    case 'k':
+      return kingMoves(board, row, col, attackBaord);
+    case 'b':
+      if(pinnedPieces[`${row}${col}`]){
+        return bishopMoves(board, row, col, pinnedPieces[`${row}${col}`].pinDirection);
+      }
+      return bishopMoves(board, row, col);
+    case 'q':
+      if(pinnedPieces[`${row}${col}`]){
+        return queenMoves(board, row, col, pinnedPieces[`${row}${col}`].pinDirection);
+      }
+      return queenMoves(board, row, col);
+    default:
+      return [];
   }
 }
 
@@ -230,13 +225,13 @@ const bishopMoves = (board, row, col, pinDirection = '') => {
 
 const queenMoves = (board, row, col, pinDirection = '') => {
   const result = [];
-  if(!pinDirection === ''){
-    result.push(...moveDirection(board, row, col, pinDirection.charAt(0), pinDirection.charAt(1)));
-    result.push(...moveDirection(board, row, col, Number(pinDirection.charAt(0)) * -1, Number(pinDirection.charAt(1)) * -1));
-  }
-  else {
+  if(pinDirection === ''){
     result.push(...rookMoves(board, row, col));
     result.push(...bishopMoves(board, row, col));
+  }
+  else {
+    result.push(...moveDirection(board, row, col, pinDirection.charAt(0), pinDirection.charAt(1)));
+    result.push(...moveDirection(board, row, col, Number(pinDirection.charAt(0)) * -1, Number(pinDirection.charAt(1)) * -1));
   }
   return result;
 }
