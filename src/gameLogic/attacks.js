@@ -131,11 +131,11 @@ const attackedSquaresCheck = (board, allyColor) =>{
             const attackedPiece = board[square[0]][square[1]];
             if(attacksBoard[square[0]][square[1]] ==='0'){
               attacksBoard[square[0]][square[1]] = '1';
-              if(attackedPiece === 'k' || attackedPiece === 'K'){
+              if((attackedPiece === 'k' && allyColor === 'black') || (attackedPiece === 'K' && allyColor === 'white')){
                 checkingPiecePosition = `${rowIndex}${colIndex}`;
               }
             }
-            else if(attacksBoard[square[0]][square[1]] ==='1' && (attackedPiece === 'k' || attackedPiece === 'K')){
+            else if(attacksBoard[square[0]][square[1]] ==='1' && ((attackedPiece === 'k' && allyColor === 'black') || (attackedPiece === 'K' && allyColor === 'white'))){
               attacksBoard[square[0]][square[1]] = '2';
               checkingPiecePosition = `${rowIndex}${colIndex}`;
             }
@@ -148,11 +148,11 @@ const attackedSquaresCheck = (board, allyColor) =>{
             const attackedPiece = board[square[0]][square[1]];
             if(attacksBoard[square[0]][square[1]] ==='0'){
               attacksBoard[square[0]][square[1]] = '1';
-              if(attackedPiece === 'k' || attackedPiece === 'K'){
+              if((attackedPiece === 'k' && allyColor === 'black') || ((attackedPiece === 'k' && allyColor === 'black') || (attackedPiece === 'K' && allyColor === 'white'))){
                 checkingPiecePosition = `${rowIndex}${colIndex}`;
               }
             }
-            else if(attacksBoard[square[0]][square[1]] ==='1' && (attackedPiece === 'k' || attackedPiece === 'K')){
+            else if(attacksBoard[square[0]][square[1]] ==='1' && ((attackedPiece === 'k' && allyColor === 'black') || (attackedPiece === 'K' && allyColor === 'white'))){
               attacksBoard[square[0]][square[1]] = '2';
               checkingPiecePosition = `${rowIndex}${colIndex}`;
             }
@@ -165,11 +165,11 @@ const attackedSquaresCheck = (board, allyColor) =>{
             const attackedPiece = board[square[0]][square[1]];
             if(attacksBoard[square[0]][square[1]] ==='0'){
               attacksBoard[square[0]][square[1]] = '1';
-              if(attackedPiece === 'k' || attackedPiece === 'K'){
+              if((attackedPiece === 'k' && allyColor === 'black') || ((attackedPiece === 'k' && allyColor === 'black') || (attackedPiece === 'K' && allyColor === 'white'))){
                 checkingPiecePosition = `${rowIndex}${colIndex}`;
               }
             }
-            else if(attacksBoard[square[0]][square[1]] ==='1' && (attackedPiece === 'k' || attackedPiece === 'K')){
+            else if(attacksBoard[square[0]][square[1]] ==='1' && ((attackedPiece === 'k' && allyColor === 'black') || (attackedPiece === 'K' && allyColor === 'white'))){
               attacksBoard[square[0]][square[1]] = '2';
               checkingPiecePosition = `${rowIndex}${colIndex}`;
             }
@@ -193,7 +193,7 @@ const attackedSquaresCheck = (board, allyColor) =>{
               const attackedPiece = board[square[0]][square[1]];
               if(attacksBoard[square[0]][square[1]] ==='0'){
                 attacksBoard[square[0]][square[1]] = '1';
-                if(attackedPiece === 'k' || attackedPiece === 'K'){
+                if((attackedPiece === 'k' && allyColor === 'black') || (attackedPiece === 'K' && allyColor === 'white')){
                   checkingPiecePosition = `${rowIndex}${colIndex}`;
                 }
               }
@@ -219,6 +219,7 @@ const attackedSquaresCheck = (board, allyColor) =>{
   })
 
   let result = {attacksBoard, pinnedPieces, checkingPiecePosition};
+  console.log('RESULT', result.attacksBoard)
   return result;
 }
 
