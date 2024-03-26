@@ -5,45 +5,42 @@ const attackDirection = (board, row, col, rowDirection, colDirection) => {
   let newCol = col + colDirection;
   let attackedSquares = [];
   let pinnedPiece = {};
-  let posiblePin = []
+  let possiblePin = []
   let pinnedCount = 0;
   const piece = board[row][col];
   const color = piece === piece.toLowerCase() ? 'black' : 'white';
   while(newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8){
-    if(board[newRow][newCol] === '0' && pinnedCount === 0){
+    if(board[newRow][newCol] !== '0'  && getPieceColor(board[newRow][newCol]) === color){
       attackedSquares.push([newRow, newCol]);
-      newRow += rowDirection;
-      newCol += colDirection;
+      break;
     }
-    else if((board[newRow][newCol] === 'k' || board[newRow][newCol] === 'K') && getPieceColor(board[newRow][newCol]) !== color){
-      if(pinnedCount > 0){
-        pinnedPiece = {piece: posiblePin, pinDirection: `${rowDirection}${colDirection}` , pinType: 'soft'};
-        break;
-      }
-      attackedSquares.push([newRow, newCol]);
-      newRow += rowDirection;
-      newCol += colDirection;
-    }
-    else if(!(board[newRow][newCol] === 'k' || !board[newRow][newCol] === 'K') && color !== getPieceColor(board[newRow][newCol])){
-      if(pinnedCount === 0){
-        posiblePin = [newRow, newCol];
-        pinnedCount += 1;
-      }
-      else if(pinnedCount === 1){
-        pinnedPiece = [];
-        break;
-      }
-      attackedSquares.push([newRow, newCol]);
-      newRow += rowDirection;
-      newCol += colDirection;
 
-    }
-    else if(color === getPieceColor(board[newRow][newCol]) && pinnedCount === 0){
-      attackedSquares.push([newRow, newCol]);
-      break;
-    }
-    else{
-      break;
+    if (pinnedCount === 0) {
+      if (board[newRow][newCol] === '0') {
+        attackedSquares.push([newRow, newCol]);
+        newRow += rowDirection;
+        newCol += colDirection;
+      } else if (board[newRow][newCol].toLowerCase() === 'k') {
+        attackedSquares.push([newRow, newCol]);
+        newRow += rowDirection;
+        newCol += colDirection;
+      } else {
+        possiblePin = [newRow, newCol];
+        pinnedCount = 1;
+        attackedSquares.push([newRow, newCol]);
+        newRow += rowDirection;
+        newCol += colDirection;
+      }
+    } else if (pinnedCount === 1) {
+      if (board[newRow][newCol] === '0') {
+        newRow += rowDirection;
+        newCol += colDirection;
+      } else if (board[newRow][newCol].toLowerCase() === 'k') {
+        pinnedPiece = { piece: possiblePin, pinDirection: `${rowDirection}${colDirection}` };
+        break;
+      } else {
+        break;
+      }
     }
   }
   let result = {attackedSquares, pinnedPiece,}
@@ -105,7 +102,7 @@ const kingAttackSquares = (row, col) => {
   return result;
 }
 
-const attackedSquaresCheck = (board, allyColor) =>{
+const attackedSquaresCheck = (board, allyColor) => {
   let attacksBoard = parseBoard('0000000000000000000000000000000000000000000000000000000000000000');
   let pinnedPieces = {}
   let checkingPiecePosition = '';
@@ -121,13 +118,55 @@ const attackedSquaresCheck = (board, allyColor) =>{
     [1, -1],
     [-1, 1]
   ];
+
   board.forEach((row, rowIndex) => {
     row.forEach((piece, colIndex) => {
-      if(piece === '0') return null;
-      if(getPieceColor(piece) !== allyColor){
-        if(piece.toLowerCase() === 'p'){
-          let result = pawnAttackSqures(rowIndex, colIndex, allyColor);
-          result.forEach((square) => {
+      if(piece === '0' || getPieceColor(piece) === allyColor){return null};
+      if(piece.toLowerCase() === 'p'|| piece.toLowerCase() === 'n'||piece.toLowerCase() === 'k'){
+        let result = [];
+        switch (piece.toLowerCase()) {
+          case 'p':
+            result = pawnAttackSqures(rowIndex, colIndex, allyColor);
+            break;
+          case 'n':
+            result = knightAttackSquares(rowIndex, colIndex);
+            break;
+          case 'k':
+            result = kingAttackSquares(rowIndex, colIndex);
+            break;
+          default:
+            break;
+        }
+        result.forEach((square) => {
+          const attackedPiece = board[square[0]][square[1]];
+          if(attacksBoard[square[0]][square[1]] ==='0'){
+            attacksBoard[square[0]][square[1]] = '1';
+            if((attackedPiece === 'k' && allyColor === 'black') || (attackedPiece === 'K' && allyColor === 'white')){
+              checkingPiecePosition = `${rowIndex}${colIndex}`;
+            }
+          }
+          else if(attacksBoard[square[0]][square[1]] ==='1' && ((attackedPiece === 'k' && allyColor === 'black') || (attackedPiece === 'K' && allyColor === 'white'))){
+            attacksBoard[square[0]][square[1]] = '2';
+            checkingPiecePosition = `${rowIndex}${colIndex}`;
+          }
+        });
+      }
+      else {
+        let directions = []
+        switch (piece.toLowerCase()) {
+          case 'r':
+            directions  = verticalAndHorizontal
+            break;
+          case 'b':
+            directions = diagonal
+            break;
+          default:
+            directions = [...verticalAndHorizontal, ...diagonal]
+            break;
+        }
+        directions.map((direction) => {
+          let result = attackDirection(board, rowIndex, colIndex, direction[0], direction[1])
+          result.attackedSquares.forEach((square) => {
             const attackedPiece = board[square[0]][square[1]];
             if(attacksBoard[square[0]][square[1]] ==='0'){
               attacksBoard[square[0]][square[1]] = '1';
@@ -135,98 +174,30 @@ const attackedSquaresCheck = (board, allyColor) =>{
                 checkingPiecePosition = `${rowIndex}${colIndex}`;
               }
             }
-            else if(attacksBoard[square[0]][square[1]] ==='1' && ((attackedPiece === 'k' && allyColor === 'black') || (attackedPiece === 'K' && allyColor === 'white'))){
-              attacksBoard[square[0]][square[1]] = '2';
-              checkingPiecePosition = `${rowIndex}${colIndex}`;
+            else if(attacksBoard[square[0]][square[1]] ==='1' && (attackedPiece === 'k' || attackedPiece === 'K')){
+              attacksBoard[square[0]][square[1]] = '2'; 
             }
           });
-          return null;
-        }
-        else if(piece.toLowerCase() === 'n'){
-          let result = knightAttackSquares(rowIndex, colIndex)
-          result.forEach((square) => {
-            const attackedPiece = board[square[0]][square[1]];
-            if(attacksBoard[square[0]][square[1]] ==='0'){
-              attacksBoard[square[0]][square[1]] = '1';
-              if((attackedPiece === 'k' && allyColor === 'black') || ((attackedPiece === 'k' && allyColor === 'black') || (attackedPiece === 'K' && allyColor === 'white'))){
-                checkingPiecePosition = `${rowIndex}${colIndex}`;
-              }
+          if(result.pinnedPiece.piece){
+            const key = `${result.pinnedPiece.piece[0]}${result.pinnedPiece.piece[1]}`;
+            if (!pinnedPieces[key]) {
+              pinnedPieces[key] = { pinDirection: result.pinnedPiece.pinDirection};
             }
-            else if(attacksBoard[square[0]][square[1]] ==='1' && ((attackedPiece === 'k' && allyColor === 'black') || (attackedPiece === 'K' && allyColor === 'white'))){
-              attacksBoard[square[0]][square[1]] = '2';
-              checkingPiecePosition = `${rowIndex}${colIndex}`;
-            }
-          });
-          return null;
-        }
-        else if(piece.toLowerCase() === 'k'){
-          let result = kingAttackSquares(rowIndex, colIndex)
-          result.forEach((square) => {
-            const attackedPiece = board[square[0]][square[1]];
-            if(attacksBoard[square[0]][square[1]] ==='0'){
-              attacksBoard[square[0]][square[1]] = '1';
-              if((attackedPiece === 'k' && allyColor === 'black') || ((attackedPiece === 'k' && allyColor === 'black') || (attackedPiece === 'K' && allyColor === 'white'))){
-                checkingPiecePosition = `${rowIndex}${colIndex}`;
-              }
-            }
-            else if(attacksBoard[square[0]][square[1]] ==='1' && ((attackedPiece === 'k' && allyColor === 'black') || (attackedPiece === 'K' && allyColor === 'white'))){
-              attacksBoard[square[0]][square[1]] = '2';
-              checkingPiecePosition = `${rowIndex}${colIndex}`;
-            }
-          });
-          return null;
-        }
-        else {
-          let directions = []
-          if(piece.toLowerCase() === 'r'){
-            directions  = verticalAndHorizontal
           }
-          else if(piece.toLowerCase() === 'b'){
-            directions = diagonal
-          }
-          else {
-            directions = [...verticalAndHorizontal, ...diagonal]
-          }
-          directions.map((direction) => {
-            let result = attackDirection(board, rowIndex, colIndex, direction[0], direction[1])
-            result.attackedSquares.forEach((square) => {
-              const attackedPiece = board[square[0]][square[1]];
-              if(attacksBoard[square[0]][square[1]] ==='0'){
-                attacksBoard[square[0]][square[1]] = '1';
-                if((attackedPiece === 'k' && allyColor === 'black') || (attackedPiece === 'K' && allyColor === 'white')){
-                  checkingPiecePosition = `${rowIndex}${colIndex}`;
-                }
-              }
-              else if(attacksBoard[square[0]][square[1]] ==='1' && (attackedPiece === 'k' || attackedPiece === 'K')){
-                attacksBoard[square[0]][square[1]] = '2'; 
-              }
-            });
-            if(result.pinnedPiece.piece){
-              const key = `${result.pinnedPiece.piece[0]}${result.pinnedPiece.piece[1]}`;
-              if (!pinnedPieces[key]) {
-                pinnedPieces[key] = { pinDirection: result.pinnedPiece.pinDirection, pinType: result.pinnedPiece.pinType };
-              }
-              else{
-                pinnedPieces[key].pinType = 'hard'
-              }
-            }
-            return null;
-          })
           return null;
-        }
+        })
+        return null;
       }
     })
   })
-
   let result = {attacksBoard, pinnedPieces, checkingPiecePosition};
-  console.log('RESULT', result.attacksBoard)
-  return result;
-}
+    return result;
+  }
 
-module.exports = {
-  attackedSquaresCheck,
-  attackDirection,
-  pawnAttackSqures,
-  knightAttackSquares,
-  kingAttackSquares
-};
+  module.exports = {
+    attackedSquaresCheck,
+    attackDirection,
+    pawnAttackSqures,
+    knightAttackSquares,
+    kingAttackSquares
+  };
