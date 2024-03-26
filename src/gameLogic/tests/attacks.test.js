@@ -320,9 +320,8 @@ describe('generates the attack board for a position with pins', () => {
           checkingPiecePosition: "",
           pinnedPieces: {
             63: {
-                pinDirection: "10",
-                pinType: "soft",
-              },
+              pinDirection: "10",
+            },
           }
         },
       },
@@ -358,9 +357,8 @@ describe('generates the attack board for a position with pins', () => {
           checkingPiecePosition: "",
           pinnedPieces: {
             63: {
-                pinDirection: "1-1",
-                pinType: "soft",
-              },
+              pinDirection: "1-1",
+            },
           }
         },
       },
@@ -396,16 +394,13 @@ describe('generates the attack board for a position with pins', () => {
           checkingPiecePosition: "",
           pinnedPieces: {
             63: {
-                pinDirection: "11",
-                pinType: "soft",
+              pinDirection: "11",
               },
             64: {
               pinDirection: "10",
-              pinType: "soft",
             },
             65: {
               pinDirection: "1-1",
-              pinType: "soft",
             },
           }
         },
@@ -414,6 +409,132 @@ describe('generates the attack board for a position with pins', () => {
     attackTests.forEach(({ board, expectedAttackBoard }) => {
       it('returns the attacked squares', () => {
         expect(attackedSquaresCheck(board.pieces, 'white')).toEqual(expectedAttackBoard)
+      });
+    });
+  });
+  describe('white attacking', () => {
+    const attackTests = [
+      {
+        board: {
+          pieces: [
+            ['0', '0', '0', '0', 'k', '0', '0', '0'],
+            ['0', '0', '0', '0', 'p', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', 'Q', '0', '0', 'K'],
+          ],
+          turn: 'b',
+          castling: '',
+          enPassant: '-',
+          halfMove: '1',
+          fullMove: '1'
+        },
+        expectedAttackBoard: {
+          attacksBoard: [
+            ['0', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '1', '0', '0', '0'],
+            ['0', '0', '0', '0', '1', '0', '0', '0'],
+            ['1', '0', '0', '0', '1', '0', '0', '0'],
+            ['0', '1', '0', '0', '1', '0', '0', '1'],
+            ['0', '0', '1', '0', '1', '0', '1', '0'],
+            ['0', '0', '0', '1', '1', '1', '1', '1'],
+            ['1', '1', '1', '1', '0', '1', '1', '1'],
+          ],
+          checkingPiecePosition: "",
+          pinnedPieces: {
+            14: {
+              pinDirection: "-10",
+            },
+          }
+        },
+      },
+      {
+        board: {
+          pieces: [
+            ['0', '0', 'k', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', 'p', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', 'b'],
+            ['0', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', 'B'],
+            ['0', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', 'K'],
+          ],
+          turn: 'b',
+          castling: '',
+          enPassant: '-',
+          halfMove: '1',
+          fullMove: '1'
+        },
+        expectedAttackBoard: {
+          attacksBoard: [
+            ['0', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '1', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '1', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '1', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '1', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '1', '1'],
+            ['0', '0', '0', '0', '0', '1', '1', '0'],
+          ],
+          checkingPiecePosition: "",
+          pinnedPieces: {
+            13: {
+              pinDirection: "-1-1",
+            },
+          }
+        },
+      },
+      {
+        board: {
+          pieces: [
+            ['0', '0', '0', '0', 'k', '0', '0', '0'],
+            ['0', '0', '0', 'p', 'p', 'p', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', 'B'],
+            ['Q', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', 'R', '0', '0', 'K'],
+          ],
+          turn: 'b',
+          castling: '',
+          enPassant: '-',
+          halfMove: '1',
+          fullMove: '1'
+        },
+        expectedAttackBoard: {
+          attacksBoard: [
+            ['1', '0', '0', '0', '0', '0', '0', '0'],
+            ['1', '0', '0', '1', '1', '1', '0', '0'],
+            ['1', '0', '1', '0', '1', '0', '1', '0'],
+            ['1', '1', '0', '0', '1', '0', '0', '0'],
+            ['0', '1', '1', '1', '1', '1', '1', '1'],
+            ['1', '1', '0', '0', '1', '1', '0', '0'],
+            ['1', '0', '1', '0', '1', '0', '1', '1'],
+            ['1', '1', '1', '1', '0', '1', '1', '1'],
+          ],
+          checkingPiecePosition: "",
+          pinnedPieces: {
+            13: {
+              pinDirection: "-11",
+            },
+            14: {
+              pinDirection: "-10",
+            },
+            15: {
+              pinDirection: "-1-1",
+            },
+          }
+        },
+      },
+    ];
+    attackTests.forEach(({ board, expectedAttackBoard }) => {
+      it('returns the attacked squares', () => {
+        expect(attackedSquaresCheck(board.pieces, 'black')).toEqual(expectedAttackBoard)
       });
     });
   });
