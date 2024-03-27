@@ -195,30 +195,32 @@ const moveDirectionInCheck = (board, row, col, rowDirection, colDirection, check
 
 const rookMoves = (board, row, col, pinDirection = '') => {
   const result = [];
-  if(!pinDirection === ''){
-    result.push(...moveDirection(board, row, col, pinDirection[0], pinDirection[0]));
-    result.push(...moveDirection(board, row, col, pinDirection[0] * -1, pinDirection[0] * -1));
-  }
-  else {
+  if(pinDirection === ''){
     result.push(...moveDirection(board, row, col, 1, 0));
     result.push(...moveDirection(board, row, col, -1, 0));
     result.push(...moveDirection(board, row, col, 0, 1));
     result.push(...moveDirection(board, row, col, 0, -1));
+  }
+  else {
+    console.log('here')
+    console.log(pinDirection)
+    result.push(...moveDirection(board, row, col, pinDirection[0], pinDirection[1]));
+    result.push(...moveDirection(board, row, col, pinDirection[0] * -1, pinDirection[1] * -1));
   }
   return result;
 }
 
 const bishopMoves = (board, row, col, pinDirection = '') => {
   const result = [];
-  if(!pinDirection === ''){
-    result.push(...moveDirection(board, row, col, pinDirection[0], pinDirection[0]));
-    result.push(...moveDirection(board, row, col, pinDirection[0] * -1, pinDirection[0] * -1));
-  }
-  else {
+  if(pinDirection === ''){
     result.push(...moveDirection(board, row, col, 1, 1));
     result.push(...moveDirection(board, row, col, -1, -1));
     result.push(...moveDirection(board, row, col, 1, -1));
     result.push(...moveDirection(board, row, col, -1, 1));
+  }
+  else {
+    result.push(...moveDirection(board, row, col, pinDirection[0], pinDirection[1]));
+    result.push(...moveDirection(board, row, col, pinDirection[0] * -1, pinDirection[1] * -1));
   }
   return result;
 }
@@ -230,49 +232,49 @@ const queenMoves = (board, row, col, pinDirection = '') => {
     result.push(...bishopMoves(board, row, col));
   }
   else {
-    result.push(...moveDirection(board, row, col, pinDirection[0], pinDirection[0]));
-    result.push(...moveDirection(board, row, col, pinDirection[0] * -1, pinDirection[0] * -1));
+    result.push(...moveDirection(board, row, col, pinDirection[0], pinDirection[1]));
+    result.push(...moveDirection(board, row, col, pinDirection[0] * -1, pinDirection[1] * -1));
   }
-  console.log(result)
   return result;
 }
 
 const rookMovesInCheck = (board, row, col, pinDirection = '', checkingPieceIndex, checkLine) => {
   const result = [];
-  if(!pinDirection === ''){
-    return [];
-  }
-  else {
+  if(pinDirection === ''){
+
     result.push(...moveDirectionInCheck(board, row, col, 1, 0, checkingPieceIndex, checkLine));
     result.push(...moveDirectionInCheck(board, row, col, -1, 0, checkingPieceIndex, checkLine));
     result.push(...moveDirectionInCheck(board, row, col, 0, 1, checkingPieceIndex, checkLine));
     result.push(...moveDirectionInCheck(board, row, col, 0, -1, checkingPieceIndex, checkLine));
+  }
+  else {
+    return [];
   }
   return result;
 }
 
 const bishopMovesInCheck = (board, row, col, pinDirection = '', checkingPieceIndex, checkLine) => {
   const result = [];
-  if(!pinDirection === ''){
-    return [];
-  }
-  else {
+  if(pinDirection === ''){
     result.push(...moveDirectionInCheck(board, row, col, 1, 1, checkingPieceIndex, checkLine));
     result.push(...moveDirectionInCheck(board, row, col, -1, -1, checkingPieceIndex, checkLine));
     result.push(...moveDirectionInCheck(board, row, col, 1, -1, checkingPieceIndex, checkLine));
     result.push(...moveDirectionInCheck(board, row, col, -1, 1, checkingPieceIndex, checkLine));
+  }
+  else {
+    return [];
   }
   return result;
 }
 
 const queenMovesInCheck = (board, row, col, pinDirection = '', checkingPieceIndex, checkLine) => {
   const result = [];
-  if(!pinDirection === ''){
-    return [];
-  }
-  else {
+  if(pinDirection === ''){
     result.push(...rookMoves(board, row, col,pinDirection, checkingPieceIndex, checkLine));
     result.push(...bishopMoves(board, row, col, checkingPieceIndex,pinDirection, checkLine));
+  }
+  else {
+    return [];
   }
   return result;
 }
@@ -288,7 +290,7 @@ const pawnMoves = (board, row, col, pinDirection = '') => {
   if(col - 1 > 0 && board.pieces[row + direction][col - 1] !== '0' && getPieceColor(board.pieces[row + direction][col - 1]) !== color && (pinDirection === '' || (pinDirection[0] === direction * -1 && pinDirection[1] === 1))){
     result.push([row + direction, col - 1]);
   }
-  if(board.pieces[row + direction][col] === '0' && (pinDirection === '' || (pinDirection[0] === direction * -1 && pinDirection[0] === 0))){
+  if(board.pieces[row + direction][col] === '0' && (pinDirection === '' || (pinDirection[0] === direction * -1 && pinDirection[1] === 0))){
     result.push([row + direction, col]);
     if((color === 'white' && row === 6) || (color === 'black' && row === 1)){
       if(board.pieces[row + 2 * direction][col] === '0'){
