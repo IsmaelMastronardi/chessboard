@@ -23,7 +23,7 @@ const calculatePosibleMoves = (board, allyColor) => {
   let moves = [];
   let kingPosition = searchKing(board.pieces, allyColor)
   if(attackBaord[kingPosition[0]][kingPosition[1]] === '2'){
-    moves = kingMoves(board, kingPosition[0], kingPosition[1]);
+    moves = {[`${kingPosition[0]}${kingPosition[1]}`]: kingMoves(board, kingPosition[0], kingPosition[1], attackBaord)};
     if(Object.keys(moves).length === 0){
       return 'checkmate';
     };
