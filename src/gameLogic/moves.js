@@ -106,11 +106,12 @@ const kingMoves = (board, row, col, attackBoard) => {
     [1, 0],
     [1, 1],
     [0, 1],
+    [-1, 1],
     [-1, 0],
     [-1, -1],
     [0, -1],
     [1, -1],
-    [-1, 1]
+
   ];
   directions.forEach(direction => {
     const newRow = row + direction[0];
