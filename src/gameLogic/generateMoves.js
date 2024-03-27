@@ -29,7 +29,7 @@ const calculatePosibleMoves = (board, allyColor) => {
     };
   }
   else if(attackBaord[kingPosition[0]][kingPosition[1]] === '1'){
-   moves = handleCheck(board, attackBaord,kingPosition, allyColor, pinnedPieces, checkingPiecePosition);
+   moves = handleCheck(board, attackBaord, kingPosition, allyColor, pinnedPieces, checkingPiecePosition);
    if(Object.keys(moves).length === 0){
     return 'checkmate';
   };
