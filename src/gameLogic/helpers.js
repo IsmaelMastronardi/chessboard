@@ -4,6 +4,8 @@ const getPieceColor = (piece) => {
   return piece === piece.toLowerCase() ? 'black' : 'white';
 }
 
+const isInCheckline = (subArr, newRow, newCol) => JSON.stringify(subArr) === JSON.stringify([newRow, newCol]);
+
 const  parseBoard = (boardString) => {
   const board = [];
   for (let i = 0; i < 8; i++) {
@@ -59,6 +61,7 @@ convertToBoard(initialPostion);
 
 module.exports = {
   getPieceColor,
+  isInCheckline,
   convertToBoard,
   parseBoard,
 };
