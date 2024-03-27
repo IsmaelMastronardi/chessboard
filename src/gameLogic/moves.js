@@ -1,40 +1,38 @@
 const { getPieceColor } = require('./helpers');
 
-const calculateCheckLine = (board, checkingPiecePosition, kingPosition) => {
+const calculateCheckLine = (checkingPiecePosition, kingPosition) => {
   let checkLine = [];
-  let rowDirection = checkingPiecePosition[0] === kingPosition[0] ? 0 : checkingPiecePosition[0] > kingPosition[0] ? -1 : 1;
-  let colDirection = checkingPiecePosition[1] === kingPosition[1] ? 0 : checkingPiecePosition[1] > kingPosition[1] ? -1 : 1;
-  while(checkingPiecePosition[0] !== kingPosition[0] && checkingPiecePosition[1] !== kingPosition[1]){
-    checkingPiecePosition[0] += rowDirection;
-    checkingPiecePosition[1] += colDirection;
-    checkLine.push(checkingPiecePosition);
+  let temp = [...checkingPiecePosition];
+  let rowDirection = temp[0] === kingPosition[0] ? 0 : temp[0] > kingPosition[0] ? -1 : 1;
+  let colDirection = temp[1] === kingPosition[1] ? 0 : temp[1] > kingPosition[1] ? -1 : 1;
+  while((temp[0] !== kingPosition[0] && temp[1] !== kingPosition[1])){
+    temp[0] += rowDirection;
+    temp[1] += colDirection;
+    checkLine.push([temp[0], temp[1]]);
   }
   return checkLine;
 }
 
-const callMoves = (board, allyColor, pinnedPieces ,attackBaord) => {
+const callMoves = (board, allyColor, pinnedPieces ,attackBoard) => {
   let moves = {};
   board.pieces.forEach((row, rowIndex) => {
     row.forEach((piece, colIndex) => {
       if (getPieceColor(piece) === allyColor && piece !== '0') {
-          moves[`${rowIndex}${colIndex}`] = getPieceMoves(board, rowIndex, colIndex, pinnedPieces, attackBaord);
+          moves[`${rowIndex}${colIndex}`] = getPieceMoves(board, rowIndex, colIndex, pinnedPieces, attackBoard);
       }
     });
   });
   return moves;
 }
 
-const handleCheck = (board, attackBaord,kingPosition, allyColor, pinnedPieces, checkingPiecePosition) => {
+const handleCheck = (board, attackBoard, kingPosition, allyColor, pinnedPieces, checkingPiecePosition) => {
   let moves = {};
-  let checkingPiece = attackBaord[checkingPiecePosition[0]][checkingPiecePosition[1]];
   let checkLine = [];
-  if(!checkingPiece.toLowerCase() === 'p' && !checkingPiece.toLowerCase() === 'n'){
-    checkLine = calculateCheckLine(board, checkingPiecePosition, kingPosition)
-  }
+  checkLine = calculateCheckLine(checkingPiecePosition, kingPosition)
   board.pieces.forEach((row, rowIndex) => {
     row.forEach((piece, colIndex) => {
       if (getPieceColor(piece) === allyColor && piece !== '0') {
-          moves[`${rowIndex}${colIndex}`] = getPieceMovesInCheck(board, rowIndex, colIndex, pinnedPieces, checkLine, checkingPiece, checkingPiecePosition);
+          moves[`${rowIndex}${colIndex}`] = getPieceMovesInCheck(board, rowIndex, colIndex, pinnedPieces, checkLine, checkingPiecePosition, attackBoard);
       }
     });
   });
@@ -42,7 +40,7 @@ const handleCheck = (board, attackBaord,kingPosition, allyColor, pinnedPieces, c
 }
 
 
-const getPieceMoves = (board, row, col, pinnedPieces, attackBaord) => {
+const getPieceMoves = (board, row, col, pinnedPieces, attackBoard) => {
   const piece = board.pieces[row][col];
   switch (piece.toLowerCase()) {
     case 'p':
@@ -61,7 +59,7 @@ const getPieceMoves = (board, row, col, pinnedPieces, attackBaord) => {
       }
       return knightMoves(board, row, col);
     case 'k':
-      return kingMoves(board, row, col, attackBaord);
+      return kingMoves(board, row, col, attackBoard);
     case 'b':
       if(pinnedPieces[`${row}${col}`]){
         return bishopMoves(board, row, col, pinnedPieces[`${row}${col}`].pinDirection);
@@ -78,7 +76,7 @@ const getPieceMoves = (board, row, col, pinnedPieces, attackBaord) => {
 }
 
 
-const getPieceMovesInCheck = (board, row, col, pinnedPieces, checkLine, checkingPiece, checkingPieceIndex) => {
+const getPieceMovesInCheck = (board, row, col, pinnedPieces, checkLine, checkingPieceIndex, attackBoard) => {
   const piece = board.pieces[row][col];
   if(pinnedPieces[`${row}${col}`]){
     return [];
@@ -94,12 +92,14 @@ const getPieceMovesInCheck = (board, row, col, pinnedPieces, checkLine, checking
       return bishopMovesInCheck(board, row, col, checkingPieceIndex, checkLine);
     case 'q':
       return queenMovesInCheck(board, row, col, checkingPieceIndex, checkLine);
+    case 'k':
+      return kingMoves(board, row, col, attackBoard);
     default:
       return [];
   }  
 }
 
-const kingMoves = (board, row, col, attackBaord) => {
+const kingMoves = (board, row, col, attackBoard) => {
   const moves = [];
   const color = getPieceColor(board.pieces[row][col]);
   const directions = [
@@ -116,28 +116,28 @@ const kingMoves = (board, row, col, attackBaord) => {
     const newRow = row + direction[0];
     const newCol = col + direction[1];
     if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
-      if ((board.pieces[newRow][newCol] === '0' || color !== getPieceColor(board.pieces[newRow][newCol])) && attackBaord[newRow][newCol] !== '1') {
+      if ((board.pieces[newRow][newCol] === '0' || color !== getPieceColor(board.pieces[newRow][newCol])) && attackBoard[newRow][newCol] === '0') {
         moves.push([newRow, newCol]);
       }
     }
   });
   if(color === 'white' && board.castling.includes('K')){
-    if(board.pieces[7][5] === '0' && board.pieces[7][6] === '0' && attackBaord[7][5] !== '1' && attackBaord[7][6] !== '1'){
+    if(board.pieces[7][5] === '0' && board.pieces[7][6] === '0' && attackBoard[7][5] !== '1' && attackBoard[7][6] !== '1'){
       moves.push([7, 6]);
     } 
   }
   if(color === 'white' && board.castling.includes('Q')){
-    if(board.pieces[7][1] === '0' && board.pieces[7][2] === '0' && board.pieces[7][3] === '0' && attackBaord[7][1] !== '1' && attackBaord[7][2] !== '1' && attackBaord[7][3] !== '1'){
+    if(board.pieces[7][1] === '0' && board.pieces[7][2] === '0' && board.pieces[7][3] === '0' && attackBoard[7][1] !== '1' && attackBoard[7][2] !== '1' && attackBoard[7][3] !== '1'){
       moves.push([7, 2]);
     } 
   }
   if(color === 'black' && board.castling.includes('k')){
-    if(board.pieces[0][5] === '0' && board.pieces[0][6] === '0' && attackBaord[0][5] !== '1' && attackBaord[0][6] !== '1'){
+    if(board.pieces[0][5] === '0' && board.pieces[0][6] === '0' && attackBoard[0][5] !== '1' && attackBoard[0][6] !== '1'){
       moves.push([0, 6]);
     } 
   }
   if(color === 'black' && board.castling.includes('q')){
-    if(board.pieces[0][1] === '0' && board.pieces[0][2] === '0' && board.pieces[0][3] === '0' && attackBaord[0][1] !== '1' && attackBaord[0][2] !== '1' && attackBaord[0][3] !== '1'){
+    if(board.pieces[0][1] === '0' && board.pieces[0][2] === '0' && board.pieces[0][3] === '0' && attackBoard[0][1] !== '1' && attackBoard[0][2] !== '1' && attackBoard[0][3] !== '1'){
       moves.push([0, 2]);
     } 
   }
@@ -174,20 +174,20 @@ const moveDirectionInCheck = (board, row, col, rowDirection, colDirection, check
   let result = [];
   const piece = board.pieces[row][col];
   const color = getPieceColor(piece);
-
+  const isInCheckline = (subArr, newRow, newCol) => JSON.stringify(subArr) === JSON.stringify([newRow, newCol]);
   while(newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8){
-    if(board.pieces[newRow][newCol] === '0' && checkLine.includes([newRow, newCol])){
-      result.push(`${newRow}${newCol}`);
-      newRow += rowDirection;
-      newCol += colDirection;
-    }
-    else if(color !== getPieceColor(board[newRow][newCol]) && checkingPieceIndex === `${newRow}${newCol}`){
-      result.push(`${newRow}${newCol}`);
-      break;
-    }
-    else{
-      break;
-    }
+    ((newRow, newCol) => {
+      if(board.pieces[newRow][newCol] === '0' && checkLine.some(subArr => isInCheckline(subArr, newRow, newCol))){
+        result.push([newRow, newCol]);
+        newRow += rowDirection;
+        newCol += colDirection;
+      }
+      else if(checkingPieceIndex[0] === newRow && checkingPieceIndex[1] === newCol){
+        result.push([newRow, newCol]);
+      }
+    })(newRow, newCol);
+    newRow += rowDirection;
+    newCol += colDirection;
   }
   return result
 }
@@ -202,8 +202,6 @@ const rookMoves = (board, row, col, pinDirection = '') => {
     result.push(...moveDirection(board, row, col, 0, -1));
   }
   else {
-    console.log('here')
-    console.log(pinDirection)
     result.push(...moveDirection(board, row, col, pinDirection[0], pinDirection[1]));
     result.push(...moveDirection(board, row, col, pinDirection[0] * -1, pinDirection[1] * -1));
   }
@@ -238,44 +236,28 @@ const queenMoves = (board, row, col, pinDirection = '') => {
   return result;
 }
 
-const rookMovesInCheck = (board, row, col, pinDirection = '', checkingPieceIndex, checkLine) => {
+const rookMovesInCheck = (board, row, col, checkingPieceIndex, checkLine) => {
   const result = [];
-  if(pinDirection === ''){
-
-    result.push(...moveDirectionInCheck(board, row, col, 1, 0, checkingPieceIndex, checkLine));
-    result.push(...moveDirectionInCheck(board, row, col, -1, 0, checkingPieceIndex, checkLine));
-    result.push(...moveDirectionInCheck(board, row, col, 0, 1, checkingPieceIndex, checkLine));
-    result.push(...moveDirectionInCheck(board, row, col, 0, -1, checkingPieceIndex, checkLine));
-  }
-  else {
-    return [];
-  }
+  result.push(...moveDirectionInCheck(board, row, col, 1, 0, checkingPieceIndex, checkLine));
+  result.push(...moveDirectionInCheck(board, row, col, -1, 0, checkingPieceIndex, checkLine));
+  result.push(...moveDirectionInCheck(board, row, col, 0, 1, checkingPieceIndex, checkLine));
+  result.push(...moveDirectionInCheck(board, row, col, 0, -1, checkingPieceIndex, checkLine));
   return result;
 }
 
-const bishopMovesInCheck = (board, row, col, pinDirection = '', checkingPieceIndex, checkLine) => {
+const bishopMovesInCheck = (board, row, col, checkingPieceIndex, checkLine) => {
   const result = [];
-  if(pinDirection === ''){
-    result.push(...moveDirectionInCheck(board, row, col, 1, 1, checkingPieceIndex, checkLine));
-    result.push(...moveDirectionInCheck(board, row, col, -1, -1, checkingPieceIndex, checkLine));
-    result.push(...moveDirectionInCheck(board, row, col, 1, -1, checkingPieceIndex, checkLine));
-    result.push(...moveDirectionInCheck(board, row, col, -1, 1, checkingPieceIndex, checkLine));
-  }
-  else {
-    return [];
-  }
+  result.push(...moveDirectionInCheck(board, row, col, 1, 1, checkingPieceIndex, checkLine));
+  result.push(...moveDirectionInCheck(board, row, col, -1, -1, checkingPieceIndex, checkLine));
+  result.push(...moveDirectionInCheck(board, row, col, 1, -1, checkingPieceIndex, checkLine));
+  result.push(...moveDirectionInCheck(board, row, col, -1, 1, checkingPieceIndex, checkLine));
   return result;
 }
 
-const queenMovesInCheck = (board, row, col, pinDirection = '', checkingPieceIndex, checkLine) => {
+const queenMovesInCheck = (board, row, col, checkingPieceIndex, checkLine) => {
   const result = [];
-  if(pinDirection === ''){
-    result.push(...rookMoves(board, row, col,pinDirection, checkingPieceIndex, checkLine));
-    result.push(...bishopMoves(board, row, col, checkingPieceIndex,pinDirection, checkLine));
-  }
-  else {
-    return [];
-  }
+  result.push(...rookMoves(board, row, col, checkingPieceIndex, checkLine));
+  result.push(...bishopMoves(board, row, col, checkingPieceIndex, checkLine));
   return result;
 }
 
@@ -301,7 +283,7 @@ const pawnMoves = (board, row, col, pinDirection = '') => {
   return result;
 }
 
-const pawnMovesInCheck = (board, row, col, checkingPieceIndex, checkLine ) => {
+const pawnMovesInCheck = (board, row, col, checkingPieceIndex, checkLine) => {
   const result = [];
   const piece = board.pieces[row][col];
   const color = getPieceColor(piece);
