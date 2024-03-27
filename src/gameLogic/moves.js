@@ -1,4 +1,4 @@
-const { getPieceColor } = require('./helpers');
+const { getPieceColor, isInCheckline } = require('./helpers');
 
 const calculateCheckLine = (checkingPiecePosition, kingPosition) => {
   let checkLine = [];
@@ -172,9 +172,6 @@ const moveDirectionInCheck = (board, row, col, rowDirection, colDirection, check
   let newRow = row + rowDirection;
   let newCol = col + colDirection;
   let result = [];
-  const piece = board.pieces[row][col];
-  const color = getPieceColor(piece);
-  const isInCheckline = (subArr, newRow, newCol) => JSON.stringify(subArr) === JSON.stringify([newRow, newCol]);
   while(newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8){
     ((newRow, newCol) => {
       if(board.pieces[newRow][newCol] === '0' && checkLine.some(subArr => isInCheckline(subArr, newRow, newCol))){
@@ -256,8 +253,8 @@ const bishopMovesInCheck = (board, row, col, checkingPieceIndex, checkLine) => {
 
 const queenMovesInCheck = (board, row, col, checkingPieceIndex, checkLine) => {
   const result = [];
-  result.push(...rookMoves(board, row, col, checkingPieceIndex, checkLine));
-  result.push(...bishopMoves(board, row, col, checkingPieceIndex, checkLine));
+  result.push(...rookMovesInCheck(board, row, col, checkingPieceIndex, checkLine));
+  result.push(...bishopMovesInCheck(board, row, col, checkingPieceIndex, checkLine));
   return result;
 }
 
@@ -288,17 +285,34 @@ const pawnMovesInCheck = (board, row, col, checkingPieceIndex, checkLine) => {
   const piece = board.pieces[row][col];
   const color = getPieceColor(piece);
   const direction = color === 'white' ? -1 : 1;
-  if(board.pieces[row + direction][col + 1] !== '0' && getPieceColor(board.pieces[row + direction][col + 1]) !== color && checkingPieceIndex === `${row + direction}${col + 1}`){
+  if(
+    board.pieces[row + direction][col + 1] !== '0'
+    &&
+    getPieceColor(board.pieces[row + direction][col + 1]) !== color
+    &&
+    (checkingPieceIndex[0] === row + direction && checkingPieceIndex[1] === col + 1)
+    ){
     result.push([row + direction, col + 1]);
   }
-  if(board.pieces[row + direction][col - 1] !== '0' && getPieceColor(board.pieces[row + direction][col - 1]) !== color && checkingPieceIndex === `${row + direction}${col - 1}`){
+  if(
+    board.pieces[row + direction][col - 1] !== '0'
+    &&
+    getPieceColor(board.pieces[row + direction][col - 1]) !== color
+    &&
+    (
+      checkingPieceIndex[0] === row + direction
+      &&
+      checkingPieceIndex[1] === col - 1
+    )
+    ){
     result.push([row + direction, col - 1]);
   }
+  
   if(board.pieces[row + direction][col] === '0'){
-    if(checkLine.includes([row + direction, col])){
+    if(checkLine.some(subArr => isInCheckline(subArr, row + direction, col))){
     result.push([row + direction, col]);
     }
-    if(((color === 'white' && row === 6) || (color === 'black' && row === 1)) &&  checkLine.includes([row + 2 * direction, col])){
+    if(((color === 'white' && row === 6) || (color === 'black' && row === 1)) && checkLine.some(subArr => isInCheckline(subArr, row + 2 * direction, col))){
       if(board.pieces[row + 2 * direction][col] === '0'){
         result.push([row + 2 * direction, col]);
       }
@@ -346,11 +360,21 @@ const knightMovesInCheck = (board, row, col, checkingPieceIndex, checkLine) => {
     [-1, 2],
     [-1, -2]
   ];
+
   for (let i = 0; i < directions.length; i++) {
     const newRow = row + directions[i][0];
     const newCol = col + directions[i][1];
     if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
-      if ((board.pieces[newRow][newCol] === '0' || getPieceColor(board.pieces[newRow][newCol]) !== color) && (checkLine.includes([newRow, newCol]) || checkingPieceIndex === `${newRow}${newCol}`)) {
+      let currentSquare = board.pieces[newRow][newCol];
+      if (
+        (currentSquare === '0' || getPieceColor(currentSquare) !== color)
+        &&
+        (
+          checkLine.some(subArr => isInCheckline(subArr, newRow, newCol))
+        ||
+          (checkingPieceIndex[0] === newRow && checkingPieceIndex[1] === newCol)
+        )) 
+        {
         result.push([newRow, newCol]);
       }
     }
