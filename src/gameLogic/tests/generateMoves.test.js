@@ -81,7 +81,7 @@ describe('generate all posible, legal moves on one turn',() => {
       expect(calculatePosibleMoves(initialBoard, 'black')).toEqual(expectedMoves);
     });
   });
-  describe('with 1 pin',() => {
+  describe('with a pin',() => {
     describe('black attacking', () => {
       const pinTests = [
         {
@@ -385,6 +385,43 @@ describe('generate all posible, legal moves on one turn',() => {
       pinTests.forEach(({board, expectedMoves}) => {
         test('in different positions', () => {
           expect(calculatePosibleMoves(board, 'black')).toEqual(expectedMoves);
+        });
+      });
+    });
+  });
+  describe('with 1 check', () => {
+    describe('black attacking', () => {
+      describe('should be able to block or move', () => {
+        const pinTests = [
+          {
+            board:
+            {
+              pieces: [
+                ['k', '0', '0', '0', '0', '0', '0', '0'],
+                ['0', 'q', '0', '0', '0', '0', 'R', '0'],
+                ['0', '0', '0', '0', '0', '0', '0', '0'],
+                ['0', '0', '0', '0', '0', '0', '0', '0'],
+                ['0', '0', '0', '0', '0', '0', '0', '0'],
+                ['0', '0', '0', '0', '0', '0', '0', '0'],
+                ['0', '0', '0', '0', '0', '0', '0', '0'],
+                ['0', '0', '0', '0', '0', '0', '0', 'K']
+              ],
+              turn: 'w',
+              castling: '',
+              enPassant: '-',
+              halfMove: '0',
+              fullMove: '1'
+            },
+             expectedMoves: {
+              '16': [[6, 6], [1, 1]],
+              '77': [[ 6, 7 ], [ 7, 6 ]]
+            }
+          },
+        ];
+        pinTests.forEach(({board, expectedMoves}) => {
+          test('in different positions', () => {
+            expect(calculatePosibleMoves(board, 'white')).toEqual(expectedMoves);
+          });
         });
       });
     });
