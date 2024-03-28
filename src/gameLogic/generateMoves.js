@@ -33,10 +33,13 @@ const calculatePosibleMoves = (board, allyColor) => {
    moves = handleCheck(board, attackBaord, kingPosition, allyColor, pinnedPieces, checkingPiecePosition);
    if(Object.keys(moves).length === 0){
     return 'checkmate';
-  };
+    };
   }
   else{
     moves = callMoves(board, allyColor, pinnedPieces, attackBaord);
+    if(Object.keys(moves).length === 0){
+      return 'stalemate';
+      };
   }
   return moves;
 }
