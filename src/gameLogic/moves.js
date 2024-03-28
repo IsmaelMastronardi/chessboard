@@ -18,7 +18,10 @@ const callMoves = (board, allyColor, pinnedPieces ,attackBoard) => {
   board.pieces.forEach((row, rowIndex) => {
     row.forEach((piece, colIndex) => {
       if (getPieceColor(piece) === allyColor && piece !== '0') {
-          moves[`${rowIndex}${colIndex}`] = getPieceMoves(board, rowIndex, colIndex, pinnedPieces, attackBoard);
+        let pieceMoves = getPieceMoves(board, rowIndex, colIndex, pinnedPieces, attackBoard);
+        if(pieceMoves.length > 0){
+          moves[`${rowIndex}${colIndex}`] = pieceMoves;
+        }
       }
     });
   });
@@ -32,7 +35,10 @@ const handleCheck = (board, attackBoard, kingPosition, allyColor, pinnedPieces, 
   board.pieces.forEach((row, rowIndex) => {
     row.forEach((piece, colIndex) => {
       if (getPieceColor(piece) === allyColor && piece !== '0') {
-          moves[`${rowIndex}${colIndex}`] = getPieceMovesInCheck(board, rowIndex, colIndex, pinnedPieces, checkLine, checkingPiecePosition, attackBoard);
+        let  pieceMoves = getPieceMovesInCheck(board, rowIndex, colIndex, pinnedPieces, checkLine, checkingPiecePosition, attackBoard);
+        if(pieceMoves.length > 0){
+          moves[`${rowIndex}${colIndex}`] = pieceMoves;
+        }
       }
     });
   });
