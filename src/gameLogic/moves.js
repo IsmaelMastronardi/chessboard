@@ -179,15 +179,22 @@ const moveDirectionInCheck = (board, row, col, rowDirection, colDirection, check
   let newRow = row + rowDirection;
   let newCol = col + colDirection;
   let result = [];
+  let color = getPieceColor(board.pieces[row][col]);
   while(newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8){
+    if(board.pieces[newRow][newCol] !== '0' && color === getPieceColor(board.pieces[newRow][newCol])){
+      break;
+    }
+    if(board.pieces[newRow][newCol] !== '0' && color !== getPieceColor(board.pieces[newRow][newCol])){
+      if(checkingPieceIndex[0] === newRow && checkingPieceIndex[1] === newCol){
+        result.push([newRow, newCol]);
+      }
+      break;
+    }
     ((newRow, newCol) => {
       if(board.pieces[newRow][newCol] === '0' && checkLine.some(subArr => isInCheckline(subArr, newRow, newCol))){
         result.push([newRow, newCol]);
         newRow += rowDirection;
         newCol += colDirection;
-      }
-      else if(checkingPieceIndex[0] === newRow && checkingPieceIndex[1] === newCol){
-        result.push([newRow, newCol]);
       }
     })(newRow, newCol);
     newRow += rowDirection;
@@ -292,27 +299,33 @@ const pawnMovesInCheck = (board, row, col, checkingPieceIndex, checkLine) => {
   const piece = board.pieces[row][col];
   const color = getPieceColor(piece);
   const direction = color === 'white' ? -1 : 1;
-  if(
-    board.pieces[row + direction][col + 1] !== '0'
-    &&
-    getPieceColor(board.pieces[row + direction][col + 1]) !== color
-    &&
-    (checkingPieceIndex[0] === row + direction && checkingPieceIndex[1] === col + 1)
-    ){
-    result.push([row + direction, col + 1]);
-  }
-  if(
-    board.pieces[row + direction][col - 1] !== '0'
-    &&
-    getPieceColor(board.pieces[row + direction][col - 1]) !== color
-    &&
-    (
-      checkingPieceIndex[0] === row + direction
+  if((row + direction >= 0 && row + direction < 8)){
+    if(
+      col + 1 < 8
       &&
-      checkingPieceIndex[1] === col - 1
-    )
-    ){
-    result.push([row + direction, col - 1]);
+      board.pieces[row + direction][col + 1] !== '0'
+      &&
+      getPieceColor(board.pieces[row + direction][col + 1]) !== color
+      &&
+      (checkingPieceIndex[0] === row + direction && checkingPieceIndex[1] === col + 1)
+      ){
+      result.push([row + direction, col + 1]);
+    }
+    if(
+      col - 1 > 0
+      &&
+      board.pieces[row + direction][col - 1] !== '0'
+      &&
+      getPieceColor(board.pieces[row + direction][col - 1]) !== color
+      &&
+      (
+        checkingPieceIndex[0] === row + direction
+        &&
+        checkingPieceIndex[1] === col - 1
+      )
+      ){
+      result.push([row + direction, col - 1]);
+    }
   }
   
   if(board.pieces[row + direction][col] === '0'){
