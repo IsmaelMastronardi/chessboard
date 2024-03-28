@@ -824,4 +824,39 @@ describe('return all posible, legal moves with a single check', () => {
       });
     });
   });
+  describe('special moves', () => {
+    describe('should be able to En Passant', () => {
+      const pinTests = [
+        {
+          board:
+          {
+            pieces: [
+              ['k', '0', '0', '0', '0', '0', '0', '0'],
+              ['0', '0', '0', '0', '0', '0', '0', '0'],
+              ['0', '0', '0', '0', '0', '0', '0', '0'],
+              ['0', 'p', 'P', '0', '0', '0', '0', '0'],
+              ['0', '0', '0', '0', '0', '0', '0', '0'],
+              ['0', '0', '0', '0', '0', '0', '0', '0'],
+              ['0', '0', '0', '0', '0', '0', '0', '0'],
+              ['K', '0', '0', '0', '0', '0', '0', '0'],
+            ],
+            turn: 'w',
+            castling: '',
+            enPassant: '21',
+            halfMove: '0',
+            fullMove: '1'
+          },
+            expectedMoves: {
+              '32': [[2, 1], [2, 2]],
+              '70': [[7, 1], [6, 1], [6, 0]],
+            }
+        },
+      ];
+      pinTests.forEach(({board, expectedMoves}) => {
+        test('in different positions', () => {
+          expect(calculatePosibleMoves(board, 'white')).toEqual(expectedMoves);
+        });
+      });
+    });
+  })
 });
