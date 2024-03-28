@@ -1269,6 +1269,15 @@ describe('return all posible, legal moves with 2 or more checks', () => {
           '44': [[5, 4], [4, 5], [3, 4], [4, 3]],
         }
       },
+    ]
+    pinTests.forEach(({board, expectedMoves}) => {
+      test('in different positions', () => {
+        expect(calculatePosibleMoves(board, 'white')).toEqual(expectedMoves);
+      });
+    });
+  });
+  describe('black attacking, should result in checkmate', () => {
+    const pinTests = [
       {
         board:
         {
@@ -1368,6 +1377,15 @@ describe('return all posible, legal moves with 2 or more checks', () => {
           '33': [[4, 3], [3, 4], [2, 3], [3, 2]],
         }
       },
+    ]
+    pinTests.forEach(({board, expectedMoves}) => {
+      test('in different positions', () => {
+        expect(calculatePosibleMoves(board, 'black')).toEqual(expectedMoves);
+      });
+    });
+  });
+  describe('white attacking, should result in checkmate', () => {
+    const pinTests = [
       {
         board:
         {
