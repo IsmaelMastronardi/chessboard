@@ -67,6 +67,68 @@ describe('return all posible, legal moves with no checks nor pins', () => {
     }
     expect(calculatePosibleMoves(initialBoard, 'black')).toEqual(expectedMoves);
   });
+  describe('should result in stalemate', () => {
+    describe('black attacking', () => {
+      const pinTests = [
+        {
+          board:
+          {
+            pieces: [
+              ['0', 'r', '0', 'r', '0', '0', '0', '0'],
+              ['0', '0', '0', '0', '0', 'b', '0', '0'],
+              ['0', '0', '0', '0', 'N', '0', '0', '0'],
+              ['0', '0', '0', '0', '0', '0', '0', 'q'],
+              ['0', '0', 'K', '0', '0', '0', '0', '0'],
+              ['p', '0', '0', '0', '0', '0', '0', 'q'],
+              ['P', '0', '0', '0', '0', '0', '0', '0'],
+              ['0', '0', '0', '0', '0', '0', '0', '0'],
+            ],
+            turn: 'w',
+            castling: '',
+            enPassant: '-',
+            halfMove: '0',
+            fullMove: '1'
+          },
+            expectedMoves: 'stalemate'
+        },
+      ];
+      pinTests.forEach(({board, expectedMoves}) => {
+        test('in different positions', () => {
+          expect(calculatePosibleMoves(board, 'white')).toEqual(expectedMoves);
+        });
+      });
+    });
+    describe('white attacking', () => {
+      const pinTests = [
+        {
+          board:
+          {
+            pieces: [
+              ['0', 'R', '0', 'R', '0', '0', '0', '0'],
+              ['0', '0', '0', '0', '0', 'B', '0', '0'],
+              ['0', '0', '0', '0', 'n', '0', '0', '0'],
+              ['0', '0', '0', '0', '0', '0', '0', 'Q'],
+              ['0', '0', 'k', '0', '0', '0', '0', '0'],
+              ['0', '0', '0', '0', '0', '0', '0', 'Q'],
+              ['0', '0', '0', '0', '0', '0', '0', '0'],
+              ['0', '0', '0', '0', '0', '0', '0', '0'],
+            ],
+            turn: 'b',
+            castling: '',
+            enPassant: '-',
+            halfMove: '0',
+            fullMove: '1'
+          },
+            expectedMoves: 'stalemate'
+        },
+      ];
+      pinTests.forEach(({board, expectedMoves}) => {
+        test('in different positions', () => {
+          expect(calculatePosibleMoves(board, 'black')).toEqual(expectedMoves);
+        });
+      });
+    });
+  });
 });
 describe('return all posible, legal moves with a single pin',() => {
   describe('black attacking', () => {
