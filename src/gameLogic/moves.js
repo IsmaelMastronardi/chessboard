@@ -276,18 +276,29 @@ const pawnMoves = (board, row, col, pinDirection = '') => {
   const result = [];
   const piece = board.pieces[row][col];
   const color = getPieceColor(piece);
-  const direction = color === 'white' ? -1 : 1;
-  if(col + 1 < 8 &&  board.pieces[row + direction][col + 1] !== '0' && getPieceColor(board.pieces[row + direction][col + 1]) !== color && (pinDirection === '' || (pinDirection[0] === direction * -1 && pinDirection[1] === -1))){
-    result.push([row + direction, col + 1]);
-  }
-  if(col - 1 > 0 && board.pieces[row + direction][col - 1] !== '0' && getPieceColor(board.pieces[row + direction][col - 1]) !== color && (pinDirection === '' || (pinDirection[0] === direction * -1 && pinDirection[1] === 1))){
-    result.push([row + direction, col - 1]);
-  }
-  if(board.pieces[row + direction][col] === '0' && (pinDirection === '' || (pinDirection[0] === direction * -1 && pinDirection[1] === 0))){
-    result.push([row + direction, col]);
+  const rowDirection = color === 'white' ? -1 : 1;
+  const colDirections = [1, -1];
+  console.log('BOARD', board)
+  colDirections.forEach((colDirection) => {
+    const targetSquare = board.pieces[row + rowDirection][col + colDirection];
+    if(col + colDirection < 0 || col + colDirection >= 8){
+      return;
+    }
+    if(targetSquare === '0' || getPieceColor(targetSquare) === color){
+      if(pinDirection === '' && board.enPassant === `${row + rowDirection}${col + colDirection}`){
+        result.push([row + rowDirection, col + colDirection]);
+      }
+      return;
+    }
+    if((pinDirection === '' || (pinDirection[0] === rowDirection * -1 && pinDirection[1] === colDirection * -1))){
+      result.push([row + rowDirection, col + colDirection]);
+    }
+  });
+  if(board.pieces[row + rowDirection][col] === '0' && (pinDirection === '' || (pinDirection[0] === rowDirection * -1 && pinDirection[1] === 0))){
+    result.push([row + rowDirection, col]);
     if((color === 'white' && row === 6) || (color === 'black' && row === 1)){
-      if(board.pieces[row + 2 * direction][col] === '0'){
-        result.push([row + 2 * direction, col]);
+      if(board.pieces[row + 2 * rowDirection][col] === '0'){
+        result.push([row + 2 * rowDirection, col]);
       }
     }
   }
