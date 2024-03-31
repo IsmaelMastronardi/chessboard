@@ -210,6 +210,27 @@ describe('return all posible, legal moves with 2 or more checks', () => {
         },
           expectedMoves: 'checkmate'
       },
+      {
+        board:
+        {
+          pieces: [
+            ['0', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', 'Q'],
+            ['0', '0', '0', 'k', '0', '0', '0', 'Q'],
+            ['0', '0', '0', '0', '0', '0', '0', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', '0'],
+            ['B', '0', '0', '0', 'N', '0', 'B', '0'],
+            ['0', '0', '0', '0', '0', '0', '0', 'K']
+          ],
+          turn: 'b',
+          castling: '',
+          enPassant: '-',
+          halfMove: '0',
+          fullMove: '1'
+        },
+          expectedMoves: 'checkmate'
+      },
     ]
     pinTests.forEach(({board, expectedMoves}) => {
       test('in different positions', () => {
