@@ -13,12 +13,12 @@ const Board = () => {
       {convertedBoard.pieces.map((row, rowIndex) => {
         return row.map((square, colIndex) => {
           const isDark = (rowIndex + colIndex) % 2 === 1;
-          let highlated = false;
+          let highlighted = false;
           if(selectedPiece && JSON.stringify(posibleMoves[selectedPiece])?.includes(JSON.stringify([rowIndex, colIndex]))){
-            highlated = true;
+            highlighted = true;
           }
           else {
-            highlated = false;
+            highlighted = false;
           }
           return (
             <div key={`${rowIndex}-${colIndex}`} className="col-span-1">
@@ -26,7 +26,7 @@ const Board = () => {
               value={square}
               isDark={isDark}
               index={`${rowIndex}${colIndex}`}
-              posibleSquare={highlated}/>
+              posibleSquare={highlighted}/>
             </div>
           );
         })
