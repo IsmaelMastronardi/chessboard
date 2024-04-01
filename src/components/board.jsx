@@ -6,7 +6,6 @@ import { getPosibleMoves } from "../redux/slices/boardSlice";
 const Board = () => {
   const {convertedBoard, posibleMoves, selectedPiece} = useSelector((store) => store.gameBoard);
   console.log(JSON.stringify(posibleMoves[selectedPiece]))
-  console.log(JSON.stringify(posibleMoves[selectedPiece]).indexOf([5, 0]))
   return(
     <section className="flex flex-col items-center gap-10">
       <p>board</p>
@@ -15,13 +14,12 @@ const Board = () => {
         return row.map((square, colIndex) => {
           const isDark = (rowIndex + colIndex) % 2 === 1;
           let highlated = false;
-          if(selectedPiece && JSON.stringify(posibleMoves[selectedPiece]).indexOf([rowIndex, colIndex]) !== -1){
+          if(selectedPiece && JSON.stringify(posibleMoves[selectedPiece])?.includes(JSON.stringify([rowIndex, colIndex]))){
             highlated = true;
           }
           else {
             highlated = false;
           }
-          console.log(highlated)
           return (
             <div key={`${rowIndex}-${colIndex}`} className="col-span-1">
               <Square
