@@ -5,7 +5,6 @@ import { getPosibleMoves } from "../redux/slices/boardSlice";
 
 const Board = () => {
   const {convertedBoard, posibleMoves, selectedPiece} = useSelector((store) => store.gameBoard);
-  console.log(JSON.stringify(posibleMoves[selectedPiece]))
   return(
     <section className="flex flex-col items-center gap-10">
       <p>board</p>
