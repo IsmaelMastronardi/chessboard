@@ -2,9 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 import { calculatePosibleMoves } from "../../gameLogic/generateMoves";
 import { convertToBoard } from "../../gameLogic/helpers";
 
-export const movePiece = (oldPos, newPost) => (dispatch) => {
+export const movePiece = (pieceIndex, newIndex) => (dispatch) => {
   console.log('moving piece')
-  dispatch(gameBoardSlice.actions.updateBoard(oldPos, newPost));
+  dispatch(gameBoardSlice.actions.updateBoard({pieceIndex, newIndex}));
 };
 
 export const selectPiece = (index) => (dispatch) => {
@@ -22,17 +22,21 @@ const initialState = {
   fenBoard: initalBoardPosition,
   convertedBoard: convertToBoard(initalBoardPosition),
   posibleMoves: calculatePosibleMoves(convertToBoard(initalBoardPosition), 'white'),
-  selectedPiece: '60',
+  selectedPiece: '',
 };
 
 const gameBoardSlice = createSlice({
   name: 'gameBoard',
   initialState,
   reducers: {
-    updateBoard: {
-      reducer: (state, action) => {
-        console.log(action.payload)
-      }
+    updateBoard: (state, action) => {
+      console.log(action.payload)
+      const oldIndex = action.payload.pieceIndex
+      const newIndex = action.payload.newIndex
+      const piece = state.convertedBoard.pieces[oldIndex[0]][oldIndex[1]]
+      state.convertedBoard.pieces[oldIndex[0]][oldIndex[1]] = '0';
+      state.convertedBoard.pieces[newIndex[0]][newIndex[1]] = piece;
+      state.selectedPiece = ''
     },
     updateSelectedPiece: (state, action) => {
       state.selectedPiece = action.payload;
