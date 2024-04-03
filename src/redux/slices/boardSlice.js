@@ -30,7 +30,6 @@ const gameBoardSlice = createSlice({
   initialState,
   reducers: {
     updateBoard: (state, action) => {
-      console.log(action.payload)
       const oldIndex = action.payload.pieceIndex
       const newIndex = action.payload.newIndex
       const piece = state.convertedBoard.pieces[oldIndex[0]][oldIndex[1]]
