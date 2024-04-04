@@ -57,11 +57,36 @@ const convertToBoard = (fen) => {
   return result
 }
 
-convertToBoard(initialPostion);
+const convertToFen = (board) => {
+  const boardString = board.pieces.map((row) => {
+    let count = 0;
+    let temp = [];
+    for(let i = 0; i<row.length; i++){
+      if(isNaN(Number(row[i]))){
+        if(count > 0){
+          temp.push(count);
+          count = 0;
+        }
+        temp.push(row[i]);
+      }
+      else{
+        count += 1;
+        if(i === 7){
+          temp.push(count);
+          count = 0;
+        }
+      }
+    }
+    return temp.join('');
+  }).join('/');
+  return `${boardString} ${board.turn} ${board.castling} ${board.enPassant} ${board.halfMove} ${board.fullMove}`;
+}
+
 
 module.exports = {
   getPieceColor,
   isInCheckline,
   convertToBoard,
   parseBoard,
+  convertToFen,
 };
