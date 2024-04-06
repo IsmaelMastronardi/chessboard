@@ -41,7 +41,6 @@ const gameBoardSlice = createSlice({
       state.selectedPiece = '';
       state.fenBoard = convertToFen(state.convertedBoard);
       const moves = calculatePosibleMoves(state.convertedBoard, state.convertedBoard.turn === 'w' ? 'white' : 'black');
-      console.log(moves);
       state.posibleMoves = moves;
     },
     updateSelectedPiece: (state, action) => {
