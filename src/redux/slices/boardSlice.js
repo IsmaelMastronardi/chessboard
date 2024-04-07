@@ -32,12 +32,6 @@ const gameBoardSlice = createSlice({
   initialState,
   reducers: {
     updateBoard: (state, action) => {
-      const oldIndex = action.payload.pieceIndex;
-      const newIndex = action.payload.newIndex;
-      const piece = state.convertedBoard.pieces[oldIndex[0]][oldIndex[1]];
-      state.convertedBoard.pieces[oldIndex[0]][oldIndex[1]] = '0';
-      state.convertedBoard.pieces[newIndex[0]][newIndex[1]] = piece;
-      state.convertedBoard.turn === 'w' ? state.convertedBoard.turn = 'b' : state.convertedBoard.turn = 'w';
       state.selectedPiece = '';
       state.fenBoard = convertToFen(state.convertedBoard);
       const moves = calculatePosibleMoves(state.convertedBoard, state.convertedBoard.turn === 'w' ? 'white' : 'black');
