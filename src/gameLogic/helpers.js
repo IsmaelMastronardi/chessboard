@@ -82,6 +82,11 @@ const convertToFen = (board) => {
   return `${boardString} ${board.turn} ${board.castling} ${board.enPassant} ${board.halfMove} ${board.fullMove}`;
 }
 
+// const rowToLetters = (row) => {
+//   const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+//   return letters[row];
+// }
+
 const finalizeMove = (board, oldIndex, newIndex) => {
   const movingPiece = board.pieces[oldIndex[0]][oldIndex[1]];
   const previousSquare = board.pieces[oldIndex[0]][oldIndex[1]];
@@ -90,7 +95,14 @@ const finalizeMove = (board, oldIndex, newIndex) => {
   board.pieces[newIndex[0]][newIndex[1]] = movingPiece;
 
   const castlingToRemove = new Set();
-
+  if(movingPiece.toLowerCase() === 'p' || movingPiece.toLowerCase() === 'P'){
+    if(oldIndex[0] + 2 === newIndex[0]){
+      board.enPassant = `${oldIndex[0] + 1}${oldIndex[1]}`;
+    }
+    else if(oldIndex[0] - 2 === newIndex[0]){
+      board.enPassant = `${oldIndex[0] - 1}${oldIndex[1]}`;
+    }
+  }
   if(currentPlayer === 'w'){
     board.turn = 'b';
     board.fullMove = Number(board.fullMove) + 1;
@@ -153,4 +165,5 @@ module.exports = {
   convertToBoard,
   parseBoard,
   convertToFen,
+  finalizeMove,
 };
