@@ -1,9 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { calculatePosibleMoves } from "../../gameLogic/generateMoves";
-import { convertToBoard, convertToFen } from "../../gameLogic/helpers";
+import { convertToBoard, convertToFen, finalizeMove } from "../../gameLogic/helpers";
 
 export const movePiece = (pieceIndex, newIndex) => (dispatch) => {
-  console.log('moving piece')
   dispatch(gameBoardSlice.actions.updateBoard({pieceIndex, newIndex}));
 };
 
@@ -12,8 +11,6 @@ export const selectPiece = (index) => (dispatch) => {
 };
 export const getPosibleMoves = (board, color) => (dispatch) => {
   const allyColor = color === 'w' ? 'white' : 'black';
-  console.log(allyColor);
-  console.log('aaaaaaaaa')
   const result = calculatePosibleMoves(board, allyColor);
   dispatch(gameBoardSlice.actions.updatePosibleMoves(result));
 };
@@ -33,6 +30,7 @@ const gameBoardSlice = createSlice({
   reducers: {
     updateBoard: (state, action) => {
       state.selectedPiece = '';
+      state.convertedBoard = finalizeMove(state.convertedBoard, action.payload.pieceIndex, action.payload.newIndex);
       state.fenBoard = convertToFen(state.convertedBoard);
       const moves = calculatePosibleMoves(state.convertedBoard, state.convertedBoard.turn === 'w' ? 'white' : 'black');
       state.posibleMoves = moves;
