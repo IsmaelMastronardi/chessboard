@@ -87,77 +87,7 @@ const convertToFen = (board) => {
 //   return letters[row];
 // }
 
-const finalizeMove = (board, oldIndex, newIndex) => {
-  const movingPiece = board.pieces[oldIndex[0]][oldIndex[1]];
-  const previousSquare = board.pieces[oldIndex[0]][oldIndex[1]];
-  const currentPlayer = board.turn;
-  board.pieces[oldIndex[0]][oldIndex[1]] = '0';
-  board.pieces[newIndex[0]][newIndex[1]] = movingPiece;
 
-  const castlingToRemove = new Set();
-  if(movingPiece.toLowerCase() === 'p' || movingPiece.toLowerCase() === 'P'){
-    if(oldIndex[0] + 2 === newIndex[0]){
-      board.enPassant = `${oldIndex[0] + 1}${oldIndex[1]}`;
-    }
-    else if(oldIndex[0] - 2 === newIndex[0]){
-      board.enPassant = `${oldIndex[0] - 1}${oldIndex[1]}`;
-    }
-  }
-  if(currentPlayer === 'w'){
-    board.turn = 'b';
-    board.fullMove = Number(board.fullMove) + 1;
-    board.halfMove = Number(board.halfMove) + 1;
-    if(movingPiece === 'K'){
-      castlingToRemove.add('K');
-      castlingToRemove.add('Q');
-    }
-    if(movingPiece === 'R'){
-      if(previousSquare[0] === 7 && previousSquare[1] === 0){
-        castlingToRemove.add('Q');
-      }
-      if(previousSquare[0] === 7 && previousSquare[1] === 7){
-        castlingToRemove.add('K');
-      }
-    }
-    if(newIndex[0] === 0){
-      if(newIndex[1] === 0){
-        castlingToRemove.add('Q');
-      }
-      if(newIndex[1] === 7){
-        castlingToRemove.add('K');
-      }
-    }
-  }
-  if(currentPlayer === 'b'){
-    board.turn = 'w';
-    board.halfMove = Number(board.halfMove) + 1;
-    if(movingPiece === 'k'){
-      castlingToRemove.add('k');
-      castlingToRemove.add('q');
-    }
-    if(movingPiece === 'r'){
-      if(previousSquare[0] === 0 && previousSquare[1] === 0){
-        castlingToRemove.add('q');
-      }
-      if(previousSquare[0] === 0 && previousSquare[1] === 7){
-        castlingToRemove.add('k');
-      }
-    }
-    if(newIndex[0] === 7){
-      if(newIndex[1] === 0){
-        castlingToRemove.add('q');
-      }
-      if(newIndex[1] === 7){
-        castlingToRemove.add('k');
-      }
-    }
-  }
-  castlingToRemove.forEach(right => {
-    board.castling.replace(new RegExp(right, 'g'), '');
-});
-
-  return board;
-}
 
 module.exports = {
   getPieceColor,
@@ -165,5 +95,4 @@ module.exports = {
   convertToBoard,
   parseBoard,
   convertToFen,
-  finalizeMove,
 };
