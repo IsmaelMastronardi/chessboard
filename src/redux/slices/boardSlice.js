@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { calculatePosibleMoves } from "../../gameLogic/generateMoves";
-import { convertToBoard, convertToFen, finalizeMove } from "../../gameLogic/helpers";
+import { convertToBoard, convertToFen } from "../../gameLogic/helpers";
+import { finalizeMove } from "../../gameLogic/completeMove";
 
 export const movePiece = (pieceIndex, newIndex) => (dispatch) => {
   dispatch(gameBoardSlice.actions.updateBoard({pieceIndex, newIndex}));
