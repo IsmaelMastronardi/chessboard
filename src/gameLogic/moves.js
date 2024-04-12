@@ -278,7 +278,6 @@ const pawnMoves = (board, row, col, pinDirection = '') => {
   const color = getPieceColor(piece);
   const rowDirection = color === 'white' ? -1 : 1;
   const colDirections = [1, -1];
-  console.log('BOARD', board)
   colDirections.forEach((colDirection) => {
     const targetSquare = board.pieces[row + rowDirection][col + colDirection];
     if(col + colDirection < 0 || col + colDirection >= 8){
