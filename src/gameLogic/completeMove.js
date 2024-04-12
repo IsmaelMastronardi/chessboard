@@ -1,6 +1,5 @@
 const finalizeMove = (board, oldIndex, newIndex) => {
   const movingPiece = board.pieces[oldIndex[0]][oldIndex[1]];
-  const newSquare = board.pieces[oldIndex[0][oldIndex[1]]]
   const previousSquare = board.pieces[oldIndex[0]][oldIndex[1]];
   const currentPlayer = board.turn;
   const castlingToRemove = new Set();
