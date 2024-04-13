@@ -41,6 +41,7 @@ const calculatePosibleMoves = (board, allyColor) => {
       return 'stalemate';
       };
   }
+  console.log(moves);
   return moves;
 }
 
