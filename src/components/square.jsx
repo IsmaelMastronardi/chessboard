@@ -19,6 +19,7 @@ const Square = ({value, isDark, index, posibleSquare }) => {
 
   const handleDrop = (oldPost, newPos) => {
     if(validateMove(newPos)){
+      // posibleMoves[`${oldPost[0]}${oldPost[1]}`]
       dispatch(movePiece(oldPost, index));
     }
   }
