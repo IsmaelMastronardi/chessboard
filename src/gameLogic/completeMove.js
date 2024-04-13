@@ -47,9 +47,7 @@ const finalizeMove = (board, oldIndex, newIndex) => {
     }
 
     // If you castled move the rook to the side of the king
-    console.log(Math.abs(oldIndex[1] - newIndex[1]) === 2)
     if(movingPiece === 'K' && (Math.abs(oldIndex[1] - newIndex[1]) === 2)){
-      console.log('castrling')
       if(newIndex[1] === 6){
         board.pieces[7][7] = '0';
         board.pieces[7][5] = 'R'
