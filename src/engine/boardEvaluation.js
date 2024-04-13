@@ -16,6 +16,7 @@ const calculatePositionValue = (board, allyColor) => {
   return totalValue
 }
 
-const initialPostion = "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 1";
+const initialPostion = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+const secondPosition = "rnbqkbnr/pppppppp/8/8/3P4/8/PPPP1PPP/RNBQKBNR b KQkq - 1 1";
 const board = convertToBoard(initialPostion);
 console.log(calculatePositionValue(board.pieces,board.turn === 'w'? 'white' : 'black'));
