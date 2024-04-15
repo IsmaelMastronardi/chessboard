@@ -61,7 +61,9 @@ const convertToBoard = (fen) => {
   result.turn = splitedFen[1];
   result.castling = splitedFen[2];
   result.enPassant = splitedFen[3];
-  result.enPassant = `${letterToNumbers(splitedFen[3][0])}${splitedFen[3][1]}`;
+  if(splitedFen[3] !== '-'){
+    result.enPassant = `${letterToNumbers(splitedFen[3][0])}${splitedFen[3][1]}`;
+  }
   result.halfMove = splitedFen[4];
   result.fullMove = splitedFen[5];
   return result
