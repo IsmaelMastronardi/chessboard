@@ -3,8 +3,8 @@ import { calculatePosibleMoves } from "../../gameLogic/generateMoves";
 import { convertToBoard, convertToFen } from "../../gameLogic/helpers";
 import { finalizeMove } from "../../gameLogic/completeMove";
 
-export const movePiece = (pieceIndex, newIndex, isPcMove) => (dispatch) => {
-  dispatch(gameBoardSlice.actions.updateBoard({pieceIndex, newIndex, isPcMove}));
+export const movePiece = (pieceIndex, newIndex, isPcMove, isPromoting) => (dispatch) => {
+  dispatch(gameBoardSlice.actions.updateBoard({pieceIndex, newIndex, isPcMove, isPromoting}));
 };
 
 export const selectPiece = (index) => (dispatch) => {
@@ -16,7 +16,8 @@ export const getPosibleMoves = (board, color) => (dispatch) => {
   dispatch(gameBoardSlice.actions.updatePosibleMoves(result));
 };
 
-const initalBoardPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+// const initalBoardPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+const initalBoardPosition = "rnbqk2r/pppp2Pp/3b1n2/4p3/5P2/8/PPPP2PP/RNBQKBNR w KQkq c5 10 6";
 
 const initialState = {
   fenBoard: initalBoardPosition,
@@ -32,7 +33,8 @@ const gameBoardSlice = createSlice({
   reducers: {
     updateBoard: (state, action) => {
       state.selectedPiece = '';
-      state.convertedBoard = finalizeMove(state.convertedBoard, action.payload.pieceIndex, action.payload.newIndex);
+      state.convertedBoard = finalizeMove(state.convertedBoard, action.payload.pieceIndex, action.payload.newIndex, action.payload.isPromoting);
+      console.log('slice')
       state.fenBoard = convertToFen(state.convertedBoard);
       const moves = calculatePosibleMoves(state.convertedBoard, state.convertedBoard.turn === 'w' ? 'white' : 'black');
       state.posibleMoves = moves;

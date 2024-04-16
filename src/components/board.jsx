@@ -7,7 +7,6 @@ import { minimax } from "../engine/boardEvaluation";
 const Board = () => {
   const {fenBoard, convertedBoard, posibleMoves, selectedPiece, waitingForPcMove} = useSelector((store) => store.gameBoard);
   const dispatch = useDispatch();
-  console.log(fenBoard);
   useEffect(() => {
     if (waitingForPcMove) {
       setTimeout(() => {
