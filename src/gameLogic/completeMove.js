@@ -5,7 +5,7 @@ const finalizeMove = (board, oldIndex, newIndex) => {
   const castlingToRemove = new Set();
 
   board.pieces[oldIndex[0]][oldIndex[1]] = '0';
-  board.pieces[newIndex.move[0]][newIndex.move[1]] = movingPiece;
+  board.pieces[newIndex[0]][newIndex[1]] = movingPiece;
 
   if(currentPlayer === 'w'){
     board.turn = 'b';
@@ -28,11 +28,11 @@ const finalizeMove = (board, oldIndex, newIndex) => {
 
 
     // Handle opponent lossing casteling rights 
-    if(newIndex.move[0] === 7){
-      if(newIndex.move[1] === 0){
+    if(newIndex[0] === 7){
+      if(newIndex[1] === 0){
         castlingToRemove.add('q');
       }
-      if(newIndex.move[1] === 7){
+      if(newIndex[1] === 7){
         castlingToRemove.add('k');
       }
     }
@@ -40,18 +40,18 @@ const finalizeMove = (board, oldIndex, newIndex) => {
     // Add En Passant if you moved the pawn 2 squares
     if(movingPiece === 'P'){
 
-      if(oldIndex[0] - 2 === newIndex.move[0]){
+      if(oldIndex[0] - 2 === newIndex[0]){
         board.enPassant = `${oldIndex[0] - 1}${oldIndex[1]}`;
       }
     }
 
     // If you castled move the rook to the side of the king
-    if(movingPiece === 'K' && (Math.abs(oldIndex[1] - newIndex.move[1]) === 2)){
-      if(newIndex.move[1] === 6){
+    if(movingPiece === 'K' && (Math.abs(oldIndex[1] - newIndex[1]) === 2)){
+      if(newIndex[1] === 6){
         board.pieces[7][7] = '0';
         board.pieces[7][5] = 'R'
       }
-      if(newIndex.move[1] === 2){
+      if(newIndex[1] === 2){
         board.pieces[7][0] = '0';
         board.pieces[7][3] = 'R'
       }
@@ -76,31 +76,31 @@ const finalizeMove = (board, oldIndex, newIndex) => {
     }
 
     // Handle opponent lossing casteling rights 
-    if(newIndex.move[0] === 0){
-      if(newIndex.move[1] === 0){
+    if(newIndex[0] === 0){
+      if(newIndex[1] === 0){
         castlingToRemove.add('Q');
       }
-      if(newIndex.move[1] === 7){
+      if(newIndex[1] === 7){
         castlingToRemove.add('K');
       }
     }
 
     // Add En Passant if you moved the pawn 2 squares
     if(movingPiece === 'p'){
-      if(oldIndex[0] + 2 === newIndex.move[0]){
+      if(oldIndex[0] + 2 === newIndex[0]){
         board.enPassant = `${oldIndex[0] + 1}${oldIndex[1]}`;
       }
     }
 
     // If you castled move the rook to the side of the king
-    if(movingPiece === 'k' && (Math.abs(oldIndex[1] - newIndex.move[1]) === 2)){
-      if(newIndex.move[1] === 6){
+    if(movingPiece === 'k' && (Math.abs(oldIndex[1] - newIndex[1]) === 2)){
+      if(newIndex[1] === 6){
         board.pieces[0][7] = '0';
-        board.pieces[0][5] = 'R'
+        board.pieces[0][5] = 'r'
       }
-      if(newIndex.move[1] === 2){
+      if(newIndex[1] === 2){
         board.pieces[0][0] = '0';
-        board.pieces[0][3] = 'R'
+        board.pieces[0][3] = 'r'
       }
     }
   }
@@ -110,7 +110,7 @@ const finalizeMove = (board, oldIndex, newIndex) => {
 });
 
   // If you take En Passant, remove the taken pawn
-  if((movingPiece === 'P' || movingPiece === 'p') && newIndex.move[0] === Number(board.enPassant[0]) && newIndex.move[1] === Number(board.enPassant[1])){
+  if((movingPiece === 'P' || movingPiece === 'p') && newIndex[0] === Number(board.enPassant[0]) && newIndex[1] === Number(board.enPassant[1])){
     if(board.enPassant[0] === '5'){
       board.pieces[4][board.enPassant[1]] = '0';
     }

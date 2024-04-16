@@ -46,7 +46,7 @@ const minimax = (board, depth, maximizingPlayer) => {
     let bestMove = null;
     for (const key in moves) {
       for (const move of moves[key]) {
-        const newBoard = JSON.parse(JSON.stringify(board));;
+        const newBoard = JSON.parse(JSON.stringify(board));
         finalizeMove(newBoard, key, move.move);
         const { value } = minimax(newBoard, depth - 1, !maximizingPlayer);
         if ((maximizingPlayer && value > bestValue) || (!maximizingPlayer && value < bestValue)) {
