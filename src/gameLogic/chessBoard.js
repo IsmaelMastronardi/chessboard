@@ -70,8 +70,6 @@ const displayBoard = (board) => {
   return result.join('');
 }
 
-let board = convertToBoard(initialPostion);
-console.log(board);
 
 
 

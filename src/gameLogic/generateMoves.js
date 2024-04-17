@@ -21,7 +21,7 @@ const calculatePosibleMoves = (board, allyColor) => {
   let pinnedPieces = attacksAndPins.pinnedPieces;
   let checkingPiecePosition = attacksAndPins.checkingPiecePosition;
   let moves = [];
-  let kingPosition = searchKing(board.pieces, allyColor)
+  let kingPosition = searchKing(board.pieces, allyColor);
   if(attackBaord[kingPosition[0]][kingPosition[1]] === '2'){
     let temp = {[`${kingPosition[0]}${kingPosition[1]}`]: kingMoves(board, kingPosition[0], kingPosition[1], attackBaord)};
     moves  = temp;

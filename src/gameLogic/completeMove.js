@@ -1,9 +1,8 @@
-const finalizeMove = (board, oldIndex, newIndex) => {
+const finalizeMove = (board, oldIndex, newIndex, isPromoting = false) => {
   const movingPiece = board.pieces[oldIndex[0]][oldIndex[1]];
   const previousSquare = board.pieces[oldIndex[0]][oldIndex[1]];
   const currentPlayer = board.turn;
   const castlingToRemove = new Set();
-
 
   board.pieces[oldIndex[0]][oldIndex[1]] = '0';
   board.pieces[newIndex[0]][newIndex[1]] = movingPiece;
@@ -38,18 +37,20 @@ const finalizeMove = (board, oldIndex, newIndex) => {
       }
     }
 
-    // Add En Passant if you moved the pawn 2 squares
+    
     if(movingPiece === 'P'){
-
+      //promote to queen
+      if(isPromoting){
+        board.pieces[newIndex[0]][newIndex[1]] = 'Q';
+      }
+      // Add En Passant if you moved the pawn 2 squares
       if(oldIndex[0] - 2 === newIndex[0]){
         board.enPassant = `${oldIndex[0] - 1}${oldIndex[1]}`;
       }
     }
 
     // If you castled move the rook to the side of the king
-    console.log(Math.abs(oldIndex[1] - newIndex[1]) === 2)
     if(movingPiece === 'K' && (Math.abs(oldIndex[1] - newIndex[1]) === 2)){
-      console.log('castrling')
       if(newIndex[1] === 6){
         board.pieces[7][7] = '0';
         board.pieces[7][5] = 'R'
@@ -88,8 +89,13 @@ const finalizeMove = (board, oldIndex, newIndex) => {
       }
     }
 
-    // Add En Passant if you moved the pawn 2 squares
+
     if(movingPiece === 'p'){
+      //promote to queen
+      if(isPromoting){
+        board.pieces[newIndex[0]][newIndex[1]] = 'q';
+      }
+      // Add En Passant if you moved the pawn 2 squares
       if(oldIndex[0] + 2 === newIndex[0]){
         board.enPassant = `${oldIndex[0] + 1}${oldIndex[1]}`;
       }
@@ -99,11 +105,11 @@ const finalizeMove = (board, oldIndex, newIndex) => {
     if(movingPiece === 'k' && (Math.abs(oldIndex[1] - newIndex[1]) === 2)){
       if(newIndex[1] === 6){
         board.pieces[0][7] = '0';
-        board.pieces[0][5] = 'R'
+        board.pieces[0][5] = 'r'
       }
       if(newIndex[1] === 2){
         board.pieces[0][0] = '0';
-        board.pieces[0][3] = 'R'
+        board.pieces[0][3] = 'r'
       }
     }
   }
@@ -123,7 +129,7 @@ const finalizeMove = (board, oldIndex, newIndex) => {
     
     board.enPassant = '-';
   }
-
+  console.log('finalizing move')
   return board;
 }
 

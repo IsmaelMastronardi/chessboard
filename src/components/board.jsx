@@ -1,11 +1,20 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Square from "./square";
-import { convertToBoard } from "../gameLogic/helpers";
-import { getPosibleMoves } from "../redux/slices/boardSlice";
+import { useEffect } from "react";
+import { movePiece } from "../redux/slices/boardSlice";
+import { minimax } from "../engine/boardEvaluation";
 
 const Board = () => {
-  const {convertedBoard, posibleMoves, selectedPiece} = useSelector((store) => store.gameBoard);
-  console.log(convertedBoard)
+  const {fenBoard, convertedBoard, posibleMoves, selectedPiece, waitingForPcMove} = useSelector((store) => store.gameBoard);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (waitingForPcMove) {
+      setTimeout(() => {
+        const result = minimax(convertedBoard, 3, false);
+        dispatch(movePiece(result.piece, result.move, true));
+      }, 100);
+    }
+  });
   return(
     <section className="flex flex-col items-center gap-10">
       <p>board</p>

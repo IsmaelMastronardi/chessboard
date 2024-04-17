@@ -123,29 +123,34 @@ const kingMoves = (board, row, col, attackBoard) => {
     const newRow = row + direction[0];
     const newCol = col + direction[1];
     if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
-      if ((board.pieces[newRow][newCol] === '0' || color !== getPieceColor(board.pieces[newRow][newCol])) && attackBoard[newRow][newCol] === '0') {
-        moves.push([newRow, newCol]);
+      if(attackBoard[newRow][newCol] === '0'){
+        if ((board.pieces[newRow][newCol] === '0')) {
+          moves.push({move: [newRow, newCol]});
+        }
+        else if(color !== getPieceColor(board.pieces[newRow][newCol])){
+          moves.push({move: [newRow, newCol], capture: true, capturedPiece: board.pieces[newRow][newCol]});
+        }
       }
     }
   });
   if(color === 'white' && board.castling.includes('K')){
     if(board.pieces[7][5] === '0' && board.pieces[7][6] === '0' && attackBoard[7][5] !== '1' && attackBoard[7][6] !== '1'){
-      moves.push([7, 6]);
+      moves.push({move: [7, 6], castling: true, rookPosition: [7, 5]});
     } 
   }
   if(color === 'white' && board.castling.includes('Q')){
     if(board.pieces[7][1] === '0' && board.pieces[7][2] === '0' && board.pieces[7][3] === '0' && attackBoard[7][1] !== '1' && attackBoard[7][2] !== '1' && attackBoard[7][3] !== '1'){
-      moves.push([7, 2]);
+      moves.push({move: [7, 2], castling: true, rookPosition: [7, 3]});
     } 
   }
   if(color === 'black' && board.castling.includes('k')){
     if(board.pieces[0][5] === '0' && board.pieces[0][6] === '0' && attackBoard[0][5] !== '1' && attackBoard[0][6] !== '1'){
-      moves.push([0, 6]);
+      moves.push({move: [0, 6], castling: true, rookPosition: [0, 5]});
     } 
   }
   if(color === 'black' && board.castling.includes('q')){
     if(board.pieces[0][1] === '0' && board.pieces[0][2] === '0' && board.pieces[0][3] === '0' && attackBoard[0][1] !== '1' && attackBoard[0][2] !== '1' && attackBoard[0][3] !== '1'){
-      moves.push([0, 2]);
+      moves.push({move: [0, 2], castling: true, rookPosition: [0, 3]});
     } 
   }
   return moves;
@@ -160,12 +165,12 @@ const moveDirection = (board, row, col, rowDirection, colDirection) => {
 
   while(newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8){
     if(board.pieces[newRow][newCol] === '0'){
-      result.push([newRow, newCol]);
+      result.push({move: [newRow, newCol]});
       newRow += rowDirection;
       newCol += colDirection;
     }
     else if(color !== getPieceColor(board.pieces[newRow][newCol])){
-      result.push([newRow, newCol]);
+      result.push({move: [newRow, newCol], capture: true, capturedPiece: board.pieces[newRow][newCol]});
       break;
     }
     else{
@@ -186,13 +191,13 @@ const moveDirectionInCheck = (board, row, col, rowDirection, colDirection, check
     }
     if(board.pieces[newRow][newCol] !== '0' && color !== getPieceColor(board.pieces[newRow][newCol])){
       if(checkingPieceIndex[0] === newRow && checkingPieceIndex[1] === newCol){
-        result.push([newRow, newCol]);
+        result.push({move: [newRow, newCol], capture: true, capturedPiece: board.pieces[newRow][newCol]});
       }
       break;
     }
     ((newRow, newCol) => {
       if(board.pieces[newRow][newCol] === '0' && checkLine.some(subArr => isInCheckline(subArr, newRow, newCol))){
-        result.push([newRow, newCol]);
+        result.push({move: [newRow, newCol]});
         newRow += rowDirection;
         newCol += colDirection;
       }
@@ -285,19 +290,19 @@ const pawnMoves = (board, row, col, pinDirection = '') => {
     }
     if(targetSquare === '0' || getPieceColor(targetSquare) === color){
       if(pinDirection === '' && board.enPassant === `${row + rowDirection}${col + colDirection}`){
-        result.push([row + rowDirection, col + colDirection]);
+        result.push({move: [row + rowDirection, col + colDirection], enPassant: true, enPassantIndex: [row + rowDirection, col + colDirection]});
       }
       return;
     }
     if((pinDirection === '' || (pinDirection[0] === rowDirection * -1 && pinDirection[1] === colDirection * -1))){
-      result.push([row + rowDirection, col + colDirection]);
+      result.push({move: [row + rowDirection, col + colDirection], capture: true, capturedPiece: targetSquare});
     }
   });
   if(board.pieces[row + rowDirection][col] === '0' && (pinDirection === '' || (pinDirection[0] === rowDirection * -1 && pinDirection[1] === 0))){
-    result.push([row + rowDirection, col]);
+    result.push({move: [row + rowDirection, col]});
     if((color === 'white' && row === 6) || (color === 'black' && row === 1)){
       if(board.pieces[row + 2 * rowDirection][col] === '0'){
-        result.push([row + 2 * rowDirection, col]);
+        result.push({move: [row + 2 * rowDirection, col]});
       }
     }
   }
@@ -319,7 +324,7 @@ const pawnMovesInCheck = (board, row, col, checkingPieceIndex, checkLine) => {
       &&
       (checkingPieceIndex[0] === row + direction && checkingPieceIndex[1] === col + 1)
       ){
-      result.push([row + direction, col + 1]);
+      result.push({move: [row + direction, col + 1], capture: true, capturedPiece: board.pieces[row + direction][col + 1]});
     }
     if(
       col - 1 > 0
@@ -334,17 +339,17 @@ const pawnMovesInCheck = (board, row, col, checkingPieceIndex, checkLine) => {
         checkingPieceIndex[1] === col - 1
       )
       ){
-      result.push([row + direction, col - 1]);
+      result.push({move: [row + direction, col - 1], capture: true, capturedPiece: board.pieces[row + direction][col - 1]});
     }
   }
   
   if(board.pieces[row + direction][col] === '0'){
     if(checkLine.some(subArr => isInCheckline(subArr, row + direction, col))){
-    result.push([row + direction, col]);
+    result.push({move: [row + direction, col], enPassant: true, enPassantIndex: [row + direction, col]});
     }
     if(((color === 'white' && row === 6) || (color === 'black' && row === 1)) && checkLine.some(subArr => isInCheckline(subArr, row + 2 * direction, col))){
       if(board.pieces[row + 2 * direction][col] === '0'){
-        result.push([row + 2 * direction, col]);
+        result.push({move: [row + 2 * direction, col], enPassant: true, enPassantIndex: [row + 2 * direction, col]});
       }
     }
   }
@@ -369,8 +374,11 @@ const knightMoves = (board, row, col) => {
     const newRow = row + directions[i][0];
     const newCol = col + directions[i][1];
     if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
-      if (board.pieces[newRow][newCol] === '0' || getPieceColor(board.pieces[newRow][newCol]) !== color) {
-        result.push([newRow, newCol]);
+      if (board.pieces[newRow][newCol] === '0') {
+        result.push({move: [newRow, newCol]});
+      }
+      if(getPieceColor(board.pieces[newRow][newCol]) !== color){
+        result.push({move: [newRow, newCol], capture: true, capturedPiece: board.pieces[newRow][newCol]});
       }
     }
   }
@@ -396,16 +404,13 @@ const knightMovesInCheck = (board, row, col, checkingPieceIndex, checkLine) => {
     const newCol = col + directions[i][1];
     if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
       let currentSquare = board.pieces[newRow][newCol];
-      if (
-        (currentSquare === '0' || getPieceColor(currentSquare) !== color)
-        &&
-        (
-          checkLine.some(subArr => isInCheckline(subArr, newRow, newCol))
-        ||
-          (checkingPieceIndex[0] === newRow && checkingPieceIndex[1] === newCol)
-        )) 
-        {
-        result.push([newRow, newCol]);
+      if ((checkLine.some(subArr => isInCheckline(subArr, newRow, newCol))||(checkingPieceIndex[0] === newRow && checkingPieceIndex[1] === newCol))) {
+        if(currentSquare === '0'){
+          result.push({move: [newRow, newCol]});
+        }
+        if(getPieceColor(currentSquare) !== color){
+          result.push({move: [newRow, newCol], capture: true, capturedPiece: currentSquare});
+        }
       }
     }
   }
