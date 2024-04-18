@@ -44,10 +44,10 @@ const Square = ({value, isDark, index, posibleSquare }) => {
 
   const piece = selectPieceIcon(value);
   return (
-    <div className={`border border-gray-500 p-4 text-center relative ${bgColor}`} ref={drop} onClick={handleClick}>
+    <div className={`border flex justify-center items-center border-gray-400 text-center relative w-full h-full p-0 ${bgColor}`} ref={drop} onClick={handleClick}>
       {posibleSquare &&
         <div className="absolute w-6 h-6 bg-gray-300 rounded-full top-7 right-7 opacity-80"></div>}
-      <div className="w-12 h-12" onDragStart={handleClick} ref={drag}>{piece}</div>
+      <div className="w-6 h-6" onDragStart={handleClick} ref={drag}>{piece}</div>
       {/* <div className="absolute top-0 left-0 w-40 h-40 bg-gray-400"></div> */}
     </div>
   )

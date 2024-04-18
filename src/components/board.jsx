@@ -16,8 +16,7 @@ const Board = () => {
     }
   });
   return(
-    <section className="flex flex-col items-center gap-10">
-      <p>board</p>
+    <section className="flex flex-col items-center gap-10 pt-12">
       <div className="grid grid-cols-8">
       {convertedBoard.pieces.map((row, rowIndex) => {
         return row.map((square, colIndex) => {
@@ -30,7 +29,7 @@ const Board = () => {
             highlighted = false;
           }
           return (
-            <div key={`${rowIndex}-${colIndex}`} className="col-span-1">
+            <div key={`${rowIndex}-${colIndex}`} className="w-12 h-12 col-span-1">
               <Square
               value={square}
               isDark={isDark}

@@ -16,8 +16,8 @@ export const getPosibleMoves = (board, color) => (dispatch) => {
   dispatch(gameBoardSlice.actions.updatePosibleMoves(result));
 };
 
-// const initalBoardPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-const initalBoardPosition = "rnbqk2r/pppp2Pp/3b1n2/4p3/5P2/8/PPPP2PP/RNBQKBNR w KQkq c5 10 6";
+const initalBoardPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+
 
 const initialState = {
   fenBoard: initalBoardPosition,
