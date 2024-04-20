@@ -16,11 +16,11 @@ const Square = ({value, isDark, index, posibleSquare }) => {
   const dispatch = useDispatch();
 
   const executeMove = (oldPos, newPos, piece) => {
-    dispatch(movePiece(oldPos, newPos, false, pawnIsPromoting(piece, newPos)));
+    dispatch(movePiece(oldPos, newPos, false));
   };
 
-  const saveMove = (move) => {
-    setSelectedMove(move);
+  const saveMove = (from, to) => {
+    setSelectedMove({from, to});
   }
 
   const togglePromotionMenu = () => {
@@ -30,7 +30,10 @@ const Square = ({value, isDark, index, posibleSquare }) => {
   const promotionSelect = (promotionPiece) => {
     setSelectedMove(undefined);
     togglePromotionMenu();
-    executeMove(selectedMove.move[0], selectedMove.move[1], false, selectedMove.promotion, promotionPiece);
+    console.log(posibleMoves[`${selectedMove.from[0]}${selectedMove.from[1]}`]);
+    const move = posibleMoves[`${selectedMove.from[0]}${selectedMove.from[1]}`].find(obj => obj.move && obj.move[0] === selectedMove.to[0] && obj.move[1] === selectedMove.to[1] && obj.promotionPiece === promotionPiece);
+    console.log(move);
+    executeMove(selectedMove.from, move, false);
   }
 
   const handleClick = () => {
@@ -41,25 +44,18 @@ const Square = ({value, isDark, index, posibleSquare }) => {
     return arr.find(obj => obj.move && obj.move[0] === move[0] && obj.move[1] === move[1])
   };
 
-  const pawnIsPromoting = (piece, index) => {
-    if(piece.toLowerCase() === 'p' && (index[0] === 0 || index[0] === 7)){
-      return true;
-    }
-    return false;
-  };
-
   const handleDrop = (oldPos, newPos, piece) => {
     const selectedMove = findMove(posibleMoves[`${oldPos[0]}${oldPos[1]}`], newPos);
     if(selectedMove){
       if(piece.toLowerCase() === 'p'){
         if(selectedMove.promotion){
-          saveMove(selectedMove);
+          saveMove(oldPos, newPos);
           togglePromotionMenu();
-          // dispatch(movePiece(oldPos, newPos, false, true));
         }
       }
       else {
-        executeMove(oldPos, index, false, pawnIsPromoting(piece, newPos))
+        //        oldPos, newIndex, isPcMove, isPromoting
+        executeMove(oldPos, selectedMove, false);
       }
     }
   };
@@ -108,12 +104,11 @@ const Square = ({value, isDark, index, posibleSquare }) => {
       <div className="absolute z-10 m-auto bg-white">
         <ul>
           <li>
-            <button
-              onClick={promotionSelect}
-            >
-              QUEEN
-            </button>
+            <button onClick={() => promotionSelect('Q')}>QUEEN</button>
           </li>
+          <li>
+            <button onClick={() => promotionSelect('N')}>KNIGTH</button>
+          </li>       
           <li>
             <button
             onClick={() => {
