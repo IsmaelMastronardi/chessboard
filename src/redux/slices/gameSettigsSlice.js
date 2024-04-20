@@ -1,8 +1,9 @@
-const { createSlice } = require("@reduxjs/toolkit");
+import { createSlice } from "@reduxjs/toolkit";
+
 
 const initialState = {
   boardColor: 'light',
-  pieceStyle: 'initial',
+  squareBackgroundColor: '#228B22',
   pcDepth: 3,
 };
 
@@ -13,8 +14,8 @@ const gameSettingsSlice = createSlice({
     updateBoardColor: (state, action) => {
       state.boardColor = action.payload;
     },
-    updatePieceStyle: (state, action) => {
-      state.pieceStyle = action.payload;
+    updatesquareBackgroundColor: (state, action) => {
+      state.squareBackgroundColor = action.payload;
     },
     updatePcDepth: (state, action) => {
       state.pcDepth = action.payload;
@@ -22,5 +23,5 @@ const gameSettingsSlice = createSlice({
   },
 });
 
-export const { updateBoardColor, updatePieceStyle, updatePcDepth } = gameSettingsSlice.actions;
+export const { updateBoardColor, updatesquareBackgroundColor, updatePcDepth } = gameSettingsSlice.actions;
 export default gameSettingsSlice.reducer;

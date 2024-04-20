@@ -1,15 +1,25 @@
 const Navigation = () => {
 return (
-  <nav className="bg-white">
-    <ul>
+  <nav className="bg-white ">
+    <ul className="flex justify-center gap-20">
       <li>
         <a>
-          Increment
+          Home
         </a>
       </li>
       <li>
         <a>
-          Decrement
+          Editor
+        </a>
+      </li>
+      <li>
+        <a>
+          Learn
+        </a>
+      </li>
+      <li>
+        <a>
+          About
         </a>
       </li>
     </ul>

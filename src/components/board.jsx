@@ -3,20 +3,22 @@ import Square from "./square";
 import { useEffect } from "react";
 import { movePiece } from "../redux/slices/boardSlice";
 import { minimax } from "../engine/boardEvaluation";
+import SettingsMenu from "./settingsMenu";
 
 const Board = () => {
-  const {fenBoard, convertedBoard, posibleMoves, selectedPiece, waitingForPcMove} = useSelector((store) => store.gameBoard);
+  const {convertedBoard, posibleMoves, selectedPiece, waitingForPcMove, playerColor} = useSelector((store) => store.gameBoard);
   const dispatch = useDispatch();
-  useEffect(() => {
-    if (waitingForPcMove) {
-      setTimeout(() => {
-        const result = minimax(convertedBoard, 3, false);
-        dispatch(movePiece(result.piece, result.move, true));
-      }, 100);
-    }
-  });
+  // console.log(posibleMoves);
+  // useEffect(() => {
+  //   if (waitingForPcMove) {
+  //     setTimeout(() => {
+  //       const result = minimax(convertedBoard, 3, false);
+  //       dispatch(movePiece(result.piece, result.move, true));
+  //     }, 100);
+  //   }
+  // });
   return(
-    <section className="flex flex-col items-center gap-10 pt-12">
+    <section className="">
       <div className="grid grid-cols-8">
       {convertedBoard.pieces.map((row, rowIndex) => {
         return row.map((square, colIndex) => {
@@ -39,6 +41,9 @@ const Board = () => {
           );
         })
       })}
+    </div>
+    <div className="flex items-start w-full">
+      <SettingsMenu />
     </div>
     </section>
   )

@@ -129,7 +129,6 @@ const finalizeMove = (board, oldIndex, newIndex, isPromoting = false) => {
     
     board.enPassant = '-';
   }
-  console.log('finalizing move')
   return board;
 }
 

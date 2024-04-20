@@ -15,8 +15,8 @@ export const getPosibleMoves = (board, color) => (dispatch) => {
   const result = calculatePosibleMoves(board, allyColor);
   dispatch(gameBoardSlice.actions.updatePosibleMoves(result));
 };
-
-const initalBoardPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+const initalBoardPosition = "k7/7P/8/8/8/8/8/K7 w KQkq - 0 1";
+// const initalBoardPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
 
 const initialState = {
@@ -25,6 +25,8 @@ const initialState = {
   posibleMoves: calculatePosibleMoves(convertToBoard(initalBoardPosition), 'white'),
   selectedPiece: '',
   waitingForPcMove: false,
+  playerColor: 'black',
+  gameStarted: false,
 };
 
 const gameBoardSlice = createSlice({
@@ -34,7 +36,6 @@ const gameBoardSlice = createSlice({
     updateBoard: (state, action) => {
       state.selectedPiece = '';
       state.convertedBoard = finalizeMove(state.convertedBoard, action.payload.pieceIndex, action.payload.newIndex, action.payload.isPromoting);
-      console.log('slice')
       state.fenBoard = convertToFen(state.convertedBoard);
       const moves = calculatePosibleMoves(state.convertedBoard, state.convertedBoard.turn === 'w' ? 'white' : 'black');
       state.posibleMoves = moves;
