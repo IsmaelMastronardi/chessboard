@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import Board from "../components/board";
 import { useState } from "react";
 import { blackKingIcon,whiteKingIcon } from "../gameLogic/pieces";
+import PastMoves from "../components/pastMoves";
 
 const Home = () => {
   const [startGameMenu, setStartGameMenu] = useState(false);
@@ -17,7 +18,7 @@ const Home = () => {
         >
           Start
         </button>
-        <button className="bg-gray-500 border">Abandon</button>
+        <button className="bg-gray-500 border">Surrender</button>
       </div>
       <Board />
       {startGameMenu && (
@@ -43,6 +44,7 @@ const Home = () => {
           </div>
         </div>
       )}
+      <PastMoves />
     </div>
   )
 }

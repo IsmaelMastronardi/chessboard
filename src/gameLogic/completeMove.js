@@ -1,4 +1,4 @@
-const finalizeMove = (board, oldIndex, move, isPromoting = false) => {
+const finalizeMove = (board, oldIndex, move) => {
   const movingPiece = board.pieces[oldIndex[0]][oldIndex[1]];
   const previousSquare = board.pieces[oldIndex[0]][oldIndex[1]];
   const currentPlayer = board.turn;

@@ -1,13 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
 import Square from "./square";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { movePiece } from "../redux/slices/boardSlice";
 import { minimax } from "../engine/boardEvaluation";
 import SettingsMenu from "./settingsMenu";
+import { current } from "@reduxjs/toolkit";
 
 const Board = () => {
-  const {convertedBoard, posibleMoves, selectedPiece, waitingForPcMove, playerColor} = useSelector((store) => store.gameBoard);
+  const {convertedBoard, posibleMoves, selectedPiece, waitingForPcMove, pastBoardStates, currentBoard} = useSelector((store) => store.gameBoard);
   const dispatch = useDispatch();
+  const [boardStateIndex, setBoardStateIndex] = useState(currentBoard);
+  useEffect(() => {
+    setBoardStateIndex(currentBoard);
+  }, [currentBoard]);
   // console.log(posibleMoves);
   // useEffect(() => {
   //   if (waitingForPcMove) {
@@ -17,10 +22,16 @@ const Board = () => {
   //     }, 100);
   //   }
   // });
+  const changeBoardState = (direction) => {
+    if(boardStateIndex + direction >= 0 && boardStateIndex + direction < pastBoardStates.length){
+      setBoardStateIndex(boardStateIndex + direction);
+    }
+  };
+
   return(
     <section className="">
       <div className="grid grid-cols-8">
-      {convertedBoard.pieces.map((row, rowIndex) => {
+      {pastBoardStates[boardStateIndex].pieces.map((row, rowIndex) => {
         return row.map((square, colIndex) => {
           const isDark = (rowIndex + colIndex) % 2 === 1;
           let highlighted = false;
@@ -36,7 +47,9 @@ const Board = () => {
               value={square}
               isDark={isDark}
               index={[rowIndex, colIndex]}
-              posibleSquare={highlighted}/>
+              posibleSquare={highlighted}
+              inCurrentBoard={boardStateIndex === currentBoard}
+              />
             </div>
           );
         })
@@ -44,6 +57,10 @@ const Board = () => {
     </div>
     <div className="flex items-start w-full">
       <SettingsMenu />
+    </div>
+    <div className="flex justify-between w-full">
+      <button onClick={() => changeBoardState(-1)}>&lt;---</button>
+      <button onClick={() => changeBoardState(1)}>---&gt;</button>
     </div>
     </section>
   )

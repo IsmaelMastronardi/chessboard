@@ -32,8 +32,7 @@ const callMoves = (board, allyColor, pinnedPieces ,attackBoard) => {
 
 const handleCheck = (board, attackBoard, kingPosition, allyColor, pinnedPieces, checkingPiecePosition) => {
   let moves = {};
-  let checkLine = [];
-  checkLine = calculateCheckLine(checkingPiecePosition, kingPosition)
+  let checkLine = calculateCheckLine(checkingPiecePosition, kingPosition)
   board.pieces.forEach((row, rowIndex) => {
     row.forEach((piece, colIndex) => {
       if (getPieceColor(piece) === allyColor && piece !== '0') {
