@@ -7,12 +7,12 @@ import SettingsMenu from "./settingsMenu";
 import { current } from "@reduxjs/toolkit";
 
 const Board = () => {
-  const {convertedBoard, posibleMoves, selectedPiece, waitingForPcMove, pastBoardStates, currentBoard} = useSelector((store) => store.gameBoard);
+  const {convertedBoard, posibleMoves, selectedPiece, waitingForPcMove, pastBoardStates, lastBoardStateIndex} = useSelector((store) => store.gameBoard);
   const dispatch = useDispatch();
-  const [boardStateIndex, setBoardStateIndex] = useState(currentBoard);
+  const [boardStateIndex, setBoardStateIndex] = useState(lastBoardStateIndex);
   useEffect(() => {
-    setBoardStateIndex(currentBoard);
-  }, [currentBoard]);
+    setBoardStateIndex(lastBoardStateIndex);
+  }, [lastBoardStateIndex]);
   // console.log(posibleMoves);
   // useEffect(() => {
   //   if (waitingForPcMove) {
@@ -48,7 +48,7 @@ const Board = () => {
               isDark={isDark}
               index={[rowIndex, colIndex]}
               posibleSquare={highlighted}
-              inCurrentBoard={boardStateIndex === currentBoard}
+              isCurrentBoardState={boardStateIndex === lastBoardStateIndex}
               />
             </div>
           );

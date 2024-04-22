@@ -5,7 +5,7 @@ import { selectPieceIcon } from "../gameLogic/pieces";
 import { useState } from "react";
 
 
-const Square = ({value, isDark, index, posibleSquare, inCurrentBoard }) => {
+const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => {
   const {posibleMoves} = useSelector((store) => store.gameBoard);
   const {squareBackgroundColor} = useSelector((store) => store.settings);
   const [promotionMenu, setPromotionMenu] = useState(false);
@@ -63,7 +63,7 @@ const Square = ({value, isDark, index, posibleSquare, inCurrentBoard }) => {
 
   const [, drag] = useDrag({
     drag: () => {
-      if(!inCurrentBoard){return;}
+      if(!isCurrentBoardState){return;}
     },
     type: 'PIECE',
     item: { index: index, piece: value},
@@ -72,7 +72,7 @@ const Square = ({value, isDark, index, posibleSquare, inCurrentBoard }) => {
   const [, drop] = useDrop({
     accept: 'PIECE',
     drop: (item) => {
-      if(!inCurrentBoard){return;}
+      if(!isCurrentBoardState){return;}
       handleDrop(item.index, index, item.piece);
     } 
   });

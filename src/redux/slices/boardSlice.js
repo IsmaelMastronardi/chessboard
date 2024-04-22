@@ -28,7 +28,7 @@ const initialState = {
   playerColor: 'black',
   gameStarted: false,
   pastBoardStates: [convertToBoard(initalBoardPosition)],
-  currentBoard: 0,
+  lastBoardStateIndex: 0,
 };
 
 const gameBoardSlice = createSlice({
@@ -43,7 +43,7 @@ const gameBoardSlice = createSlice({
       state.posibleMoves = moves;
       state.waitingForPcMove = !action.payload.isPcMove;
       state.pastBoardStates.push(state.convertedBoard);
-      state.currentBoard +=1
+      state.lastBoardStateIndex +=1
     },
     updateSelectedPiece: (state, action) => {
       state.selectedPiece = action.payload;
