@@ -4,6 +4,7 @@ import { convertToBoard, convertToFen } from "../../gameLogic/helpers";
 import { finalizeMove } from "../../gameLogic/completeMove";
 
 export const movePiece = (oldIndex, move, isPcMove) => (dispatch) => {
+  console.log('movingPiece');
   dispatch(gameBoardSlice.actions.updateBoard({oldIndex, move, isPcMove}));
 };
 

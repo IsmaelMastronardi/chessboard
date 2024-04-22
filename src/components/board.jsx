@@ -4,24 +4,23 @@ import { useEffect, useState } from "react";
 import { movePiece } from "../redux/slices/boardSlice";
 import { minimax } from "../engine/boardEvaluation";
 import SettingsMenu from "./settingsMenu";
-import { current } from "@reduxjs/toolkit";
 
 const Board = () => {
   const {convertedBoard, posibleMoves, selectedPiece, waitingForPcMove, pastBoardStates, lastBoardStateIndex} = useSelector((store) => store.gameBoard);
   const dispatch = useDispatch();
   const [boardStateIndex, setBoardStateIndex] = useState(lastBoardStateIndex);
+
+  useEffect(() => {
+    if (waitingForPcMove) {
+      const result = minimax(convertedBoard, 3, false);
+      dispatch(movePiece(result.piece, result.move, true));
+    }
+  });
   useEffect(() => {
     setBoardStateIndex(lastBoardStateIndex);
   }, [lastBoardStateIndex]);
-  // console.log(posibleMoves);
-  // useEffect(() => {
-  //   if (waitingForPcMove) {
-  //     setTimeout(() => {
-  //       const result = minimax(convertedBoard, 3, false);
-  //       dispatch(movePiece(result.piece, result.move, true));
-  //     }, 100);
-  //   }
-  // });
+
+
   const changeBoardState = (direction) => {
     if(boardStateIndex + direction >= 0 && boardStateIndex + direction < pastBoardStates.length){
       setBoardStateIndex(boardStateIndex + direction);
