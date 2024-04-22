@@ -6,7 +6,7 @@ import { useState } from "react";
 
 
 const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => {
-  const {posibleMoves} = useSelector((store) => store.gameBoard);
+  const {posibleMoves, selectedPiece} = useSelector((store) => store.gameBoard);
   const {squareBackgroundColor} = useSelector((store) => store.settings);
   const [promotionMenu, setPromotionMenu] = useState(false);
 
@@ -30,33 +30,35 @@ const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => 
   const promotionSelect = (promotionPiece) => {
     setSelectedMove(undefined);
     togglePromotionMenu();
-    console.log(posibleMoves[`${selectedMove.from[0]}${selectedMove.from[1]}`]);
     const move = posibleMoves[`${selectedMove.from[0]}${selectedMove.from[1]}`].find(obj => obj.move && obj.move[0] === selectedMove.to[0] && obj.move[1] === selectedMove.to[1] && obj.promotionPiece === promotionPiece);
     console.log(move);
     executeMove(selectedMove.from, move, false);
   }
-
-  const handleClick = () => {
-    dispatch(selectPiece(index));
-  }
-
   const findMove = (arr, move) => {
     return arr.find(obj => obj.move && obj.move[0] === move[0] && obj.move[1] === move[1])
   };
 
-  const handleDrop = (oldPos, newPos, piece) => {
-    console.log(posibleMoves[`${oldPos[0]}${oldPos[1]}`]);
-    if(!posibleMoves[`${oldPos[0]}${oldPos[1]}`]){
+  const handleClick = () => {
+    if(selectedPiece && posibleSquare){
+      handleDrop();
+    }
+    else {
+      dispatch(selectPiece(index));
+    }
+
+  }
+  const handleDrop = () => {
+    if(!posibleMoves[`${selectedPiece[0]}${selectedPiece[1]}`]){
       return;
     }
-    const selectedMove = findMove(posibleMoves[`${oldPos[0]}${oldPos[1]}`], newPos);
+    const selectedMove = findMove(posibleMoves[`${selectedPiece[0]}${selectedPiece[1]}`], index);
     if(selectedMove){
       if(selectedMove.promotion){
-        saveMove(oldPos, newPos);
+        saveMove(selectedPiece, index);
         togglePromotionMenu();
       }
       else {
-        executeMove(oldPos, selectedMove, false);
+        executeMove(selectedPiece, selectedMove, false);
       }
     }
   };

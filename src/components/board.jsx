@@ -38,9 +38,6 @@ const Board = () => {
           if(selectedPiece && JSON.stringify(posibleMoves[`${selectedPiece[0]}${selectedPiece[1]}`])?.includes(JSON.stringify([rowIndex, colIndex]))){
             highlighted = true;
           }
-          else {
-            highlighted = false;
-          }
           return (
             <div key={`${rowIndex}-${colIndex}`} className="w-12 h-12 col-span-1">
               <Square
