@@ -30,6 +30,7 @@ const initialState = {
   gameStarted: false,
   pastBoardStates: [convertToBoard(initalBoardPosition)],
   lastBoardStateIndex: 0,
+  gameHasStarted: false,
 };
 
 const gameBoardSlice = createSlice({
@@ -37,6 +38,7 @@ const gameBoardSlice = createSlice({
   initialState,
   reducers: {
     updateBoard: (state, action) => {
+      console.log('payload',action.payload)
       state.selectedPiece = '';
       state.convertedBoard = finalizeMove(state.convertedBoard, action.payload.oldIndex, action.payload.move);
       state.fenBoard = convertToFen(state.convertedBoard);
@@ -52,8 +54,15 @@ const gameBoardSlice = createSlice({
     updatePosibleMoves: (state, action) => {
       state.posibleMoves = action.payload;
     },
+    startGame: (state, action) => {
+      state.gameHasStarted = true;
+    },
+    endGame: (state, action) => {
+      state.gameHasStarted = false;
+    }
   },
 });
 
+export const { updateBoard, updateSelectedPiece, updatePosibleMoves, startGame, endGame } = gameBoardSlice.actions;
 export default gameBoardSlice.reducer;
 

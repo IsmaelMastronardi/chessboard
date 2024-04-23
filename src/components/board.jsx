@@ -16,6 +16,7 @@ const Board = () => {
       dispatch(movePiece(result.piece, result.move, true));
     }
   });
+
   useEffect(() => {
     setBoardStateIndex(lastBoardStateIndex);
   }, [lastBoardStateIndex]);
@@ -27,9 +28,28 @@ const Board = () => {
     }
   };
 
+  useEffect(() => {
+    const handleArrowKey = (e) => {
+      if(e.key === 'ArrowLeft'){
+        console.log('here')
+        changeBoardState(-1);
+      }
+      if(e.key === 'ArrowRight'){
+        console.log('here2')
+        changeBoardState(1);
+      }
+    };
+    document.addEventListener('keydown', handleArrowKey);
+    return () => document.removeEventListener('keydown', handleArrowKey);
+  });
+
+
+
+
+
   return(
     <section className="">
-      <div className="grid grid-cols-8">
+      <div className="grid grid-cols-8 gameBoard">
       {pastBoardStates[boardStateIndex].pieces.map((row, rowIndex) => {
         return row.map((square, colIndex) => {
           const isDark = (rowIndex + colIndex) % 2 === 1;

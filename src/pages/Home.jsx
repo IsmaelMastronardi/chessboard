@@ -1,22 +1,23 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Board from "../components/board";
 import { useState } from "react";
 import { blackKingIcon,whiteKingIcon } from "../gameLogic/pieces";
 import PastMoves from "../components/pastMoves";
+import { startGame } from "../redux/slices/boardSlice";
 
 const Home = () => {
   const [startGameMenu, setStartGameMenu] = useState(false);
   const toggleMenu = () => {
     setStartGameMenu(!startGameMenu);
   }
+  const dispatch = useDispatch();
   return(
     <div className="relative flex flex-col items-center justify-center gap-4 pt-12">
       <div className="flex gap-20">
         <button
         className="bg-gray-500 border"
         onClick={toggleMenu}
-        >
-          Start
+        >Start
         </button>
         <button className="bg-gray-500 border">Surrender</button>
       </div>
@@ -40,6 +41,24 @@ const Home = () => {
             </button>
             <button>
               {whiteKingIcon}
+            </button>
+          </div>
+          <div>
+            <button onClick={
+              () => {
+                dispatch(startGame());
+                toggleMenu();
+              }
+            }>
+              Start
+            </button>
+            <button
+            onClick={
+              () => {
+                toggleMenu();
+              }
+            }>
+              Cancel
             </button>
           </div>
         </div>

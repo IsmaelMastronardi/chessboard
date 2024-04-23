@@ -1,12 +1,12 @@
 import { useDrag, useDrop } from "react-dnd";
-import { movePiece, selectPiece } from "../redux/slices/boardSlice";
+import { movePiece, selectPiece, startGame } from "../redux/slices/boardSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectPieceIcon } from "../gameLogic/pieces";
 import { useState } from "react";
 
 
 const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => {
-  const {posibleMoves, selectedPiece} = useSelector((store) => store.gameBoard);
+  const {posibleMoves, selectedPiece, gameHasStarted} = useSelector((store) => store.gameBoard);
   const {squareBackgroundColor} = useSelector((store) => store.settings);
   const [promotionMenu, setPromotionMenu] = useState(false);
 
@@ -39,6 +39,9 @@ const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => 
   };
 
   const handleClick = () => {
+    if(!gameHasStarted){
+      return;
+    }
     if(selectedPiece && posibleSquare){
       handleDrop();
     }
@@ -82,7 +85,7 @@ const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => 
   const piece = selectPieceIcon(value);
   return (
     <><div
-      className={`border flex justify-center items-center border-gray-400 text-center relative w-full h-full p-0 `}
+      className={`border flex justify-center items-center border-gray-400 text-center relative w-full h-full p-0 square`}
       ref={drop}
       onClick={handleClick}
       style={{
