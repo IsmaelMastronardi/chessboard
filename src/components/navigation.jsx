@@ -1,16 +1,14 @@
+import { NavLink } from "react-router-dom";
+
 const Navigation = () => {
 return (
   <nav className="bg-white ">
     <ul className="flex justify-center gap-20">
       <li>
-        <a>
-          Home
-        </a>
+        <NavLink to={'/'}>Home</NavLink>
       </li>
       <li>
-        <a>
-          Editor
-        </a>
+        <NavLink to={'/editor'}>Editor</NavLink>
       </li>
       <li>
         <a>
