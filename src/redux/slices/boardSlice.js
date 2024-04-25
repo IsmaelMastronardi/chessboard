@@ -17,8 +17,8 @@ export const getPosibleMoves = (board, color) => (dispatch) => {
   dispatch(gameBoardSlice.actions.updatePosibleMoves(result));
 };
 // const initalBoardPosition = "k7/7P/8/8/8/8/8/K7 w KQkq - 0 1";
-const initalBoardPosition = "k7/8/8/8/8/8/7p/K7 w KQkq - 0 1";
-// const initalBoardPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+// const initalBoardPosition = "k7/8/8/8/8/8/7p/K7 w KQkq - 0 1";
+const initalBoardPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
 
 const initialState = {
