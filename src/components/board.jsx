@@ -7,6 +7,7 @@ import SettingsMenu from "./settingsMenu";
 
 const Board = () => {
   const {convertedBoard, posibleMoves, selectedPiece, waitingForPcMove, pastBoardStates, lastBoardStateIndex} = useSelector((store) => store.gameBoard);
+  const {playerColor} = useSelector((store) => store.settings);
   const dispatch = useDispatch();
   const [boardStateIndex, setBoardStateIndex] = useState(lastBoardStateIndex);
 
@@ -43,13 +44,9 @@ const Board = () => {
     return () => document.removeEventListener('keydown', handleArrowKey);
   });
 
-
-
-
-
   return(
     <section className="">
-      <div className="grid grid-cols-8 gameBoard">
+      <div className={`grid grid-cols-8 ${playerColor === 'white' ? '' : 'rotatedGameBoard'}`} >
       {pastBoardStates[boardStateIndex].pieces.map((row, rowIndex) => {
         return row.map((square, colIndex) => {
           const isDark = (rowIndex + colIndex) % 2 === 1;

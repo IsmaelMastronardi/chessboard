@@ -3,14 +3,14 @@ import { movePiece, selectPiece, startGame } from "../redux/slices/boardSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectPieceIcon } from "../gameLogic/pieces";
 import { useState } from "react";
+import PositionIndicator from "./positionIndicator";
 
 
 const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => {
   const {posibleMoves, selectedPiece, gameHasStarted} = useSelector((store) => store.gameBoard);
-  const {squareBackgroundColor} = useSelector((store) => store.settings);
+  const {playerColor, squareBackgroundColor} = useSelector((store) => store.settings);
   const [promotionMenu, setPromotionMenu] = useState(false);
 
-  // const [promotionPiece, setPromotionPiece] = useState(undefined);
   const [selectedMove, setSelectedMove] = useState(undefined);
 
   const dispatch = useDispatch();
@@ -85,33 +85,23 @@ const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => 
   const piece = selectPieceIcon(value);
   return (
     <><div
-      className={`border flex justify-center items-center border-gray-400 text-center relative w-full h-full p-0 square`}
+      className={`border flex justify-center items-center border-gray-400 text-center relative w-full h-full p-0 square ${playerColor === 'white' ? '' : 'rotatedSquare'}`}
       ref={drop}
       onClick={handleClick}
       style={{
         background: isDark ? squareBackgroundColor : "white",
       }}
     >
-      {index[1] === 0 && (
-        <div className="absolute top-0 left-0 text-xs font-bold">
-          {index[0] + 1}
-        </div>
-      )}
-      {index[0] === 7 && (
-        <div className="absolute bottom-0 right-0 text-xs font-bold">
-          {String.fromCharCode(65 + index[1])}
-        </div>
-      )}
+      <PositionIndicator row={index[0]} col={index[1]} />
       {posibleSquare && (
         <div className="absolute top-0 bottom-0 left-0 right-0 w-6 h-6 m-auto bg-gray-300 rounded-full opacity-80"></div>
       )}
       <div className="w-6 h-6" onDragStart={handleClick} ref={drag}>
         {piece}
       </div>
-      {/* <div className="absolute top-0 left-0 w-40 h-40 bg-gray-400"></div> */}
     </div>
     {promotionMenu && (
-      <div className="absolute z-10 m-auto bg-white">
+      <div className={`absolute z-10 m-auto bg-white ${playerColor === 'white' ? '' : 'rotatedPromotionMenu'}`}>
         <ul>
           <li>
             <button onClick={() => promotionSelect('Q')}>QUEEN</button>

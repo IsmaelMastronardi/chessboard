@@ -4,13 +4,18 @@ import { useState } from "react";
 import { blackKingIcon,whiteKingIcon } from "../gameLogic/pieces";
 import PastMoves from "../components/pastMoves";
 import { startGame } from "../redux/slices/boardSlice";
+import { changePlayerColor } from "../redux/slices/gameSettigsSlice";
 
 const Home = () => {
   const [startGameMenu, setStartGameMenu] = useState(false);
+  const {playerColor} = useSelector((store) => store.settings);
   const toggleMenu = () => {
     setStartGameMenu(!startGameMenu);
   }
   const dispatch = useDispatch();
+  const chooseColor = (color) => {
+    dispatch(changePlayerColor(color))
+  };
   return(
     <div className="relative flex flex-col items-center justify-center gap-4 pt-12">
       <div className="flex gap-20">
@@ -36,17 +41,17 @@ const Home = () => {
             <p>Choose Color:</p>
           </div>
           <div className="flex justify-around w-full h-20">
-            <button>
-              {blackKingIcon}
-            </button>
-            <button>
+            <button onClick={() => chooseColor('white')}>
               {whiteKingIcon}
+            </button>
+            <button onClick={() => chooseColor('black')}>
+              {blackKingIcon}
             </button>
           </div>
           <div>
             <button onClick={
               () => {
-                dispatch(startGame());
+                dispatch(startGame(playerColor === 'black'));
                 toggleMenu();
               }
             }>
