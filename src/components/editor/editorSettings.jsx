@@ -1,13 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
-import { clearBoard, initialPosition } from "../../redux/slices/boardEditorSlice";
+import { clearBoard, initialPosition, updateCastling } from "../../redux/slices/boardEditorSlice";
 import { useState } from "react";
 
 const EditorSettings = () => {
   const {editorConvertedBoard} = useSelector((store) => store.boardEditor)
   const dispatch = useDispatch();
   const [currentTurn, setCurrentTurn] = useState([editorConvertedBoard.turn]);
-  const [casteling, setCasteling] = useState([editorConvertedBoard.castling.split('')]);
+  const [castling, setCastling] = useState(editorConvertedBoard.castling.split(''));
 
+  console.log(editorConvertedBoard.castling);
   const clear = () => {
     dispatch(clearBoard())
   }
@@ -18,7 +19,19 @@ const EditorSettings = () => {
 
   const handleTurnChange = (value) => {
     setCurrentTurn(value);
-  }
+  };
+
+  const handleCastleRightsChange = (value, index) => {
+    const newCastling = [...castling];
+    if(newCastling[index] === ''){
+      newCastling[index] = value;
+    }
+    else{
+      newCastling[index] = '';
+    }
+    setCastling(newCastling);
+    dispatch(updateCastling(newCastling.join('')));
+  };
 
 return(
   <div>
@@ -46,13 +59,41 @@ return(
         <p>Casteling:</p>
         <div className="flex">
           <p>White:</p>
-          <button>King</button>
-          <button>Queen</button>
+          <label>
+            <input 
+            type="checkbox"
+            checked={editorConvertedBoard.castling.indexOf('K') !== -1}
+            onChange={() => handleCastleRightsChange('K', 0)}
+            />
+            <span>King</span>
+          </label>
+          <label>
+            <input 
+            type="checkbox"
+            checked={editorConvertedBoard.castling.indexOf('Q') !== -1}
+            onChange={() => handleCastleRightsChange('Q', 1)}
+            />
+            <span>Queen</span>
+          </label>
         </div>
         <div className="flex">
           <p>Black:</p>
-          <button>King</button>
-          <button>Queen</button>
+          <label>
+            <input 
+            type="checkbox"
+            checked={editorConvertedBoard.castling.indexOf('k') !== -1}
+            onChange={() => handleCastleRightsChange('k', 2)}
+            />
+            <span>King</span>
+          </label>
+          <label>
+            <input 
+            type="checkbox"
+            checked={editorConvertedBoard.castling.indexOf('q') !== -1}
+            onChange={() => handleCastleRightsChange('q', 3)}
+            />
+            <span>Queen</span>
+          </label>
         </div>
       </div>
     </div>

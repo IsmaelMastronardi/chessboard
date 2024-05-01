@@ -33,8 +33,11 @@ const boardEditorSlice = createSlice({
       console.log(action.payload);
       state.chosenAction = action.payload;
     },
+    updateCastling: (state, action) => {
+      state.editorConvertedBoard.castling = action.payload;
+    },
   }
 });
 
-export const { clearBoard, initialPosition, updateEditorBoard, updateChosenAction } = boardEditorSlice.actions;
+export const { clearBoard, initialPosition, updateEditorBoard, updateChosenAction, updateCastling } = boardEditorSlice.actions;
 export default boardEditorSlice.reducer;
