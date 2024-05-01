@@ -3,10 +3,9 @@ import SettingsMenu from "../settingsMenu";
 import SquareForEditor from "./squareForEditor";
 
 const BoardEditor = () => {
-  const {editorConvertedBoard} = useSelector((store) => store.boardEditor);
+  const {editorConvertedBoard, } = useSelector((store) => store.boardEditor);
   const {playerColor} = useSelector((store) => store.settings);
   const dispatch = useDispatch();
-
   return(
     <section className="">
       <div className={`grid grid-cols-8 ${playerColor === 'white' ? '' : 'rotatedGameBoard'}`} >

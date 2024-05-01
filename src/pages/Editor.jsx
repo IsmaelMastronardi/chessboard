@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import BoardEditor from "../components/editor/boardEditor";
 import PieceSelector from "./pieceSelector";
+import EditorSettings from "../components/editor/editorSettings";
 
 const Editor = () => {
   const dispatch = useDispatch();
@@ -12,6 +13,7 @@ const Editor = () => {
       <PieceSelector pieces={whitePieces} />
       <BoardEditor />
       <PieceSelector pieces={blackPieces} />
+      <EditorSettings />
     </div>
   )
 }

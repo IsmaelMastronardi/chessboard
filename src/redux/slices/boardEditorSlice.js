@@ -19,9 +19,15 @@ const boardEditorSlice = createSlice({
   name: 'boardEditor',
   initialState,
   reducers: {
+    clearBoard: (state) => {
+      state.editorConvertedBoard.pieces = Array(8).fill(null).map(() => Array(8).fill('0'));
+    },
+    initialPosition: (state) => {
+      state.editorConvertedBoard = convertToBoard(initalBoardPosition);
+    },
     updateEditorBoard: (state, action) => {
-      console.log('here')
       state.editorConvertedBoard.pieces = changeBoardValue(state.editorConvertedBoard.pieces, action.payload.row, action.payload.col, action.payload.value);
+      
     },
     updateChosenAction: (state, action) => {
       console.log(action.payload);
@@ -30,5 +36,5 @@ const boardEditorSlice = createSlice({
   }
 });
 
-export const { updateEditorBoard, updateChosenAction } = boardEditorSlice.actions;
+export const { clearBoard, initialPosition, updateEditorBoard, updateChosenAction } = boardEditorSlice.actions;
 export default boardEditorSlice.reducer;
