@@ -9,8 +9,6 @@ const EditorSettings = () => {
   const [currentTurn, setCurrentTurn] = useState(editorConvertedBoard.turn);
   const [castling, setCastling] = useState(['K', 'Q', 'k', 'q']);
 
-  console.log(editorConvertedBoard.castling);
-
   useEffect(() => {
     checkCastlingOnBoardChange();
   },[editorConvertedBoard])
