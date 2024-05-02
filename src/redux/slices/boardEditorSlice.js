@@ -27,7 +27,6 @@ const boardEditorSlice = createSlice({
     },
     checkBoardPlayability: (state) => {
       const moves = calculatePosibleMoves(state.editorConvertedBoard, state.editorConvertedBoard.turn === 'w' ? 'white' : 'black');
-      console.log('moves', moves)
       state.boardIsPlayable = moves !== 'checkmate' && moves !== 'stalemate' && moves !== 'no king found';
     },
     clearBoard: (state) => {
@@ -39,7 +38,6 @@ const boardEditorSlice = createSlice({
       boardEditorSlice.caseReducers.checkBoardPlayability(state);
     },
     updateChosenAction: (state, action) => {
-      console.log(action.payload);
       state.chosenAction = action.payload;
       boardEditorSlice.caseReducers.checkBoardPlayability(state);
     },
@@ -47,8 +45,12 @@ const boardEditorSlice = createSlice({
       state.editorConvertedBoard.castling = action.payload;
       boardEditorSlice.caseReducers.checkBoardPlayability(state);
     },
+    updateTurn: (state, action) => {
+      state.editorConvertedBoard.turn = action.payload;
+      boardEditorSlice.caseReducers.checkBoardPlayability(state);
+    },
   }
 });
 
-export const { checkBoardPlayability, clearBoard, setToInitialPosition, updateEditorBoard, updateChosenAction, updateCastling } = boardEditorSlice.actions;
+export const { checkBoardPlayability, clearBoard, setToInitialPosition, updateEditorBoard, updateChosenAction, updateCastling, updateTurn } = boardEditorSlice.actions;
 export default boardEditorSlice.reducer;

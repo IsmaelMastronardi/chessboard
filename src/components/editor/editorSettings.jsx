@@ -1,14 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
-import { clearBoard, setToInitialPosition, updateCastling } from "../../redux/slices/boardEditorSlice";
+import { clearBoard, setToInitialPosition, updateCastling, updateTurn } from "../../redux/slices/boardEditorSlice";
 import { useState } from "react";
 
 const EditorSettings = () => {
   const {editorConvertedBoard, boardIsPlayable} = useSelector((store) => store.boardEditor)
   const dispatch = useDispatch();
-  const [currentTurn, setCurrentTurn] = useState([editorConvertedBoard.turn]);
+  const [currentTurn, setCurrentTurn] = useState(editorConvertedBoard.turn);
   const [castling, setCastling] = useState(editorConvertedBoard.castling.split(''));
 
-  console.log(boardIsPlayable);
+  console.log(currentTurn);
   const clear = () => {
     dispatch(clearBoard())
   }
@@ -19,6 +19,7 @@ const EditorSettings = () => {
 
   const handleTurnChange = (value) => {
     setCurrentTurn(value);
+    updateTurn(value);
   };
 
   const handleCastleRightsChange = (value, index) => {

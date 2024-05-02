@@ -16,7 +16,6 @@ const searchKing = (board, color) => {
 }
 
 const calculatePosibleMoves = (board, allyColor) => {
-  console.log('PIECES',board.pieces)
   let attacksAndPins = attackedSquaresCheck(board.pieces, allyColor);
   let attackBaord = attacksAndPins.attacksBoard;
   let pinnedPieces = attacksAndPins.pinnedPieces;
