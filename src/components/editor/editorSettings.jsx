@@ -1,20 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
-import { clearBoard, initialPosition, updateCastling } from "../../redux/slices/boardEditorSlice";
+import { clearBoard, setToInitialPosition, updateCastling } from "../../redux/slices/boardEditorSlice";
 import { useState } from "react";
 
 const EditorSettings = () => {
-  const {editorConvertedBoard} = useSelector((store) => store.boardEditor)
+  const {editorConvertedBoard, boardIsPlayable} = useSelector((store) => store.boardEditor)
   const dispatch = useDispatch();
   const [currentTurn, setCurrentTurn] = useState([editorConvertedBoard.turn]);
   const [castling, setCastling] = useState(editorConvertedBoard.castling.split(''));
 
-  console.log(editorConvertedBoard.castling);
+  console.log(boardIsPlayable);
   const clear = () => {
     dispatch(clearBoard())
   }
 
   const returnToInitialPosition = () => {
-    dispatch(initialPosition())
+    dispatch(setToInitialPosition())
   };
 
   const handleTurnChange = (value) => {
@@ -29,6 +29,9 @@ const EditorSettings = () => {
     else{
       newCastling[index] = '';
     }
+    if(newCastling.join('') === ''){
+      newCastling.push('-');
+    };
     setCastling(newCastling);
     dispatch(updateCastling(newCastling.join('')));
   };
@@ -99,7 +102,8 @@ return(
     </div>
     <div className="bg-slate-300">
       <div className="flex flex-col">
-        <button>Play</button>
+        <button className={`${boardIsPlayable ? 'bg-green-500' : 'bg-red-500'}`}
+        >Play</button>
         <button onClick={() => clear()}>Clear</button>
         <button onClick={() => returnToInitialPosition()}>Initial Position</button>
       </div>
