@@ -31,6 +31,7 @@ const boardEditorSlice = createSlice({
     },
     clearBoard: (state) => {
       state.editorConvertedBoard.pieces = Array(8).fill(null).map(() => Array(8).fill('0'));
+      state.editorConvertedBoard.castling = '-';
       boardEditorSlice.caseReducers.checkBoardPlayability(state);
     },
     updateEditorBoard: (state, action) => {

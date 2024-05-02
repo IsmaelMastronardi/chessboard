@@ -1,14 +1,52 @@
 import { useDispatch, useSelector } from "react-redux";
 import { clearBoard, setToInitialPosition, updateCastling, updateTurn } from "../../redux/slices/boardEditorSlice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { convertToBoard } from "../../gameLogic/helpers";
 
 const EditorSettings = () => {
   const {editorConvertedBoard, boardIsPlayable} = useSelector((store) => store.boardEditor)
   const dispatch = useDispatch();
   const [currentTurn, setCurrentTurn] = useState(editorConvertedBoard.turn);
-  const [castling, setCastling] = useState(editorConvertedBoard.castling.split(''));
+  const [castling, setCastling] = useState(['K', 'Q', 'k', 'q']);
 
-  console.log(currentTurn);
+  console.log(editorConvertedBoard.castling);
+
+  useEffect(() => {
+    checkCastlingOnBoardChange();
+  },[editorConvertedBoard])
+
+  const replaceAt = (array, index) => {
+    const newArray = [...array];
+    newArray[index] = '';
+    return newArray;
+  };
+
+  const checkCastlingOnBoardChange = () => {
+    let newCastling = [...castling];
+    if (editorConvertedBoard.pieces[0][4] !== 'k') {
+        newCastling = replaceAt(newCastling, 2);
+        newCastling = replaceAt(newCastling, 3);
+    }
+    if (editorConvertedBoard.pieces[0][0] !== 'r') {
+        newCastling = replaceAt(newCastling, 3);
+    }
+    if (editorConvertedBoard.pieces[0][7] !== 'r') {
+        newCastling = replaceAt(newCastling, 2);
+    }
+    if (editorConvertedBoard.pieces[7][4] !== 'K') {
+        newCastling = replaceAt(newCastling, 0);
+        newCastling = replaceAt(newCastling, 1);
+    }
+    if (editorConvertedBoard.pieces[7][0] !== 'R') {
+        newCastling = replaceAt(newCastling, 1);
+    }
+    if (editorConvertedBoard.pieces[7][7] !== 'R') {
+        newCastling = replaceAt(newCastling, 0);
+    }
+    setCastling(newCastling);
+    dispatch(updateCastling(newCastling.join('')));
+};
+
   const clear = () => {
     dispatch(clearBoard())
   }
