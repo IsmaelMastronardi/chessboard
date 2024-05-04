@@ -73,6 +73,12 @@ const EditorSettings = () => {
     dispatch(updateCastling(newCastling.join('')));
   };
 
+  const playChess = () => {
+    if(boardIsPlayable){
+      
+    }
+  };
+
 return(
   <div>
     <div className="bg-slate-500 w-96">
@@ -139,8 +145,12 @@ return(
     </div>
     <div className="bg-slate-300">
       <div className="flex flex-col">
-        <button className={`${boardIsPlayable ? 'bg-green-500' : 'bg-red-500'}`}
-        >Play</button>
+        <button
+        className={`${boardIsPlayable ? 'bg-green-500' : 'bg-red-500'}`}
+        onClick={() => playChess()}
+        >
+          Play
+        </button>
         <button onClick={() => clear()}>Clear</button>
         <button onClick={() => returnToInitialPosition()}>Initial Position</button>
       </div>
