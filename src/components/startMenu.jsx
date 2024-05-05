@@ -1,11 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
 import { changePlayerColor } from "../redux/slices/gameSettigsSlice";
 import { blackKingIcon, whiteKingIcon } from "../gameLogic/pieces";
-import { startGame } from "../redux/slices/boardSlice";
+import { returnToStart, startFromPosition, startGame } from "../redux/slices/boardSlice";
+import { useNavigate } from "react-router-dom";
 
-const StartMenu = ({toggleMenu}) => {
+const StartMenu = ({toggleMenu, fromEditor = false}) => {
+  const {editorConvertedBoard, boardIsPlayable} = useSelector((store) => store.boardEditor);
   const {playerColor} = useSelector((store) => store.settings);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const chooseColor = (color) => {
     dispatch(changePlayerColor(color))
   };
@@ -33,18 +36,23 @@ const StartMenu = ({toggleMenu}) => {
         <div>
           <button onClick={
             () => {
-              dispatch(startGame(playerColor === 'black'));
-              toggleMenu();
-            }
-          }>
+              if(fromEditor){
+                dispatch(startFromPosition(editorConvertedBoard));
+                navigate('/');
+              }
+              else {
+                dispatch(startGame(playerColor === 'black'));
+                toggleMenu();
+              }
+            }}>
             Start
           </button>
           <button
           onClick={
             () => {
+              dispatch(returnToStart())
               toggleMenu();
-            }
-          }>
+            }}>
             Cancel
           </button>
         </div>

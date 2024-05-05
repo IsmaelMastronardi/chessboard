@@ -3,7 +3,7 @@ import { clearBoard, setToInitialPosition, updateCastling, updateTurn } from "..
 import { useEffect, useState } from "react";
 import { convertToBoard } from "../../gameLogic/helpers";
 
-const EditorSettings = () => {
+const EditorSettings = ({toggleMenu}) => {
   const {editorConvertedBoard, boardIsPlayable} = useSelector((store) => store.boardEditor)
   const dispatch = useDispatch();
   const [currentTurn, setCurrentTurn] = useState(editorConvertedBoard.turn);
@@ -71,12 +71,6 @@ const EditorSettings = () => {
     };
     setCastling(newCastling);
     dispatch(updateCastling(newCastling.join('')));
-  };
-
-  const playChess = () => {
-    if(boardIsPlayable){
-      
-    }
   };
 
 return(
@@ -147,7 +141,7 @@ return(
       <div className="flex flex-col">
         <button
         className={`${boardIsPlayable ? 'bg-green-500' : 'bg-red-500'}`}
-        onClick={() => playChess()}
+        onClick={() => { if(boardIsPlayable){toggleMenu()} }}
         >
           Play
         </button>

@@ -7,12 +7,12 @@ import PositionIndicator from "./positionIndicator";
 
 
 const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => {
+
   const {posibleMoves, selectedPiece, gameHasStarted} = useSelector((store) => store.gameBoard);
   const {playerColor, squareBackgroundColor} = useSelector((store) => store.settings);
   const [promotionMenu, setPromotionMenu] = useState(false);
 
   const [selectedMove, setSelectedMove] = useState(undefined);
-
   const dispatch = useDispatch();
 
   const executeMove = (oldPos, newPos, piece) => {

@@ -17,7 +17,7 @@ export const getPosibleMoves = (board, color) => (dispatch) => {
   dispatch(gameBoardSlice.actions.updatePosibleMoves(result));
 };
 // const initalBoardPosition = "k7/7P/8/8/8/8/8/K7 w KQkq - 0 1";
-// const initalBoardPosition = "k7/8/8/8/8/8/7p/K7 w KQkq - 0 1";
+
 const initalBoardPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
 
@@ -60,17 +60,24 @@ const gameBoardSlice = createSlice({
       state.waitingForPcMove = action.payload;
     },
     startFromPosition: (state, action) => {
-      state.convertedBoard = action.board;
-      state.pastBoardStates = [action.board];
-      state.fenBoard = convertToFen(action.board);
-      state.posibleMoves = calculatePosibleMoves(action.board, action.board.turn === 'w' ? 'white' : 'black');
+      state.convertedBoard = action.payload;
+      state.pastBoardStates = [action.payload];
+      state.fenBoard = convertToFen(action.payload);
+      state.posibleMoves = calculatePosibleMoves(action.payload, action.payload.turn === 'w' ? 'white' : 'black');
+      state.gameHasStarted = true;
     },
     endGame: (state, action) => {
       state.gameHasStarted = false;
-    }
+    },
+    returnToStart: (state) => {
+      state.convertedBoard = state.pastBoardStates[0];
+      state.fenBoard = convertToFen(state.pastBoardStates[0]);
+      state.posibleMoves = calculatePosibleMoves(state.pastBoardStates[0], 'white');
+      state.lastBoardStateIndex = 0;
+    },
   },
 });
 
-export const { updateBoard, updateSelectedPiece, updatePosibleMoves, startGame, endGame } = gameBoardSlice.actions;
+export const { updateBoard, updateSelectedPiece, updatePosibleMoves, startGame, startFromPosition, endGame, returnToStart } = gameBoardSlice.actions;
 export default gameBoardSlice.reducer;
 
