@@ -4,6 +4,7 @@ const { convertToBoard, getPieceColor } = require("../gameLogic/helpers");
 const { pieceWeights, pst_w, pst_b } = require("./pieceValues");
 
 const calculatePositionValue = (board, allyColor) => {
+  console.log(board)
   let totalValue = 0;
   board.forEach((row, rowIndex) => {
     row.forEach((col, colIndex) => {

@@ -4,7 +4,6 @@ import { convertToBoard, convertToFen } from "../../gameLogic/helpers";
 import { finalizeMove } from "../../gameLogic/completeMove";
 
 export const movePiece = (oldIndex, move, isPcMove) => (dispatch) => {
-  console.log('movingPiece');
   dispatch(gameBoardSlice.actions.updateBoard({oldIndex, move, isPcMove}));
 };
 
@@ -39,7 +38,6 @@ const gameBoardSlice = createSlice({
   initialState,
   reducers: {
     updateBoard: (state, action) => {
-      console.log('payload',action.payload)
       state.selectedPiece = '';
       state.convertedBoard = finalizeMove(state.convertedBoard, action.payload.oldIndex, action.payload.move);
       state.fenBoard = convertToFen(state.convertedBoard);

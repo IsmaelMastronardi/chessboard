@@ -14,7 +14,7 @@ const SquareForEditor = ({value, isDark, index, posibleSquare, isCurrentBoardSta
 
   const handleClick = () => {
     if (chosenAction === 'X') {
-      dispatch(updateEditorBoard({row: index[0], col: index[1], value: ''}));
+      dispatch(updateEditorBoard({row: index[0], col: index[1], value: '0'}));
     } else if (chosenAction !== '') {
       dispatch(updateEditorBoard({row: index[0], col: index[1], value: chosenAction}));
     }
