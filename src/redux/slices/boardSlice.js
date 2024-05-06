@@ -3,8 +3,8 @@ import { calculatePosibleMoves } from "../../gameLogic/generateMoves";
 import { convertToBoard, convertToFen } from "../../gameLogic/helpers";
 import { finalizeMove } from "../../gameLogic/completeMove";
 
-export const movePiece = (pieceIndex, newIndex, isPcMove, isPromoting) => (dispatch) => {
-  dispatch(gameBoardSlice.actions.updateBoard({pieceIndex, newIndex, isPcMove, isPromoting}));
+export const movePiece = (oldIndex, move, isPcMove) => (dispatch) => {
+  dispatch(gameBoardSlice.actions.updateBoard({oldIndex, move, isPcMove}));
 };
 
 export const selectPiece = (index) => (dispatch) => {
@@ -15,9 +15,10 @@ export const getPosibleMoves = (board, color) => (dispatch) => {
   const result = calculatePosibleMoves(board, allyColor);
   dispatch(gameBoardSlice.actions.updatePosibleMoves(result));
 };
+// const initalBoardPosition = "k7/7P/8/8/8/8/8/K7 w KQkq - 0 1";
 
-// const initalBoardPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-const initalBoardPosition = "rnbqk2r/pppp2Pp/3b1n2/4p3/5P2/8/PPPP2PP/RNBQKBNR w KQkq c5 10 6";
+const initalBoardPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+
 
 const initialState = {
   fenBoard: initalBoardPosition,
@@ -25,6 +26,11 @@ const initialState = {
   posibleMoves: calculatePosibleMoves(convertToBoard(initalBoardPosition), 'white'),
   selectedPiece: '',
   waitingForPcMove: false,
+  playerColor: 'white',
+  gameStarted: false,
+  pastBoardStates: [convertToBoard(initalBoardPosition)],
+  lastBoardStateIndex: 0,
+  gameHasStarted: false,
 };
 
 const gameBoardSlice = createSlice({
@@ -33,12 +39,13 @@ const gameBoardSlice = createSlice({
   reducers: {
     updateBoard: (state, action) => {
       state.selectedPiece = '';
-      state.convertedBoard = finalizeMove(state.convertedBoard, action.payload.pieceIndex, action.payload.newIndex, action.payload.isPromoting);
-      console.log('slice')
+      state.convertedBoard = finalizeMove(state.convertedBoard, action.payload.oldIndex, action.payload.move);
       state.fenBoard = convertToFen(state.convertedBoard);
       const moves = calculatePosibleMoves(state.convertedBoard, state.convertedBoard.turn === 'w' ? 'white' : 'black');
       state.posibleMoves = moves;
       state.waitingForPcMove = !action.payload.isPcMove;
+      state.pastBoardStates.push(state.convertedBoard);
+      state.lastBoardStateIndex +=1
     },
     updateSelectedPiece: (state, action) => {
       state.selectedPiece = action.payload;
@@ -46,8 +53,29 @@ const gameBoardSlice = createSlice({
     updatePosibleMoves: (state, action) => {
       state.posibleMoves = action.payload;
     },
+    startGame: (state, action) => {
+      state.gameHasStarted = true;
+      state.waitingForPcMove = action.payload;
+    },
+    startFromPosition: (state, action) => {
+      state.convertedBoard = action.payload;
+      state.pastBoardStates = [action.payload];
+      state.fenBoard = convertToFen(action.payload);
+      state.posibleMoves = calculatePosibleMoves(action.payload, action.payload.turn === 'w' ? 'white' : 'black');
+      state.gameHasStarted = true;
+    },
+    endGame: (state, action) => {
+      state.gameHasStarted = false;
+    },
+    returnToStart: (state) => {
+      state.convertedBoard = state.pastBoardStates[0];
+      state.fenBoard = convertToFen(state.pastBoardStates[0]);
+      state.posibleMoves = calculatePosibleMoves(state.pastBoardStates[0], 'white');
+      state.lastBoardStateIndex = 0;
+    },
   },
 });
 
+export const { updateBoard, updateSelectedPiece, updatePosibleMoves, startGame, startFromPosition, endGame, returnToStart } = gameBoardSlice.actions;
 export default gameBoardSlice.reducer;
 

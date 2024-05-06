@@ -1,5 +1,7 @@
 const { getPieceColor, isInCheckline } = require('./helpers');
 
+const promotionPieces = ['Q', 'R', 'N', 'B'];
+
 const calculateCheckLine = (checkingPiecePosition, kingPosition) => {
   let checkLine = [];
   let temp = [...checkingPiecePosition];
@@ -30,8 +32,7 @@ const callMoves = (board, allyColor, pinnedPieces ,attackBoard) => {
 
 const handleCheck = (board, attackBoard, kingPosition, allyColor, pinnedPieces, checkingPiecePosition) => {
   let moves = {};
-  let checkLine = [];
-  checkLine = calculateCheckLine(checkingPiecePosition, kingPosition)
+  let checkLine = calculateCheckLine(checkingPiecePosition, kingPosition)
   board.pieces.forEach((row, rowIndex) => {
     row.forEach((piece, colIndex) => {
       if (getPieceColor(piece) === allyColor && piece !== '0') {
@@ -295,11 +296,24 @@ const pawnMoves = (board, row, col, pinDirection = '') => {
       return;
     }
     if((pinDirection === '' || (pinDirection[0] === rowDirection * -1 && pinDirection[1] === colDirection * -1))){
-      result.push({move: [row + rowDirection, col + colDirection], capture: true, capturedPiece: targetSquare});
+        result.push({move: [row + rowDirection, col + colDirection], capture: true, capturedPiece: targetSquare});
     }
   });
   if(board.pieces[row + rowDirection][col] === '0' && (pinDirection === '' || (pinDirection[0] === rowDirection * -1 && pinDirection[1] === 0))){
-    result.push({move: [row + rowDirection, col]});
+    if((color === 'white' && row === 1) || (color === 'black' && row === 6)){
+      promotionPieces.forEach((piece) => {
+        result.push(
+          {
+            move: [row + rowDirection, col],
+            promotion: true,
+            promotionPiece: color === 'white' ? piece.toUpperCase() : piece.toLowerCase(),
+          }
+        );
+      });
+    }
+    else {
+      result.push({move: [row + rowDirection, col]});
+    }
     if((color === 'white' && row === 6) || (color === 'black' && row === 1)){
       if(board.pieces[row + 2 * rowDirection][col] === '0'){
         result.push({move: [row + 2 * rowDirection, col]});

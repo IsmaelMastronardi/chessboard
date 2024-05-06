@@ -1,36 +1,71 @@
 import { useDrag, useDrop } from "react-dnd";
-import { movePiece, selectPiece } from "../redux/slices/boardSlice";
+import { movePiece, selectPiece, startGame } from "../redux/slices/boardSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectPieceIcon } from "../gameLogic/pieces";
+import { useState } from "react";
+import PositionIndicator from "./positionIndicator";
 
 
-const Square = ({value, isDark, index, posibleSquare }) => {
-  const {posibleMoves, selectedPiece} = useSelector((store) => store.gameBoard);
-  const bgColor = isDark ? 'bg-green-500' : 'bg-white';
+const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => {
+
+  const {posibleMoves, selectedPiece, gameHasStarted} = useSelector((store) => store.gameBoard);
+  const {playerColor, squareBackgroundColor} = useSelector((store) => store.settings);
+  const [promotionMenu, setPromotionMenu] = useState(false);
+
+  const [selectedMove, setSelectedMove] = useState(undefined);
   const dispatch = useDispatch();
 
-  const validateMove = (newIndex) => {
-    return JSON.stringify(posibleMoves[`${selectedPiece[0]}${selectedPiece[1]}`])?.includes(JSON.stringify([newIndex[0], newIndex[1]]))
+  const saveMove = (from, to) => {
+    setSelectedMove({from, to});
   }
 
-  const pawnIsPromoting = (piece, index) => {
-    if(piece.toLowerCase() === 'p' && (index[0] === 0 || index[0] === 7)){
-      return true;
-    }
-    return false;
+  const togglePromotionMenu = () => {
+    setPromotionMenu(!promotionMenu);
+  };
+
+  const promotionSelect = (promotionPiece) => {
+    setSelectedMove(undefined);
+    togglePromotionMenu();
+    const move = posibleMoves[`${selectedMove.from[0]}${selectedMove.from[1]}`].find(obj => obj.move && obj.move[0] === selectedMove.to[0] && obj.move[1] === selectedMove.to[1] && obj.promotionPiece === promotionPiece);
+    console.log(move);
+    dispatch(movePiece(selectedMove.from, move, false));
+  }
+  const findMove = (arr, move) => {
+    return arr.find(obj => obj.move && obj.move[0] === move[0] && obj.move[1] === move[1])
   };
 
   const handleClick = () => {
-    dispatch(selectPiece(index));
-  }
-
-  const handleDrop = (oldPost, newPos, piece) => {
-    if(validateMove(newPos)){
-      dispatch(movePiece(oldPost, index, false, pawnIsPromoting(piece, newPos)));
+    if(!gameHasStarted){
+      return;
     }
+    if(selectedPiece && posibleSquare){
+      handleDrop();
+    }
+    else {
+      dispatch(selectPiece(index));
+    }
+
   }
+  const handleDrop = () => {
+    if(!posibleMoves[`${selectedPiece[0]}${selectedPiece[1]}`]){
+      return;
+    }
+    const selectedMove = findMove(posibleMoves[`${selectedPiece[0]}${selectedPiece[1]}`], index);
+    if(selectedMove){
+      if(selectedMove.promotion){
+        saveMove(selectedPiece, index);
+        togglePromotionMenu();
+      }
+      else {
+        dispatch(movePiece(selectedPiece, selectedMove, false));
+      }
+    }
+  };
 
   const [, drag] = useDrag({
+    drag: () => {
+      if(!isCurrentBoardState){return;}
+    },
     type: 'PIECE',
     item: { index: index, piece: value},
   });
@@ -38,19 +73,53 @@ const Square = ({value, isDark, index, posibleSquare }) => {
   const [, drop] = useDrop({
     accept: 'PIECE',
     drop: (item) => {
+      if(!isCurrentBoardState){return;}
       handleDrop(item.index, index, item.piece);
     } 
   });
 
   const piece = selectPieceIcon(value);
   return (
-    <div className={`border border-gray-500 p-4 text-center relative ${bgColor}`} ref={drop} onClick={handleClick}>
-      {posibleSquare &&
-        <div className="absolute w-6 h-6 bg-gray-300 rounded-full top-7 right-7 opacity-80"></div>}
-      <div className="w-12 h-12" onDragStart={handleClick} ref={drag}>{piece}</div>
-      {/* <div className="absolute top-0 left-0 w-40 h-40 bg-gray-400"></div> */}
+    <><div
+      className={`border flex justify-center items-center border-gray-400 text-center relative w-full h-full p-0 square ${playerColor === 'white' ? '' : 'rotatedSquare'}`}
+      ref={drop}
+      onClick={handleClick}
+      style={{
+        background: isDark ? squareBackgroundColor : "white",
+      }}
+    >
+      <PositionIndicator row={index[0]} col={index[1]} />
+      {posibleSquare && (
+        <div className="absolute top-0 bottom-0 left-0 right-0 w-6 h-6 m-auto bg-gray-300 rounded-full opacity-80"></div>
+      )}
+      <div className="w-6 h-6" onDragStart={handleClick} ref={drag}>
+        {piece}
+      </div>
     </div>
-  )
+    {promotionMenu && (
+      <div className={`absolute z-10 m-auto bg-white ${playerColor === 'white' ? '' : 'rotatedPromotionMenu'}`}>
+        <ul>
+          <li>
+            <button onClick={() => promotionSelect('Q')}>QUEEN</button>
+          </li>
+          <li>
+            <button onClick={() => promotionSelect('N')}>KNIGTH</button>
+          </li>       
+          <li>
+            <button
+            onClick={() => {
+              togglePromotionMenu();
+              saveMove(undefined);
+            }}
+            >
+              X
+            </button>
+          </li>
+        </ul>
+      </div>
+    )}
+    </>
+  );
 }
 
 export default Square;
