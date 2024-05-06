@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
-import { selectPieceIcon } from "../gameLogic/pieces";
-import { updateChosenAction } from "../redux/slices/boardEditorSlice";
+import { selectPieceIcon } from "../../gameLogic/pieces";
+import { updateChosenAction } from "../../redux/slices/boardEditorSlice";
+
 
 const PieceSelector = ({pieces}) => {
   const dispatch = useDispatch();
@@ -11,7 +12,7 @@ const PieceSelector = ({pieces}) => {
           <button 
             className="w-10 h-10"
             onClick={() => dispatch(updateChosenAction('X'))}>
-              X
+              <img src="../../../images/trash.png" alt="trash" className="w-6 h-6"/>
           </button>
         </li>
         {pieces.map((piece) => {
@@ -25,6 +26,13 @@ const PieceSelector = ({pieces}) => {
             </li>
           )
         })}
+         <li>
+          <button 
+            className="w-10 h-10"
+            onClick={() => dispatch(updateChosenAction('move'))}>
+              <img src="../../../images/hand.png" alt="trash" className="w-6 h-6"/>
+          </button>
+        </li>
       </ul>
     </div>
   )
