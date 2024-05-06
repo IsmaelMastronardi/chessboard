@@ -15,10 +15,6 @@ const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => 
   const [selectedMove, setSelectedMove] = useState(undefined);
   const dispatch = useDispatch();
 
-  const executeMove = (oldPos, newPos, piece) => {
-    dispatch(movePiece(oldPos, newPos, false));
-  };
-
   const saveMove = (from, to) => {
     setSelectedMove({from, to});
   }
@@ -32,7 +28,7 @@ const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => 
     togglePromotionMenu();
     const move = posibleMoves[`${selectedMove.from[0]}${selectedMove.from[1]}`].find(obj => obj.move && obj.move[0] === selectedMove.to[0] && obj.move[1] === selectedMove.to[1] && obj.promotionPiece === promotionPiece);
     console.log(move);
-    executeMove(selectedMove.from, move, false);
+    dispatch(movePiece(selectedMove.from, move, false));
   }
   const findMove = (arr, move) => {
     return arr.find(obj => obj.move && obj.move[0] === move[0] && obj.move[1] === move[1])
@@ -61,7 +57,7 @@ const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => 
         togglePromotionMenu();
       }
       else {
-        executeMove(selectedPiece, selectedMove, false);
+        dispatch(movePiece(selectedPiece, selectedMove, false));
       }
     }
   };

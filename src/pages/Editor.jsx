@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import BoardEditor from "../components/editor/boardEditor";
-import PieceSelector from "./pieceSelector";
+import PieceSelector from "../components/editor/pieceSelector";
 import EditorSettings from "../components/editor/editorSettings";
 import { useState } from "react";
 import StartMenu from "../components/startMenu";

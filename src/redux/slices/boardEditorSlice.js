@@ -13,7 +13,7 @@ const changeBoardValue = (arr, row, col, value) => {
 const initialState = {
   editorFenBoard: initalBoardPosition,
   editorConvertedBoard: convertToBoard(initalBoardPosition),
-  chosenAction: '',
+  chosenAction: 'move',
   boardIsPlayable: true,
 };
 
@@ -32,6 +32,10 @@ const boardEditorSlice = createSlice({
     clearBoard: (state) => {
       state.editorConvertedBoard.pieces = Array(8).fill(null).map(() => Array(8).fill('0'));
       state.editorConvertedBoard.castling = '-';
+      boardEditorSlice.caseReducers.checkBoardPlayability(state);
+    },
+    clearSquare: (state, action) => {
+      state.editorConvertedBoard.pieces = changeBoardValue(state.editorConvertedBoard.pieces, action.payload.row, action.payload.col, '0');
       boardEditorSlice.caseReducers.checkBoardPlayability(state);
     },
     updateEditorBoard: (state, action) => {
@@ -53,5 +57,5 @@ const boardEditorSlice = createSlice({
   }
 });
 
-export const { checkBoardPlayability, clearBoard, setToInitialPosition, updateEditorBoard, updateChosenAction, updateCastling, updateTurn } = boardEditorSlice.actions;
+export const { checkBoardPlayability, clearBoard,clearSquare, setToInitialPosition, updateEditorBoard, updateChosenAction, updateCastling, updateTurn } = boardEditorSlice.actions;
 export default boardEditorSlice.reducer;
