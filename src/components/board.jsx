@@ -32,11 +32,9 @@ const Board = () => {
   useEffect(() => {
     const handleArrowKey = (e) => {
       if(e.key === 'ArrowLeft'){
-        console.log('here')
         changeBoardState(-1);
       }
       if(e.key === 'ArrowRight'){
-        console.log('here2')
         changeBoardState(1);
       }
     };
@@ -68,15 +66,12 @@ const Board = () => {
         })
       })}
     </div>
-    <div className="flex items-start w-full">
-      <SettingsMenu />
-    </div>
     <div className="flex justify-between w-full">
       <button onClick={() => changeBoardState(-1)}>
-        <img src="../../../images/arrow_left_gray.png" className="w-12"/>
+        <img src="../../../images/arrow_left_gray.png" className="w-12" alt="previous"/>
       </button>
       <button onClick={() => changeBoardState(1)}>
-      <img src="../../../images/arrow_right_gray.png" className="w-12"/>
+      <img src="../../../images/arrow_right_gray.png" className="w-12" alt="next"/>
       </button>
     </div>
     </div>

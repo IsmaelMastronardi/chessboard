@@ -11,6 +11,7 @@ const Home = () => {
 
   return(
     <section className="home">
+      <Board />
       <div className="flex gap-20">
         <button
         className="bg-gray-500 border"
@@ -19,7 +20,6 @@ const Home = () => {
         </button>
         <button className="bg-gray-500 border">Surrender</button>
       </div>
-      <Board />
       {startGameMenu && <StartMenu toggleMenu={toggleMenu}/>}
     </section>
   )
