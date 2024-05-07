@@ -6,19 +6,19 @@ return (
   <nav className="nav">
     <ul>
       <li>
-        <img src="../../../images/app_logo.png"/>
+        <img src="../../../images/app_logo.png" alt="app logo"/>
       </li>
-      <li>
+      <li className="links">
         <NavLink to={'/'} activeclassname="active">
           Home
         </NavLink>
       </li>
-      <li>
+      <li className="links">
         <NavLink to={'/editor'} activeclassname="active">
           Editor
         </NavLink>
       </li>
-      <li>
+      <li className="links">
         <NavLink to={'/Learn'} activeclassname="active">
         Learn
         </NavLink>
