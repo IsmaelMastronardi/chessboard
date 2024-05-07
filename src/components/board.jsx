@@ -45,8 +45,8 @@ const Board = () => {
   });
 
   return(
-    <section className="">
-      <div className={`grid grid-cols-8 ${playerColor === 'white' ? '' : 'rotatedGameBoard'}`} >
+    <div className="">
+      <div className={`board ${playerColor === 'white' ? '' : 'rotatedGameBoard'}`} >
       {pastBoardStates[boardStateIndex].pieces.map((row, rowIndex) => {
         return row.map((square, colIndex) => {
           const isDark = (rowIndex + colIndex) % 2 === 1;
@@ -72,10 +72,14 @@ const Board = () => {
       <SettingsMenu />
     </div>
     <div className="flex justify-between w-full">
-      <button onClick={() => changeBoardState(-1)}>&lt;---</button>
-      <button onClick={() => changeBoardState(1)}>---&gt;</button>
+      <button onClick={() => changeBoardState(-1)}>
+        <img src="../../../images/arrow_left_gray.png" className="w-12"/>
+      </button>
+      <button onClick={() => changeBoardState(1)}>
+      <img src="../../../images/arrow_right_gray.png" className="w-12"/>
+      </button>
     </div>
-    </section>
+    </div>
   )
 }
 

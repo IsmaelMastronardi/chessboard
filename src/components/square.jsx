@@ -81,7 +81,7 @@ const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => 
   const piece = selectPieceIcon(value);
   return (
     <><div
-      className={`border flex justify-center items-center border-gray-400 text-center relative w-full h-full p-0 square ${playerColor === 'white' ? '' : 'rotatedSquare'}`}
+      className={`flex justify-center items-center text-center relative w-full h-full p-0 square select-none ${playerColor === 'white' ? '' : 'rotatedSquare'}`}
       ref={drop}
       onClick={handleClick}
       style={{

@@ -1,0 +1,7 @@
+.home {
+  @apply relative flex flex-col items-center justify-center gap-4 pt-12;
+}
+
+.board {
+  @apply grid grid-cols-8 overflow-hidden border-2 border-gray-400 rounded-lg;
+}

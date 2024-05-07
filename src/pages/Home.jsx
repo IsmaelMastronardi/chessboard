@@ -1,6 +1,5 @@
 import Board from "../components/board";
 import { useState } from "react";
-import PastMoves from "../components/pastMoves";
 import StartMenu from "../components/startMenu";
 
 const Home = () => {
@@ -11,7 +10,7 @@ const Home = () => {
 
 
   return(
-    <div className="relative flex flex-col items-center justify-center gap-4 pt-12">
+    <section className="home">
       <div className="flex gap-20">
         <button
         className="bg-gray-500 border"
@@ -22,8 +21,7 @@ const Home = () => {
       </div>
       <Board />
       {startGameMenu && <StartMenu toggleMenu={toggleMenu}/>}
-      <PastMoves />
-    </div>
+    </section>
   )
 }
 export default Home;
