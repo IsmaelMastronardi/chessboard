@@ -14,12 +14,12 @@ const BoardChanger = ({ changeBoardState }) => {
     return () => document.removeEventListener('keydown', handleArrowKey);
   });
   return (
-    <div className="flex justify-between w-full">
-    <button onClick={() => changeBoardState(-1)}>
-      <img src="../../../images/arrow_left_gray.png" className="w-12" alt="previous"/>
+    <div className="boardChanger">
+    <button onClick={() => changeBoardState(-1)} className="">
+      <img src="../../../images/arrow_left_purple.png" alt="previous"/>
     </button>
-    <button onClick={() => changeBoardState(1)}>
-    <img src="../../../images/arrow_right_gray.png" className="w-12" alt="next"/>
+    <button onClick={() => changeBoardState(1)} className="">
+    <img src="../../../images/arrow_right_purple.png"alt="next"/>
     </button>
   </div>
   );

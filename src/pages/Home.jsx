@@ -32,7 +32,7 @@ const Home = () => {
       <BoardChanger changeBoardState={changeBoardState} lastBoardStateIndex={lastBoardStateIndex} />
       <div className="flex gap-20">
         {!gameHasStarted && (
-          <button className="button1" onClick={toggleMenu}>
+          <button className="button1 startButton" onClick={toggleMenu}>
             Start
           </button>
         )}

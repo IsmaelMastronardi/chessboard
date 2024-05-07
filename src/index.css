@@ -9,9 +9,20 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: white;
+  background-color: rgb(44, 45, 49);
   font-family: "Aldrich", sans-serif;
+
 }
+
+main {
+  @apply flex flex-col items-center justify-center gap-4;
+}
+
+
+.home {
+  @apply relative flex flex-col items-center justify-center gap-4 pt-12;
+}
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

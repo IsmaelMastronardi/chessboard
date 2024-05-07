@@ -9,17 +9,19 @@ import Editor from './pages/Editor';
 
 function App() {
   return (
-    <main>
-      <BrowserRouter>
+    <BrowserRouter>
+      <header>
         <Navigation />
-        <DndProvider backend={HTML5Backend}>
-        <Routes>
-          <Route path='/' element={<Home />}></Route>
-          <Route path='/editor' element={<Editor />}></Route>
-        </ Routes >
-        </DndProvider>
-      </BrowserRouter>
-    </main>
+      </header>
+      <main>
+          <DndProvider backend={HTML5Backend}>
+          <Routes>
+            <Route path='/' element={<Home />}></Route>
+            <Route path='/editor' element={<Editor />}></Route>
+          </ Routes >
+          </DndProvider>
+      </main>
+    </BrowserRouter>
   );
 }
 
