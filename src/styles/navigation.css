@@ -1,0 +1,21 @@
+.nav ul {
+  background-color: #1F0F53;
+  color: #FFDB99;
+  @apply flex justify-around h-14;
+}
+
+li {
+  @apply flex items-center;
+}
+
+a {
+  @apply flex items-center object-contain;
+}
+
+img {
+  @apply h-12;
+}
+
+.active {
+  @apply underline;
+}
