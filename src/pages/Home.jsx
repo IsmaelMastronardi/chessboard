@@ -6,11 +6,13 @@ import { useSelector } from "react-redux";
 
 const Home = () => {
   const [startGameMenu, setStartGameMenu] = useState(false);
-  const {lastBoardStateIndex, pastBoardStates} = useSelector((store) => store.gameBoard);
+  const {lastBoardStateIndex, pastBoardStates,gameHasStarted} = useSelector((store) => store.gameBoard);
   const toggleMenu = () => {
     setStartGameMenu(!startGameMenu);
   }
+
   const [boardStateIndex, setBoardStateIndex] = useState(lastBoardStateIndex);
+
   useEffect(() => {
     setBoardStateIndex(lastBoardStateIndex);
   }, [lastBoardStateIndex]);
@@ -29,12 +31,16 @@ const Home = () => {
       <Board boardStateIndex={boardStateIndex}/>
       <BoardChanger changeBoardState={changeBoardState} lastBoardStateIndex={lastBoardStateIndex} />
       <div className="flex gap-20">
-        <button
-        className="bg-gray-500 border"
-        onClick={toggleMenu}
-        >Start
-        </button>
-        <button className="bg-gray-500 border">Surrender</button>
+        {!gameHasStarted && (
+          <button className="button1" onClick={toggleMenu}>
+            Start
+          </button>
+        )}
+        {gameHasStarted && (
+          <button className="button1">
+            Resign
+          </button>
+        )}
       </div>
       {startGameMenu && <StartMenu toggleMenu={toggleMenu}/>}
     </section>
