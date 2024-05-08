@@ -32,6 +32,10 @@
 
 .boardChanger {
   display: flex;
-  width: 80%;
+  width: 90%;
   justify-content:space-between;
+}
+.boardChanger button {
+  padding-left: 1.6rem;
+  padding-right: 1.6rem;
 }
