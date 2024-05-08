@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import StartMenu from "../components/startMenu";
 import BoardChanger from "../components/boardChanger";
 import { useSelector } from "react-redux";
+import ChessNotation from "../components/chessNotation";
 
 const Home = () => {
   const [startGameMenu, setStartGameMenu] = useState(false);
@@ -18,9 +19,9 @@ const Home = () => {
   }, [lastBoardStateIndex]);
 
 
-  const changeBoardState = (direction) => {
-    if(boardStateIndex + direction >= 0 && boardStateIndex + direction < pastBoardStates.length){
-      setBoardStateIndex(boardStateIndex + direction);
+  const changeBoardState = (newIndex) => {
+    if(newIndex >= 0 && newIndex < pastBoardStates.length){
+      setBoardStateIndex(newIndex);
     }
   };
 
@@ -29,7 +30,7 @@ const Home = () => {
   return(
     <section className="home">
       <Board boardStateIndex={boardStateIndex}/>
-      <BoardChanger changeBoardState={changeBoardState} lastBoardStateIndex={lastBoardStateIndex} />
+      <BoardChanger changeBoardState={changeBoardState} boardStateIndex={boardStateIndex}/>
       <div className="flex gap-20">
         {!gameHasStarted && (
           <button className="button1 startButton" onClick={toggleMenu}>
@@ -37,12 +38,13 @@ const Home = () => {
           </button>
         )}
         {gameHasStarted && (
-          <button className="button1">
+          <button className="button1 startButton">
             Resign
           </button>
         )}
       </div>
       {startGameMenu && <StartMenu toggleMenu={toggleMenu}/>}
+      <ChessNotation changeBoardState={changeBoardState} boardStateIndex={boardStateIndex}/>
     </section>
   )
 }

@@ -43,3 +43,38 @@
 .startMenu {
   @apply absolute flex flex-col items-center justify-center gap-2 bg-gray-400 w-60 h-52;
 }
+
+
+
+.notationsContainer {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  background-color: #1F0F53;
+  color: #FFDB99;
+  padding: 1.4rem 1rem;
+  border-radius: 0.3rem;
+}
+
+/* Set the default background color */
+
+.notationsContainer > * {
+  width: 100%;
+  background-color: #34295a;
+  border: 2px solid #1F0F53;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* Target every second row (odd rows) and change the background color */
+.notationsContainer > :nth-child(4n + 1) {
+  background-color: #271a52;
+}
+.notationsContainer > :nth-child(4n + 2) {
+  background-color: #271a52;
+}
+
+.notationActive {
+  border: 2px solid #FFDB99;
+}

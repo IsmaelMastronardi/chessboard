@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 
-const BoardChanger = ({ changeBoardState }) => {
+const BoardChanger = ({ changeBoardState, boardStateIndex }) => {
   useEffect(() => {
     const handleArrowKey = (e) => {
       if(e.key === 'ArrowLeft'){
-        changeBoardState(-1);
+        changeBoardState( boardStateIndex -1);
       }
       if(e.key === 'ArrowRight'){
-        changeBoardState(1);
+        changeBoardState(boardStateIndex + 1);
       }
     };
     document.addEventListener('keydown', handleArrowKey);
@@ -15,10 +15,10 @@ const BoardChanger = ({ changeBoardState }) => {
   });
   return (
     <div className="boardChanger">
-    <button onClick={() => changeBoardState(-1)} className="">
+    <button onClick={() => changeBoardState(boardStateIndex -1)} className="">
       <img src="../../../images/arrow_left_purple.png" alt="previous"/>
     </button>
-    <button onClick={() => changeBoardState(1)} className="">
+    <button onClick={() => changeBoardState(boardStateIndex +1)} className="">
     <img src="../../../images/arrow_right_purple.png"alt="next"/>
     </button>
   </div>
