@@ -136,22 +136,22 @@ const kingMoves = (board, row, col, attackBoard) => {
   });
   if(color === 'white' && board.castling.includes('K')){
     if(board.pieces[7][5] === '0' && board.pieces[7][6] === '0' && attackBoard[7][5] !== '1' && attackBoard[7][6] !== '1'){
-      moves.push({move: [7, 6], castling: true, rookPosition: [7, 5]});
+      moves.push({move: [7, 6], castling: true, kingSideCastle:true, rookPosition: [7, 5]});
     } 
   }
   if(color === 'white' && board.castling.includes('Q')){
     if(board.pieces[7][1] === '0' && board.pieces[7][2] === '0' && board.pieces[7][3] === '0' && attackBoard[7][1] !== '1' && attackBoard[7][2] !== '1' && attackBoard[7][3] !== '1'){
-      moves.push({move: [7, 2], castling: true, rookPosition: [7, 3]});
+      moves.push({move: [7, 2], castling: true, queenSideCastle:true, rookPosition: [7, 3]});
     } 
   }
   if(color === 'black' && board.castling.includes('k')){
     if(board.pieces[0][5] === '0' && board.pieces[0][6] === '0' && attackBoard[0][5] !== '1' && attackBoard[0][6] !== '1'){
-      moves.push({move: [0, 6], castling: true, rookPosition: [0, 5]});
+      moves.push({move: [0, 6], castling: true,kingSideCastle:true, rookPosition: [0, 5]});
     } 
   }
   if(color === 'black' && board.castling.includes('q')){
     if(board.pieces[0][1] === '0' && board.pieces[0][2] === '0' && board.pieces[0][3] === '0' && attackBoard[0][1] !== '1' && attackBoard[0][2] !== '1' && attackBoard[0][3] !== '1'){
-      moves.push({move: [0, 2], castling: true, rookPosition: [0, 3]});
+      moves.push({move: [0, 2], castling: true, queenSideCastle:true, rookPosition: [0, 3]});
     } 
   }
   return moves;
