@@ -13,7 +13,7 @@ const StartMenu = ({toggleMenu, fromEditor = false}) => {
     dispatch(changePlayerColor(color))
   };
   return (
-      <div className="absolute flex flex-col items-center justify-center gap-2 bg-gray-400 w-60 h-52">
+      <div className="startMenu">
         <div>
           <p>Choose Difficulty:</p>
         </div>
