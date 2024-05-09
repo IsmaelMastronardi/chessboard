@@ -40,7 +40,7 @@ const SquareForEditor = ({value, isDark, index, posibleSquare, isCurrentBoardSta
   return (
     <>
       <div
-        className={`border flex justify-center items-center border-gray-400 text-center relative w-full h-full p-0 square ${playerColor === 'white' ? '' : 'rotatedSquare'}`}
+        className={`square ${playerColor === 'white' ? '' : 'rotatedSquare'}`}
         style={{
           background: isDark ? squareBackgroundColor : "white",
         }}

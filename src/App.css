@@ -11,6 +11,7 @@
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   box-shadow: 0 4px 0px #1F0F53;
+  border-radius: 0.3rem;
 }
 
 .button1:hover {
