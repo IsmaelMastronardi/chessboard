@@ -1,49 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Aldrich&family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
 
-.boardChanger button,
-.button1 {
-  background-color: #FFDB99;
-  color: #1F0F53;
-  font-weight: bold;
-  font-size: 1.2rem;
-  padding: 0.3rem 1.3rem;
-  border: 2px solid #1F0F53;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0 4px 0px #1F0F53;
-  border-radius: 0.3rem;
-}
-
-.button1:hover {
-  background-color: #1F0F53;
-  color: #FFDB99;
-  border-color: #FFDB99;
-  box-shadow: 0 4px 0px #FFDB99;
-}
-
-.button1:active {
-  background-color: #573ea8;
-  border-color: #573ea8;
-}
-
-.startButton {
-  margin-top: -78px;
-  margin-bottom: 16px;
-}
-
-.boardChanger {
-  display: flex;
-  width: 90%;
-  justify-content:space-between;
-}
-.boardChanger button {
-  padding-left: 1.6rem;
-  padding-right: 1.6rem;
-}
-
-.startMenu {
-  @apply absolute flex flex-col items-center justify-center gap-2 bg-gray-400 w-60 h-52;
-}
 
 .notationsContainer {
   width: 100%;

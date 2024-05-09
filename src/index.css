@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary-yellow: #FFDB99;
+  --secondary-yellow: #685a40;
+  --primary-purple: #48348a;
+  --secondary-purple: #1F0F53;
+}
+
 body {
   margin: 0;
   padding-bottom: 2rem;

@@ -33,21 +33,24 @@ const StartMenu = ({toggleMenu, fromEditor = false}) => {
             <Pieces value="k" />
           </button>
         </div>
-        <div>
-          <button onClick={
+        <div className="flex justify-center w-full gap-8">
+          <button
+          className="button2"
+          onClick={
             () => {
-              if(fromEditor){
-                dispatch(startFromPosition(editorConvertedBoard));
-                navigate('/');
-              }
-              else {
-                dispatch(startGame(playerColor === 'black'));
-                toggleMenu();
-              }
+              // if(fromEditor){
+              //   dispatch(startFromPosition(editorConvertedBoard));
+              //   navigate('/');
+              // }
+              // else {
+              //   dispatch(startGame(playerColor === 'black'));
+              //   toggleMenu();
+              // }
             }}>
             Start
           </button>
-          <button
+          <button 
+          className="button2"
           onClick={
             () => {
               dispatch(returnToStart())
