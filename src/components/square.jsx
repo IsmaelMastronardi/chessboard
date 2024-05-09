@@ -1,9 +1,9 @@
 import { useDrag, useDrop } from "react-dnd";
 import { addNotation, createNotation, movePiece, selectPiece, startGame, updateSelectedMove } from "../redux/slices/boardSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { selectPieceIcon } from "../gameLogic/pieces";
 import { useState } from "react";
 import PositionIndicator from "./positionIndicator";
+import Pieces from "./pieces";
 
 
 const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => {
@@ -84,7 +84,6 @@ const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => 
     } 
   });
 
-  const piece = selectPieceIcon(value);
   return (
     <><div
       className={`square ${playerColor === 'white' ? '' : 'rotatedSquare'}`}
@@ -99,7 +98,7 @@ const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => 
         <div className="absolute top-0 bottom-0 left-0 right-0 w-6 h-6 m-auto bg-gray-300 rounded-full opacity-80"></div>
       )}
       <div className="w-6 h-6" onDragStart={handleClick} ref={drag}>
-        {piece}
+        <Pieces value={value} />
       </div>
     </div>
     {promotionMenu && (

@@ -4,6 +4,8 @@ import PieceSelector from "../components/editor/pieceSelector";
 import EditorSettings from "../components/editor/editorSettings";
 import { useState } from "react";
 import StartMenu from "../components/startMenu";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 
 const Editor = () => {
   const dispatch = useDispatch();

@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { changePlayerColor } from "../redux/slices/gameSettigsSlice";
-import { blackKingIcon, whiteKingIcon } from "../gameLogic/pieces";
 import { returnToStart, startFromPosition, startGame } from "../redux/slices/boardSlice";
 import { useNavigate } from "react-router-dom";
+import Pieces from "./pieces";
 
 const StartMenu = ({toggleMenu, fromEditor = false}) => {
   const {editorConvertedBoard, boardIsPlayable} = useSelector((store) => store.boardEditor);
@@ -27,10 +27,10 @@ const StartMenu = ({toggleMenu, fromEditor = false}) => {
         </div>
         <div className="flex justify-around w-full h-20">
           <button onClick={() => chooseColor('white')}>
-            {whiteKingIcon}
+            <Pieces value="K" />
           </button>
           <button onClick={() => chooseColor('black')}>
-            {blackKingIcon}
+            <Pieces value="k" />
           </button>
         </div>
         <div>

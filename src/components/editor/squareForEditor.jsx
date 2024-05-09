@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { selectPieceIcon } from "../../gameLogic/pieces";
 import PositionIndicator from "../positionIndicator";
 import { clearSquare, updateEditorBoard } from "../../redux/slices/boardEditorSlice";
 import { useDrag, useDrop } from "react-dnd";
+import Pieces from "../pieces";
 
 
 
@@ -10,8 +10,6 @@ const SquareForEditor = ({value, isDark, index, posibleSquare, isCurrentBoardSta
   const {playerColor, squareBackgroundColor} = useSelector((store) => store.settings);
   const {chosenAction} = useSelector((store) => store.boardEditor);
   const dispatch = useDispatch();
-
-  const piece = selectPieceIcon(value);
 
   const handleClick = () => {
     if (chosenAction === 'X') {
@@ -48,8 +46,8 @@ const SquareForEditor = ({value, isDark, index, posibleSquare, isCurrentBoardSta
         ref={drop}
         >
         <PositionIndicator row={index[0]} col={index[1]} />
-        <div className="w-6 h-6" ref={drag}>
-          {piece}
+        <div className="w-8 h-8" ref={drag}>
+          <Pieces value={value} />
         </div>
       </div>
     </>
