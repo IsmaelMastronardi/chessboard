@@ -2,8 +2,6 @@ import { useDispatch } from "react-redux";
 import { updateChosenAction } from "../../redux/slices/boardEditorSlice";
 import Pieces from "../pieces";
 
-
-
 const PieceSelector = ({pieces}) => {
   const dispatch = useDispatch();
   return(

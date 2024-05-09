@@ -18,6 +18,7 @@
 }
 
 .pieceSelector {
+  border-radius: 0.2rem;
   border-bottom: 8px solid #48348a;
   border-right: 6px solid #48348a;
   border-left: 6px solid #48348a;
