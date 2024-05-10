@@ -24,6 +24,8 @@ return (
         </NavLink>
       </li>
     </ul>
+    <hr />
+    <hr />
   </nav>
 );
 };

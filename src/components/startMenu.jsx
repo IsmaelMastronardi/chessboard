@@ -4,7 +4,7 @@ import { returnToStart, startFromPosition, startGame } from "../redux/slices/boa
 import { useNavigate } from "react-router-dom";
 import Pieces from "./pieces";
 
-const StartMenu = ({toggleMenu, fromEditor = false}) => {
+const StartMenu = ({toggleMenu,startGameMenu, fromEditor = false}) => {
   const {editorConvertedBoard, boardIsPlayable} = useSelector((store) => store.boardEditor);
   const {playerColor} = useSelector((store) => store.settings);
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ const StartMenu = ({toggleMenu, fromEditor = false}) => {
     dispatch(changePlayerColor(color))
   };
   return (
-      <div className="startMenu">
+      <div className={`startMenu ${startGameMenu === true ? 'startMenuDeployed' : ''}`}>
         <div>
           <p>Choose Difficulty:</p>
         </div>
@@ -38,14 +38,14 @@ const StartMenu = ({toggleMenu, fromEditor = false}) => {
           className="button2"
           onClick={
             () => {
-              // if(fromEditor){
-              //   dispatch(startFromPosition(editorConvertedBoard));
-              //   navigate('/');
-              // }
-              // else {
-              //   dispatch(startGame(playerColor === 'black'));
-              //   toggleMenu();
-              // }
+              if(fromEditor){
+                dispatch(startFromPosition(editorConvertedBoard));
+                navigate('/');
+              }
+              else {
+                dispatch(startGame(playerColor === 'black'));
+                toggleMenu();
+              }
             }}>
             Start
           </button>

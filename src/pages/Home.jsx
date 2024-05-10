@@ -29,21 +29,26 @@ const Home = () => {
 
   return(
     <section className="home">
+      <StartMenu toggleMenu={toggleMenu} startGameMenu={startGameMenu}/>
+
       <Board boardStateIndex={boardStateIndex}/>
       <BoardChanger changeBoardState={changeBoardState} boardStateIndex={boardStateIndex}/>
       <div className="flex gap-20">
         {!gameHasStarted && (
           <button className="buttonBack buttonBack2 startButton" onClick={toggleMenu}>
-           <p className="buttonFront buttonFront2" >Start</p> 
+            <span className="buttonShadow buttonShadow2">
+              <span className="buttonFront buttonFront2" >Start</span> 
+            </span>
           </button>
         )}
         {gameHasStarted && (
-          <button className="button1 startButton">
-            Resign
+          <button className="buttonBack buttonBack2 startButton">
+            <span className="buttonShadow buttonShadow2">
+              <span className="buttonFront buttonFront2" >Resign</span> 
+            </span> 
           </button>
         )}
       </div>
-      {startGameMenu && <StartMenu toggleMenu={toggleMenu}/>}
       <ChessNotation changeBoardState={changeBoardState} boardStateIndex={boardStateIndex}/>
     </section>
   )

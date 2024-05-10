@@ -9,8 +9,8 @@ const BoardEditor = () => {
   const [playMenuOpen, settingsMenuOpen] = useState(false);
   const dispatch = useDispatch();
   return(
-    <div className="">
-      <div className={`board ${playerColor === 'white' ? '' : 'rotatedGameBoard'}`} >
+    <div className="buttonHolder">
+      <div className={`board boardHolder ${playerColor === 'white' ? '' : 'rotatedGameBoard'}`} >
         {editorConvertedBoard.pieces.map((row, rowIndex) => {
           return row.map((square, colIndex) => {
             const isDark = (rowIndex + colIndex) % 2 === 1;

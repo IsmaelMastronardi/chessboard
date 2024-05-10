@@ -1,9 +1,9 @@
 nav {
-  border-bottom: 1px solid #FFDB99;
 }
 
 .nav ul {
-  background-color: #1F0F53;
+  position: relative;
+  background-color: var(--primary-purple);
   color: #FFDB99;
   font-weight: 600;
   display: flex;
@@ -11,7 +11,21 @@ nav {
   align-items: end;
   padding-top: 0.2rem;
   padding-bottom: 0.2rem;
+  z-index: 20;
 }
+
+.nav > hr {
+  height: 1rem;
+  border-color: var(--secondary-purple);
+  background-color: var(--secondary-purple);
+  position: relative;
+  z-index: 30;
+}
+.nav > hr:last-child {
+  position: relative;
+  z-index: 10;
+}
+
 
 .links {
   padding-top: 24px;
