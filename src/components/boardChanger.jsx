@@ -14,7 +14,7 @@ const BoardChanger = ({ changeBoardState, boardStateIndex }) => {
     return () => document.removeEventListener('keydown', handleArrowKey);
   });
   return (
-    <div className="mt-10 boardChanger buttonHolder">
+    <div className="boardChanger buttonHolder">
     <button onClick={() => changeBoardState(boardStateIndex -1)} className="buttonBack buttonBack2">
       <span className="buttonShadow buttonShadow2">
         <span className="px-4 py-2 buttonFront">

@@ -15,7 +15,7 @@ const Editor = () => {
   }
 
   return(
-    <div className="relative flex flex-col items-center justify-center gap-4 pt-12">
+    <div className="editor">
       <PieceSelector pieces={blackPieces} />
       <BoardEditor />
       <PieceSelector pieces={whitePieces} />

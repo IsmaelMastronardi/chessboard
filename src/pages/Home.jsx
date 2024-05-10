@@ -30,7 +30,6 @@ const Home = () => {
   return(
     <section className="home">
       <StartMenu toggleMenu={toggleMenu} startGameMenu={startGameMenu}/>
-
       <Board boardStateIndex={boardStateIndex}/>
       <BoardChanger changeBoardState={changeBoardState} boardStateIndex={boardStateIndex}/>
       <div className="flex gap-20">

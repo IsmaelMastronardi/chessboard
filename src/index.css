@@ -26,9 +26,14 @@ main {
   @apply flex flex-col items-center justify-center gap-4;
 }
 
-
+.editor,
 .home {
-  @apply flex flex-col items-center justify-center gap-4 pt-12;
+  @apply flex flex-col items-center justify-center gap-16 pt-20;
+}
+
+.editor {
+  padding-top: 2rem;
+  gap: 2rem;
 }
 
 
