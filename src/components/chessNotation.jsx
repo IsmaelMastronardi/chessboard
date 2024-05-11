@@ -7,14 +7,16 @@ const ChessNotation = ({changeBoardState, boardStateIndex}) => {
     return null;
   };
   return(
-    <div className="notationsContainer">
+    <div className="notationsContainer buttonHolder">
       {chessNotation.map((move, index) => (
-        <p 
+        <button
         key={index}
-        className={`notation ${boardStateIndex - 1 === index ? 'notationActive' : '' }`}
+        className={'notationBack'}
         onClick={() => changeBoardState(index + 1)}>
-         {move}
-        </p>
+          <span className={`notationShadow ${boardStateIndex - 1 === index ? 'notationActiveShadow' : '' }`}>
+           <div className={`notationFront ${boardStateIndex - 1 === index ? 'notationActiveFront' : '' }`}>{move}</div>
+          </span>
+        </button>
       ))}
     </div>
   );

@@ -5,12 +5,7 @@
   height: 3rem;
   outline-offset: 4px;
   border-radius: 0.2rem;
-  transition: all 2s ease-in-out;
-}
-
-.buttonBack2{
-  width: auto;
-  height: auto;
+  transition: all 0.1s ease-in-out;
 }
 
 .buttonShadow {
@@ -25,10 +20,18 @@
   transform: translateY(-2px);
   transition: all 0.1s ease-in-out;
 }
-
+.buttonBack2 {
+  width: auto;
+  height: auto;
+}
 .buttonShadow2 {
   width: auto;
   height: auto;
+}
+
+.buttonBack3,
+.buttonShadow3 {
+  width: 7rem;
 }
 
 .buttonFront {
@@ -43,6 +46,11 @@
 
 .buttonFront2 {
   padding: 1.1rem 0.8rem
+}
+
+.buttonFront3 {
+  font-size: 1rem;
+  padding: 0 0.8rem;
 }
 
 .buttonBack:active .buttonShadow {
