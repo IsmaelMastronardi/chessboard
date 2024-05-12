@@ -25,8 +25,6 @@ const Home = () => {
     }
   };
 
-
-
   return(
     <section className="home">
       <StartMenu toggleMenu={toggleMenu} startGameMenu={startGameMenu}/>
