@@ -20,19 +20,6 @@
 
   box-shadow: 0 6px 0px var(--secondary-yellow);
 } 
-/* .startMenu:after {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  background-color: rgb(87, 86, 86);
-  height: 1rem;
-  bottom: -16px;
-  left: 0;
-  right: 0;
-  border-bottom-left-radius: 0.3rem;
-  border-bottom-right-radius: 0.3rem;
-  box-shadow: 0px 10px 15px rgb(68, 68, 68);
-} */
 
 .startMenuDeployed {
   transform: translateY(20%);
