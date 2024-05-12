@@ -1,12 +1,8 @@
 .startMenu {
   position: absolute;
-  display: flex;
-  flex-direction: column;
   background-color: var(--primary-yellow);
-  position: absolute;
-  align-items: center;
+  display: flex;
   justify-content: center;
-  gap: 1.4rem;
   width: 20rem;
   height: 20rem;
   border-bottom: 0px;
@@ -15,14 +11,49 @@
   z-index: 10;
   top: 0;
   transform: translateY(-70%);
-  border-radius: 0.3rem;
+  border-radius: 0 0 2rem 2rem;
   transition: all 0.5s ease-in-out;
 
   box-shadow: 0 6px 0px var(--secondary-yellow);
-} 
+}
 
 .startMenuDeployed {
   transform: translateY(20%);
+}
+
+.startInside {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(248, 231, 199);
+  gap: 1rem;
+  border-bottom: solid 1rem var(--primary-yellow);
+  padding: 0 2rem;
+  border-radius: 0 0 2rem 2rem;
+}
+
+.startInside > ul {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.startMenuButton {
+background-color: var(--primary-yellow);
+color: var(--primary-purple);
+border: 2px solid var(--primary-purple);
+padding: 0 0.3rem;
+transition: all 0.2s ease-in-out;
+}
+
+.startMenuButtonChoosen {
+  background-color: var(--primary-purple);
+  color: var(--primary-yellow);
+  border: 2px solid var(--primary-purple);
+  box-shadow: inset 0 0 1px 1px var(--primary-yellow);
+  padding: 0 0.3rem;
+  transition: all 0.2s ease-in-out;
 }
 
 

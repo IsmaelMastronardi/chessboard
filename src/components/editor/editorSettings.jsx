@@ -1,10 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { clearBoard, setToInitialPosition, updateCastling, updateTurn } from "../../redux/slices/boardEditorSlice";
 import { useEffect, useState } from "react";
-import { convertToBoard } from "../../gameLogic/helpers";
 
 const EditorSettings = ({toggleMenu}) => {
-  const {editorConvertedBoard, boardIsPlayable} = useSelector((store) => store.boardEditor)
+  const {editorConvertedBoard} = useSelector((store) => store.boardEditor);
   const dispatch = useDispatch();
   const [currentTurn, setCurrentTurn] = useState(editorConvertedBoard.turn);
   const [castling, setCastling] = useState(['K', 'Q', 'k', 'q']);
@@ -74,8 +73,8 @@ const EditorSettings = ({toggleMenu}) => {
   };
 
 return(
-  <div>
-    <div className="bg-slate-500 w-96">
+  <div className="buttonHolder">
+    <div className="">
       <div>
         <p>Turn:</p>
         <label>
@@ -137,14 +136,8 @@ return(
         </div>
       </div>
     </div>
-    <div className="bg-slate-300">
+    <div className="">
       <div className="flex flex-col">
-        <button
-        className={`${boardIsPlayable ? 'bg-green-500' : 'bg-red-500'}`}
-        onClick={() => { if(boardIsPlayable){toggleMenu()} }}
-        >
-          Play
-        </button>
         <button onClick={() => clear()}>Clear</button>
         <button onClick={() => returnToInitialPosition()}>Initial Position</button>
       </div>
