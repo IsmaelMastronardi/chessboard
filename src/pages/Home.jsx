@@ -7,7 +7,7 @@ import ChessNotation from "../components/chessNotation";
 import {makePcMove } from "../redux/slices/boardSlice";
 
 const Home = () => {
-  const {lastBoardStateIndex, pastBoardStates,gameHasStarted, waitingForPcMove, convertedBoard} = useSelector((store) => store.gameBoard);
+  const {lastBoardStateIndex, pastBoardStates,gameHasStarted, convertedBoard} = useSelector((store) => store.gameBoard);
   const [startGameMenu, setStartGameMenu] = useState(false);
   const dispatch = useDispatch();
 
@@ -36,7 +36,7 @@ const Home = () => {
   return(
     <section className="home">
       <StartMenu toggleMenu={toggleMenu} startGameMenu={startGameMenu}/>
-      <Board boardStateIndex={boardStateIndex}/>
+      <Board boardStateIndex={boardStateIndex} lastBoardStateIndex={lastBoardStateIndex}/>
       <BoardChanger changeBoardState={changeBoardState} boardStateIndex={boardStateIndex}/>
       <div className="flex gap-20">
         {!gameHasStarted && (

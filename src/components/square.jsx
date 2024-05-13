@@ -27,7 +27,6 @@ const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => 
     setSelectedMove(undefined);
     togglePromotionMenu();
     const move = posibleMoves[`${selectedMove.from[0]}${selectedMove.from[1]}`].find(obj => obj.move && obj.move[0] === selectedMove.to[0] && obj.move[1] === selectedMove.to[1] && obj.promotionPiece === promotionPiece);
-    console.log(move);
     dispatch(movePiece(selectedMove.from, move, false));
   }
   const findMove = (arr, move) => {
@@ -46,12 +45,13 @@ const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => 
     }
 
   }
-  const handleDrop = (a,b,c) => {
+  const handleDrop = () => {
     if(!posibleMoves[`${selectedPiece[0]}${selectedPiece[1]}`]){
       return;
     }
     const selectedMove = findMove(posibleMoves[`${selectedPiece[0]}${selectedPiece[1]}`], index);
     if(selectedMove){
+  
       if(selectedMove.promotion){
         saveMove(selectedPiece, index);
         togglePromotionMenu();
@@ -78,7 +78,7 @@ const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => 
 
   const [, drop] = useDrop({
     accept: 'PIECE',
-    drop: (item) => {
+    drop: () => {
       if(!isCurrentBoardState){return;}
       handleDrop();
     } 

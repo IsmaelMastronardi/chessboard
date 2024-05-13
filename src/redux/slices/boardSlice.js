@@ -41,7 +41,6 @@ export const createNotation = (piece, from, move, turn) => (dispatch) => {
 export const makePcMove = createAsyncThunk(
   'game/makePcMove',
   async (_, { getState, dispatch }) => {
-    console.log('thunk')
     const state = getState();
     const { convertedBoard, waitingForPcMove } = state.gameBoard;
 
