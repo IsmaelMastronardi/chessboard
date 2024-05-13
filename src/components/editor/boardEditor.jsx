@@ -9,7 +9,7 @@ const BoardEditor = () => {
   const [playMenuOpen, settingsMenuOpen] = useState(false);
   const dispatch = useDispatch();
   return(
-    <div className="buttonHolder">
+    <div className="holder">
       <div className={`board boardHolder ${playerColor === 'white' ? '' : 'rotatedGameBoard'}`} >
         {editorConvertedBoard.pieces.map((row, rowIndex) => {
           return row.map((square, colIndex) => {

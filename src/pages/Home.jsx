@@ -32,16 +32,16 @@ const Home = () => {
       <BoardChanger changeBoardState={changeBoardState} boardStateIndex={boardStateIndex}/>
       <div className="flex gap-20">
         {!gameHasStarted && (
-          <button className="buttonBack buttonBack2 startButton" onClick={toggleMenu}>
-            <span className="buttonShadow buttonShadow2">
-              <span className="buttonFront buttonFront2" >Start</span> 
+          <button className="buttonBack boxAutoWH startButton" onClick={toggleMenu}>
+            <span className="buttonShadow boxAutoWH">
+              <span className="buttonFront buttonFront2 buttonFrontWithHover" >Start</span> 
             </span>
           </button>
         )}
         {gameHasStarted && (
-          <button className="buttonBack buttonBack2 startButton">
-            <span className="buttonShadow buttonShadow2">
-              <span className="buttonFront buttonFront2" >Resign</span> 
+          <button className="buttonBack boxAutoWH startButton">
+            <span className="buttonShadow boxAutoWH">
+              <span className="buttonFront buttonFront2 buttonFrontWithHover" >Resign</span> 
             </span> 
           </button>
         )}

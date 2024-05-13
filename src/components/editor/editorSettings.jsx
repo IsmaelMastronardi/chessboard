@@ -55,6 +55,7 @@ const EditorSettings = ({toggleMenu}) => {
   const handleTurnChange = (value) => {
     setCurrentTurn(value);
     updateTurn(value);
+    console.log(currentTurn)
   };
 
   const handleCastleRightsChange = (value, index) => {
@@ -73,32 +74,25 @@ const EditorSettings = ({toggleMenu}) => {
   };
 
 return(
-  <div className="buttonHolder">
+  <div className="holder">
     <div className="">
       <div className="buttonGroup">
-        <span className="buttonShadow buttonShadow2 straightBottomBorder ">
-          <p className="border-b-2 buttonFront buttonHoverDisable straightBottomBorder groupBottomFront">Turn:</p>
+        <span className="buttonShadow straightBottomBorder">
+          <p className="buttonFront straightBottomBorder groupBottomFront">Turn:</p>
         </span>
         <div className="flex justify-between">
-          <button className="buttonBack buttonBack2 buttonBackFullW">
-            <span className="buttonShadow buttonShadow2 buttonBackFullW">
-              <span className="buttonFront buttonFrontFullW buttonHoverDisable">White</span> 
+          <button className="buttonBack boxFullWH" onClick={() => handleTurnChange('w')}>
+            <span className={`buttonShadow straightTopBorder ${currentTurn === 'w' ? 'blockButtonActive' : ''}`}>
+              <span
+              className={`buttonFront straightTopBorder ${currentTurn === 'w' ? 'blockButtonActive' : ''}`}>White</span> 
             </span>
           </button>
-          <button className="buttonBack buttonBack2 buttonBackFullW">
-            <span className="buttonShadow buttonShadow2 buttonBackFullW">
-              <span className="buttonFront buttonFrontFullW buttonHoverDisable">Black</span> 
+          <button className="buttonBack boxFullWH" onClick={() => handleTurnChange('b')}>
+            <span className={`buttonShadow straightTopBorder ${currentTurn === 'b' ? 'blockButtonActive' : ''}`}>
+              <span className={`buttonFront straightTopBorder ${currentTurn === 'b' ? 'blockButtonActive' : ''}`}>Black</span> 
             </span>
           </button>
         </div>
-        {/* <label className="">
-          <input type="radio" checked={currentTurn === 'w'} onChange={() => handleTurnChange('w')}/>
-          <span className="">White</span>
-        </label>
-        <label>
-          <input type="radio" checked={currentTurn === 'b'} onChange={() => handleTurnChange('b')}/>
-          <span>Black</span>
-        </label> */}
       </div>
       <div>
         <p>Casteling:</p>

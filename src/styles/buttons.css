@@ -1,12 +1,20 @@
+.boxAutoWH {
+  width: auto;
+  height: auto;
+}
+
 .box3WH {
   width: 3rem;
   height: 3rem;
 }
 
+.boxFullWH {
+  width: 100%;
+  height: 100%;
+}
+
 .buttonBack {
   background-color: hsla(0, 0%, 13%, 0.25);
-  width: 3rem;
-  height: 3rem;
   outline-offset: 4px;
   border-radius: 0.2rem;
   transition: all 0.1s ease-in-out;
@@ -16,28 +24,10 @@
   background-color: #685a40;
   position: relative;
   display: block;
-  width: 3rem;
-  height: 3rem;
   outline-offset: 4px;
   border-radius: 0.2rem;
-  transform: translateY(-2px);
+  transform: translateY(-4px);
   transition: all 0.1s ease-in-out;
-}
-
-.buttonBack2,
-.buttonShadow2 {
-  width: auto;
-  height: auto;
-}
-
-.buttonBack3,
-.buttonShadow3 {
-  width: 7rem;
-}
-
-.buttonBackFullW,
-.buttonShadowFullW {
-  width: 100%;
 }
 
 .buttonFront {
@@ -59,25 +49,31 @@
   padding: 0 0.8rem;
 }
 
-.buttonFrontFullW {
-  border-radius: 0 0 0.2rem 0.2rem;
-}
-
-.buttonBack:active .buttonShadow {
-  transform: translateY(0px);
-}
-
+.buttonBack:active .buttonShadow,
 .buttonBack:active .buttonFront {
   transform: translateY(-1px);
 }
 
-.buttonFront:hover{
+.buttonFrontWithHover:hover{
   transform: translateY(-8px);
 }
 
+.holder {
+  background-color: var(--primary-purple);
+  border-radius: 0.2rem;
+  border-bottom: 6px solid #48348a;
+  border-right: 10px solid #48348a;
+  border-left: 10px solid #48348a;
+  box-shadow: 0px 10px 0px #1F0F53;
+}
+
+.holderLong {
+  border-bottom: 12px solid #48348a;
+}
+
 .startButton {
-  margin-top: -148px;
-  margin-bottom: 80px;
+  margin-top: -134px;
+  margin-bottom: 86px;
 }
 
 .boardChanger {
@@ -87,32 +83,27 @@
   background-color: #48348a
 }
 
-.buttonHolder {
-  background-color: var(--primary-purple);
-  border-radius: 0.2rem;
-  border-bottom: 14px solid #48348a;
-  border-right: 10px solid #48348a;
-  border-left: 10px solid #48348a;
-  box-shadow: 0px 10px 0px #1F0F53;
-}
-
-.pieceSelectorBorder {
-  border-left: 1px solid #48348a;
-  border-right: 1px solid #48348a;
-}
-
 .straightBottomBorder {
   border-radius: 0.2rem 0.2rem 0 0;
 }
 
-.buttonHoverDisable:hover {
-  transform: translateY(-6px);
+.straightTopBorder {
+  border-radius: 0 0 0.2rem 0.2rem;
 }
 
-.turnButton{
+.buttonBlockBack {
   margin-bottom: -1px;
 }
 
 .groupBottomFront{
-  border-bottom: 2px solid var(--secondary-yellow);
+  border-bottom: 4px solid var(--secondary-yellow);
+  margin-bottom: -2px;
 }
+
+.blockButtonActive {
+  transform: translateY(-1px);
+}
+
+
+
+

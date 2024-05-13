@@ -5,12 +5,12 @@ import Pieces from "../pieces";
 const PieceSelector = ({pieces}) => {
   const dispatch = useDispatch();
   return(
-    <div className="pieceSelector buttonHolder">
+    <div className="pieceSelector holder">
       <ul className="flex gap-1">
-        <li className="buttonBack">
-          <span className="buttonShadow">
+        <li className="buttonBack box3WH">
+          <span className="buttonShadow box3WH">
             <button 
-              className="w-full h-full p-2 buttonFront"
+              className="w-full h-full p-2 buttonFront buttonFrontWithHover"
               onClick={() => dispatch(updateChosenAction('X'))}>
                 <img src="../../../images/trash.png" alt="trash" className="w-full h-full"/>
             </button>
@@ -18,10 +18,10 @@ const PieceSelector = ({pieces}) => {
         </li>
         {pieces.map((piece) => {
           return (
-            <li key={piece} className="buttonBack">
-              <span className="buttonShadow">
+            <li key={piece} className="buttonBack box3WH">
+              <span className="buttonShadow box3WH">
                 <button 
-                className="w-full h-full p-2 buttonFront"
+                className="w-full h-full p-2 buttonFront buttonFrontWithHover"
                 onClick={() => dispatch(updateChosenAction(piece))}>
                   <Pieces value={piece} />
                 </button>
@@ -29,10 +29,10 @@ const PieceSelector = ({pieces}) => {
             </li>
           )
         })}
-         <li className="buttonBack">
-          <span className="buttonShadow">
+         <li className="buttonBack box3WH">
+          <span className="buttonShadow box3WH">
             <button 
-              className="w-full h-full p-2 buttonFront"
+              className="w-full h-full p-2 buttonFront buttonFrontWithHover"
               onClick={() => dispatch(updateChosenAction('move'))}>
                 <img src="../../../images/hand.png" alt="trash" className="w-full h-full"/>
             </button>

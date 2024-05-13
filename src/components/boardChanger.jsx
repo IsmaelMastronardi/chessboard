@@ -14,17 +14,17 @@ const BoardChanger = ({ changeBoardState, boardStateIndex }) => {
     return () => document.removeEventListener('keydown', handleArrowKey);
   });
   return (
-    <div className="boardChanger buttonHolder">
+    <div className="boardChanger holder">
     <button onClick={() => changeBoardState(boardStateIndex -1)} className="buttonBack buttonBack2">
       <span className="buttonShadow buttonShadow2">
-        <span className="px-4 py-2 buttonFront">
+        <span className="px-4 py-2 buttonFront buttonFrontWithHover">
           <img src="../../../images/arrow_left_purple.png" alt="previous"/>
         </span>
       </span>
     </button>
     <button onClick={() => changeBoardState(boardStateIndex +1)} className="buttonBack buttonBack2">
       <span className="buttonShadow buttonShadow2">
-        <span className="px-4 py-2 buttonFront">
+        <span className="px-4 py-2 buttonFront buttonFrontWithHover">
           <img src="../../../images/arrow_right_purple.png"alt="next"/>
         </span>
       </span>

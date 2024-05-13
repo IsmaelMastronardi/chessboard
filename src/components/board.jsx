@@ -27,7 +27,7 @@ const Board = ({boardStateIndex, lastBoardStateIndex}) => {
   });
 
   return(
-    <div className="buttonHolder">
+    <div className="holder holderLong">
       <div className={`board boardHolder ${playerColor === 'white' ? '' : 'rotatedGameBoard'}`} >
       {pastBoardStates[boardStateIndex].pieces.map((row, rowIndex) => {
         return row.map((square, colIndex) => {
