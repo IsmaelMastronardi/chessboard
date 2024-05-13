@@ -1,6 +1,10 @@
+.box3WH {
+  width: 3rem;
+  height: 3rem;
+}
+
 .buttonBack {
   background-color: hsla(0, 0%, 13%, 0.25);
-  cursor: pointer;
   width: 3rem;
   height: 3rem;
   outline-offset: 4px;
@@ -12,7 +16,6 @@
   background-color: #685a40;
   position: relative;
   display: block;
-  cursor: pointer;
   width: 3rem;
   height: 3rem;
   outline-offset: 4px;
@@ -20,10 +23,8 @@
   transform: translateY(-2px);
   transition: all 0.1s ease-in-out;
 }
-.buttonBack2 {
-  width: auto;
-  height: auto;
-}
+
+.buttonBack2,
 .buttonShadow2 {
   width: auto;
   height: auto;
@@ -32,6 +33,11 @@
 .buttonBack3,
 .buttonShadow3 {
   width: 7rem;
+}
+
+.buttonBackFullW,
+.buttonShadowFullW {
+  width: 100%;
 }
 
 .buttonFront {
@@ -51,6 +57,10 @@
 .buttonFront3 {
   font-size: 1rem;
   padding: 0 0.8rem;
+}
+
+.buttonFrontFullW {
+  border-radius: 0 0 0.2rem 0.2rem;
 }
 
 .buttonBack:active .buttonShadow {
@@ -89,4 +99,20 @@
 .pieceSelectorBorder {
   border-left: 1px solid #48348a;
   border-right: 1px solid #48348a;
+}
+
+.straightBottomBorder {
+  border-radius: 0.2rem 0.2rem 0 0;
+}
+
+.buttonHoverDisable:hover {
+  transform: translateY(-6px);
+}
+
+.turnButton{
+  margin-bottom: -1px;
+}
+
+.groupBottomFront{
+  border-bottom: 2px solid var(--secondary-yellow);
 }

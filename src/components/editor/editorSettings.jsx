@@ -75,24 +75,30 @@ const EditorSettings = ({toggleMenu}) => {
 return(
   <div className="buttonHolder">
     <div className="">
-      <div>
-        <p>Turn:</p>
-        <label>
-          <input
-          type="radio"
-          checked={currentTurn === 'w'}
-          onChange={() => handleTurnChange('w')}
-          />
-          <span>White</span>
+      <div className="buttonGroup">
+        <span className="buttonShadow buttonShadow2 straightBottomBorder ">
+          <p className="border-b-2 buttonFront buttonHoverDisable straightBottomBorder groupBottomFront">Turn:</p>
+        </span>
+        <div className="flex justify-between">
+          <button className="buttonBack buttonBack2 buttonBackFullW">
+            <span className="buttonShadow buttonShadow2 buttonBackFullW">
+              <span className="buttonFront buttonFrontFullW buttonHoverDisable">White</span> 
+            </span>
+          </button>
+          <button className="buttonBack buttonBack2 buttonBackFullW">
+            <span className="buttonShadow buttonShadow2 buttonBackFullW">
+              <span className="buttonFront buttonFrontFullW buttonHoverDisable">Black</span> 
+            </span>
+          </button>
+        </div>
+        {/* <label className="">
+          <input type="radio" checked={currentTurn === 'w'} onChange={() => handleTurnChange('w')}/>
+          <span className="">White</span>
         </label>
         <label>
-          <input 
-          type="radio"
-          checked={currentTurn === 'b'}
-          onChange={() => handleTurnChange('b')}
-          />
+          <input type="radio" checked={currentTurn === 'b'} onChange={() => handleTurnChange('b')}/>
           <span>Black</span>
-        </label>
+        </label> */}
       </div>
       <div>
         <p>Casteling:</p>
