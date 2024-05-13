@@ -4,8 +4,7 @@ import StartMenu from "../components/startMenu";
 import BoardChanger from "../components/boardChanger";
 import { useDispatch, useSelector } from "react-redux";
 import ChessNotation from "../components/chessNotation";
-import { minimax } from "../engine/boardEvaluation";
-import { createNotation, makePcMove, movePiece, updateSelectedMove } from "../redux/slices/boardSlice";
+import {makePcMove } from "../redux/slices/boardSlice";
 
 const Home = () => {
   const {lastBoardStateIndex, pastBoardStates,gameHasStarted, waitingForPcMove, convertedBoard} = useSelector((store) => store.gameBoard);
@@ -15,8 +14,6 @@ const Home = () => {
   const toggleMenu = () => {
     setStartGameMenu(!startGameMenu);
   }
-
-  console.log(waitingForPcMove)
 
   useEffect(() => {
     dispatch(makePcMove());

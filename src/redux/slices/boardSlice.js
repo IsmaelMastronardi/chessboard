@@ -46,7 +46,6 @@ export const makePcMove = createAsyncThunk(
     const { convertedBoard, waitingForPcMove } = state.gameBoard;
 
     if (waitingForPcMove) {
-      console.log('here')
       try {
         const result = await minimaxAsync(convertedBoard, 3, false);
 
@@ -138,10 +137,6 @@ const gameBoardSlice = createSlice({
       state.chessNotation.push(action.payload);
     },
   },
-  // extraReducers: (builder) => {
-  //   builder.addCase(fetchPcMove.fulfilled, (state, action) => {
-  //   });
-  // },
 });
 
 export const { updateBoard, updateSelectedPiece,updateSelectedMove, updatePosibleMoves, startGame, startFromPosition, endGame, returnToStart } = gameBoardSlice.actions;

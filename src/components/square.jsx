@@ -1,5 +1,5 @@
 import { useDrag, useDrop } from "react-dnd";
-import { addNotation, createNotation, movePiece, selectPiece, startGame, updateSelectedMove } from "../redux/slices/boardSlice";
+import { createNotation, movePiece, selectPiece } from "../redux/slices/boardSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import PositionIndicator from "./positionIndicator";
