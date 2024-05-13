@@ -75,12 +75,12 @@ const EditorSettings = ({toggleMenu}) => {
 
 return(
   <div className="holder">
-    <div className="">
-      <div className="buttonGroup">
+    <div>
+      <div>
         <span className="buttonShadow straightBottomBorder">
           <p className="buttonFront straightBottomBorder groupBottomFront">Turn:</p>
         </span>
-        <div className="flex justify-between">
+        <div className="flex">
           <button className="buttonBack boxFullWH" onClick={() => handleTurnChange('w')}>
             <span className={`buttonShadow straightTopBorder ${currentTurn === 'w' ? 'blockButtonActive' : ''}`}>
               <span
@@ -95,44 +95,48 @@ return(
         </div>
       </div>
       <div>
-        <p>Casteling:</p>
-        <div className="flex">
-          <p>White:</p>
-          <label>
-            <input 
-            type="checkbox"
-            checked={editorConvertedBoard.castling.indexOf('K') !== -1}
-            onChange={() => handleCastleRightsChange('K', 0)}
-            />
-            <span>King</span>
-          </label>
-          <label>
-            <input 
-            type="checkbox"
-            checked={editorConvertedBoard.castling.indexOf('Q') !== -1}
-            onChange={() => handleCastleRightsChange('Q', 1)}
-            />
-            <span>Queen</span>
-          </label>
+        <span className="mt-10 buttonShadow straightBottomBorder">
+          <p className="buttonFront straightBottomBorder groupBottomFront">Casteling:</p>
+        </span>
+
+        <div className="flex justify-between">
+         <span className="buttonBack boxFullWH">
+            <span className={`buttonShadow straightTopBorder`}>
+              <span
+              className={`buttonFront straightTopBorder`}>White:</span> 
+            </span>
+          </span>
+          <button className="buttonBack boxFullWH" onClick={() => handleCastleRightsChange('K', 0)}>
+            <span className={`buttonShadow straightTopBorder ${editorConvertedBoard.castling.indexOf('K') !== -1 ? 'blockButtonActive' : ''}`}>
+              <span
+              className={`buttonFront straightTopBorder ${editorConvertedBoard.castling.indexOf('K') !== -1 ? 'blockButtonActive' : ''}`}>King</span> 
+            </span>
+          </button>
+          <button className="buttonBack boxFullWH" onClick={() => handleCastleRightsChange('Q', 1)}>
+            <span className={`buttonShadow straightTopBorder ${editorConvertedBoard.castling.indexOf('Q') !== -1 ? 'blockButtonActive' : ''}`}>
+              <span className={`buttonFront straightTopBorder ${editorConvertedBoard.castling.indexOf('Q') !== -1 ? 'blockButtonActive' : ''}`}>Queen</span> 
+            </span>
+          </button>
         </div>
-        <div className="flex">
-          <p>Black:</p>
-          <label>
-            <input 
-            type="checkbox"
-            checked={editorConvertedBoard.castling.indexOf('k') !== -1}
-            onChange={() => handleCastleRightsChange('k', 2)}
-            />
-            <span>King</span>
-          </label>
-          <label>
-            <input 
-            type="checkbox"
-            checked={editorConvertedBoard.castling.indexOf('q') !== -1}
-            onChange={() => handleCastleRightsChange('q', 3)}
-            />
-            <span>Queen</span>
-          </label>
+
+        <div className="flex justify-between">
+         <span className="buttonBack boxFullWH">
+            <span className={`buttonShadow straightTopBorder`}>
+              <span
+              className={`buttonFront straightTopBorder`}>Black:</span> 
+            </span>
+          </span>
+          <button className="buttonBack boxFullWH" onClick={() => handleCastleRightsChange('k', 2)}>
+            <span className={`buttonShadow straightTopBorder ${editorConvertedBoard.castling.indexOf('k') !== -1 ? 'blockButtonActive' : ''}`}>
+              <span
+              className={`buttonFront straightTopBorder ${editorConvertedBoard.castling.indexOf('k') !== -1 ? 'blockButtonActive' : ''}`}>King</span> 
+            </span>
+          </button>
+          <button className="buttonBack boxFullWH" onClick={() => handleCastleRightsChange('q', 3)}>
+            <span className={`buttonShadow straightTopBorder ${editorConvertedBoard.castling.indexOf('q') !== -1 ? 'blockButtonActive' : ''}`}>
+              <span className={`buttonFront straightTopBorder ${editorConvertedBoard.castling.indexOf('q') !== -1 ? 'blockButtonActive' : ''}`}>Queen</span> 
+            </span>
+          </button>
         </div>
       </div>
     </div>
