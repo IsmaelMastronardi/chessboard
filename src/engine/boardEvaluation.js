@@ -32,7 +32,7 @@ const minimax = (board, depth, maximizingPlayer) => {
     const moves = calculatePosibleMoves(board, board.turn === 'w' ? 'white' : 'black');
     if (moves === 'checkmate') {
       return {
-        value: maximizingPlayer ? -Infinity : Infinity,
+        value: maximizingPlayer ? Infinity : -Infinity,
         move: null,
       };
     }
@@ -55,6 +55,7 @@ const minimax = (board, depth, maximizingPlayer) => {
         }
       }
     }
+    console.log(bestValue, bestMove);
     return {
       value: bestValue,
       piece: bestMove.piece,
