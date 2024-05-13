@@ -55,7 +55,6 @@ const minimax = (board, depth, maximizingPlayer) => {
         }
       }
     }
-    console.log(bestValue, bestMove);
     return {
       value: bestValue,
       piece: bestMove.piece,
