@@ -103,7 +103,7 @@ return(
          <span className="buttonBack boxFullWH">
             <span className={`buttonShadow straightTopBorder`}>
               <span
-              className={`buttonFront straightTopBorder`}>White:</span> 
+              className={`buttonFront straightTopBorder groupBottomFront`}>White:</span> 
             </span>
           </span>
           <button className="buttonBack boxFullWH" onClick={() => handleCastleRightsChange('K', 0)}>
