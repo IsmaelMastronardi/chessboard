@@ -96,6 +96,8 @@ const convertToFen = (board) => {
 }
 
 module.exports = {
+  rowToLetters,
+  letterToNumbers,
   getPieceColor,
   isInCheckline,
   convertToBoard,

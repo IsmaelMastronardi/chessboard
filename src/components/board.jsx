@@ -1,52 +1,34 @@
 import { useDispatch, useSelector } from "react-redux";
 import Square from "./square";
-import { useEffect, useState } from "react";
-import { movePiece } from "../redux/slices/boardSlice";
+import { useEffect } from "react";
+import { addNotation, createNotation, movePiece, updateSelectedMove } from "../redux/slices/boardSlice";
 import { minimax } from "../engine/boardEvaluation";
-import SettingsMenu from "./settingsMenu";
 
-const Board = () => {
-  const {convertedBoard, posibleMoves, selectedPiece, waitingForPcMove, pastBoardStates, lastBoardStateIndex} = useSelector((store) => store.gameBoard);
+const Board = ({boardStateIndex, lastBoardStateIndex}) => {
+  const {convertedBoard, posibleMoves, selectedPiece, waitingForPcMove, pastBoardStates} = useSelector((store) => store.gameBoard);
   const {playerColor} = useSelector((store) => store.settings);
   const dispatch = useDispatch();
-  const [boardStateIndex, setBoardStateIndex] = useState(lastBoardStateIndex);
-
   useEffect(() => {
     if (waitingForPcMove) {
       const result = minimax(convertedBoard, 3, false);
+      dispatch(updateSelectedMove({
+        piece: convertedBoard.pieces[[result.piece[0]]][result.piece[1]],
+        from: result.piece,
+        to: result.move,
+      }));
+      dispatch(createNotation(
+        convertedBoard.pieces[[result.piece[0]]][result.piece[1]],
+        result.piece,
+        result.move,
+        convertedBoard.fullMove
+      ))
       dispatch(movePiece(result.piece, result.move, true));
     }
   });
 
-  useEffect(() => {
-    setBoardStateIndex(lastBoardStateIndex);
-  }, [lastBoardStateIndex]);
-
-
-  const changeBoardState = (direction) => {
-    if(boardStateIndex + direction >= 0 && boardStateIndex + direction < pastBoardStates.length){
-      setBoardStateIndex(boardStateIndex + direction);
-    }
-  };
-
-  useEffect(() => {
-    const handleArrowKey = (e) => {
-      if(e.key === 'ArrowLeft'){
-        console.log('here')
-        changeBoardState(-1);
-      }
-      if(e.key === 'ArrowRight'){
-        console.log('here2')
-        changeBoardState(1);
-      }
-    };
-    document.addEventListener('keydown', handleArrowKey);
-    return () => document.removeEventListener('keydown', handleArrowKey);
-  });
-
   return(
-    <section className="">
-      <div className={`grid grid-cols-8 ${playerColor === 'white' ? '' : 'rotatedGameBoard'}`} >
+    <div className="holder holderLong">
+      <div className={`board boardHolder ${playerColor === 'white' ? '' : 'rotatedGameBoard'}`} >
       {pastBoardStates[boardStateIndex].pieces.map((row, rowIndex) => {
         return row.map((square, colIndex) => {
           const isDark = (rowIndex + colIndex) % 2 === 1;
@@ -68,14 +50,7 @@ const Board = () => {
         })
       })}
     </div>
-    <div className="flex items-start w-full">
-      <SettingsMenu />
     </div>
-    <div className="flex justify-between w-full">
-      <button onClick={() => changeBoardState(-1)}>&lt;---</button>
-      <button onClick={() => changeBoardState(1)}>---&gt;</button>
-    </div>
-    </section>
   )
 }
 

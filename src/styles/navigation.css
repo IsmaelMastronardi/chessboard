@@ -1,0 +1,54 @@
+nav {
+}
+
+.nav ul {
+  position: relative;
+  background-color: var(--primary-purple);
+  color: #FFDB99;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-around;
+  align-items: end;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  z-index: 20;
+}
+
+.nav > hr {
+  height: 1rem;
+  border-color: var(--secondary-purple);
+  background-color: var(--secondary-purple);
+  position: relative;
+  z-index: 30;
+}
+.nav > hr:last-child {
+  position: relative;
+  z-index: 10;
+}
+
+
+.links {
+  padding-top: 24px;
+}
+
+a {
+  border: 1px solid #FFDB99;
+  padding-left: 0.1rem;
+  padding-right: 0.1rem;
+  font-size: 0.99rem;
+}
+
+img {
+  padding-bottom: 0.1rem;
+
+  @apply h-12;
+}
+
+.active {
+  background-color: #FFDB99;
+  color: #1F0F53;
+  position: relative;
+  border: 1px solid #FFDB99;
+  box-shadow: inset 0 0 1px 1px #1F0F53;
+}
+

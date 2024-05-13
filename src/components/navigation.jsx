@@ -1,26 +1,31 @@
 import { NavLink } from "react-router-dom";
+import '../styles/navigation.css';
 
 const Navigation = () => {
 return (
-  <nav className="bg-white ">
-    <ul className="flex justify-center gap-20">
+  <nav className="nav">
+    <ul>
       <li>
-        <NavLink to={'/'}>Home</NavLink>
+        <img src="../../../images/app_logo.png" alt="app logo"/>
       </li>
-      <li>
-        <NavLink to={'/editor'}>Editor</NavLink>
+      <li className="links">
+        <NavLink to={'/'} activeclassname="active">
+          Home
+        </NavLink>
       </li>
-      <li>
-        <a>
-          Learn
-        </a>
+      <li className="links">
+        <NavLink to={'/editor'} activeclassname="active">
+          Editor
+        </NavLink>
       </li>
-      <li>
-        <a>
-          About
-        </a>
+      <li className="links">
+        <NavLink to={'/Learn'} activeclassname="active">
+        Learn
+        </NavLink>
       </li>
     </ul>
+    <hr />
+    <hr />
   </nav>
 );
 };

@@ -1,29 +1,53 @@
 import Board from "../components/board";
-import { useState } from "react";
-import PastMoves from "../components/pastMoves";
+import { useEffect, useState } from "react";
 import StartMenu from "../components/startMenu";
+import BoardChanger from "../components/boardChanger";
+import { useSelector } from "react-redux";
+import ChessNotation from "../components/chessNotation";
 
 const Home = () => {
   const [startGameMenu, setStartGameMenu] = useState(false);
+  const {lastBoardStateIndex, pastBoardStates,gameHasStarted} = useSelector((store) => store.gameBoard);
   const toggleMenu = () => {
     setStartGameMenu(!startGameMenu);
   }
 
+  const [boardStateIndex, setBoardStateIndex] = useState(lastBoardStateIndex);
+
+  useEffect(() => {
+    setBoardStateIndex(lastBoardStateIndex);
+  }, [lastBoardStateIndex]);
+
+
+  const changeBoardState = (newIndex) => {
+    if(newIndex >= 0 && newIndex < pastBoardStates.length){
+      setBoardStateIndex(newIndex);
+    }
+  };
 
   return(
-    <div className="relative flex flex-col items-center justify-center gap-4 pt-12">
+    <section className="home">
+      <StartMenu toggleMenu={toggleMenu} startGameMenu={startGameMenu}/>
+      <Board boardStateIndex={boardStateIndex}/>
+      <BoardChanger changeBoardState={changeBoardState} boardStateIndex={boardStateIndex}/>
       <div className="flex gap-20">
-        <button
-        className="bg-gray-500 border"
-        onClick={toggleMenu}
-        >Start
-        </button>
-        <button className="bg-gray-500 border">Surrender</button>
+        {!gameHasStarted && (
+          <button className="buttonBack boxAutoWH startButton" onClick={toggleMenu}>
+            <span className="buttonShadow boxAutoWH">
+              <span className="buttonFront buttonFront2 buttonFrontWithHover" >Start</span> 
+            </span>
+          </button>
+        )}
+        {gameHasStarted && (
+          <button className="buttonBack boxAutoWH startButton">
+            <span className="buttonShadow boxAutoWH">
+              <span className="buttonFront buttonFront2 buttonFrontWithHover" >Resign</span> 
+            </span> 
+          </button>
+        )}
       </div>
-      <Board />
-      {startGameMenu && <StartMenu toggleMenu={toggleMenu}/>}
-      <PastMoves />
-    </div>
+      <ChessNotation changeBoardState={changeBoardState} boardStateIndex={boardStateIndex}/>
+    </section>
   )
 }
 export default Home;

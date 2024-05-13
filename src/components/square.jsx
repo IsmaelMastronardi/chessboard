@@ -1,14 +1,14 @@
 import { useDrag, useDrop } from "react-dnd";
-import { movePiece, selectPiece, startGame } from "../redux/slices/boardSlice";
+import { addNotation, createNotation, movePiece, selectPiece, startGame, updateSelectedMove } from "../redux/slices/boardSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { selectPieceIcon } from "../gameLogic/pieces";
 import { useState } from "react";
 import PositionIndicator from "./positionIndicator";
+import Pieces from "./pieces";
 
 
 const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => {
 
-  const {posibleMoves, selectedPiece, gameHasStarted} = useSelector((store) => store.gameBoard);
+  const {convertedBoard ,posibleMoves, selectedPiece, gameHasStarted} = useSelector((store) => store.gameBoard);
   const {playerColor, squareBackgroundColor} = useSelector((store) => store.settings);
   const [promotionMenu, setPromotionMenu] = useState(false);
 
@@ -46,7 +46,7 @@ const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => 
     }
 
   }
-  const handleDrop = () => {
+  const handleDrop = (a,b,c) => {
     if(!posibleMoves[`${selectedPiece[0]}${selectedPiece[1]}`]){
       return;
     }
@@ -57,6 +57,12 @@ const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => 
         togglePromotionMenu();
       }
       else {
+        dispatch(createNotation(
+          convertedBoard.pieces[selectedPiece[0]][selectedPiece[1]],
+          selectedPiece,
+          selectedMove,
+          convertedBoard.fullMove
+        ));
         dispatch(movePiece(selectedPiece, selectedMove, false));
       }
     }
@@ -74,14 +80,13 @@ const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => 
     accept: 'PIECE',
     drop: (item) => {
       if(!isCurrentBoardState){return;}
-      handleDrop(item.index, index, item.piece);
+      handleDrop();
     } 
   });
 
-  const piece = selectPieceIcon(value);
   return (
     <><div
-      className={`border flex justify-center items-center border-gray-400 text-center relative w-full h-full p-0 square ${playerColor === 'white' ? '' : 'rotatedSquare'}`}
+      className={`square ${playerColor === 'white' ? '' : 'rotatedSquare'}`}
       ref={drop}
       onClick={handleClick}
       style={{
@@ -93,7 +98,7 @@ const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => 
         <div className="absolute top-0 bottom-0 left-0 right-0 w-6 h-6 m-auto bg-gray-300 rounded-full opacity-80"></div>
       )}
       <div className="w-6 h-6" onDragStart={handleClick} ref={drag}>
-        {piece}
+        <Pieces value={value} />
       </div>
     </div>
     {promotionMenu && (

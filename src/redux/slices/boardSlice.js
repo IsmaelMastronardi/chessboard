@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { calculatePosibleMoves } from "../../gameLogic/generateMoves";
-import { convertToBoard, convertToFen } from "../../gameLogic/helpers";
+import { convertToBoard, convertToFen, rowToLetters } from "../../gameLogic/helpers";
 import { finalizeMove } from "../../gameLogic/completeMove";
 
 export const movePiece = (oldIndex, move, isPcMove) => (dispatch) => {
@@ -15,6 +15,29 @@ export const getPosibleMoves = (board, color) => (dispatch) => {
   const result = calculatePosibleMoves(board, allyColor);
   dispatch(gameBoardSlice.actions.updatePosibleMoves(result));
 };
+export const createNotation = (piece, from, move, turn) => (dispatch) => {
+  let result;
+  if(move.promotion){
+    if(move.kingSideCastle){
+      result = `${turn}  O-O`
+    }
+    else {
+      result = `${turn}  O-O-O`
+    };
+    dispatch(gameBoardSlice.actions.addNotation(result));
+  };
+  let pieceValue = piece;
+  if(piece === 'p'|| piece === 'P'){
+    pieceValue = rowToLetters(from[1]);
+    result = `${turn}.  ${pieceValue}${Math.abs(move.move[0] - 7) + 1}`;
+    dispatch(gameBoardSlice.actions.addNotation(result));
+  }
+  else{
+    result = `${turn}.  ${pieceValue.toLowerCase()} ${rowToLetters(move.move[1])}${Math.abs(move.move[0] - 7) + 1}`;
+    dispatch(gameBoardSlice.actions.addNotation(result))
+  };
+};
+
 // const initalBoardPosition = "k7/7P/8/8/8/8/8/K7 w KQkq - 0 1";
 
 const initalBoardPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
@@ -25,12 +48,14 @@ const initialState = {
   convertedBoard: convertToBoard(initalBoardPosition),
   posibleMoves: calculatePosibleMoves(convertToBoard(initalBoardPosition), 'white'),
   selectedPiece: '',
+  selectedMove: undefined,
   waitingForPcMove: false,
   playerColor: 'white',
   gameStarted: false,
   pastBoardStates: [convertToBoard(initalBoardPosition)],
   lastBoardStateIndex: 0,
   gameHasStarted: false,
+  chessNotation: [],
 };
 
 const gameBoardSlice = createSlice({
@@ -49,6 +74,9 @@ const gameBoardSlice = createSlice({
     },
     updateSelectedPiece: (state, action) => {
       state.selectedPiece = action.payload;
+    },
+    updateSelectedMove: (state, action) => {
+      state.selectedMove = action.payload;
     },
     updatePosibleMoves: (state, action) => {
       state.posibleMoves = action.payload;
@@ -73,9 +101,12 @@ const gameBoardSlice = createSlice({
       state.posibleMoves = calculatePosibleMoves(state.pastBoardStates[0], 'white');
       state.lastBoardStateIndex = 0;
     },
+    addNotation: (state, action) => {
+      state.chessNotation.push(action.payload);
+    },
   },
 });
 
-export const { updateBoard, updateSelectedPiece, updatePosibleMoves, startGame, startFromPosition, endGame, returnToStart } = gameBoardSlice.actions;
+export const { updateBoard, updateSelectedPiece,updateSelectedMove, updatePosibleMoves, startGame, startFromPosition, endGame, returnToStart } = gameBoardSlice.actions;
 export default gameBoardSlice.reducer;
 
