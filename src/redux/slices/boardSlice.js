@@ -70,6 +70,7 @@ export const makePcMove = createAsyncThunk(
 );
 
 // const initalBoardPosition = "k7/7P/8/8/8/8/8/K7 w KQkq - 0 1";
+// const initalBoardPosition = '1k6/5Q2/8/8/8/8/6Q1/1K6 w - 0 1'
 
 const initalBoardPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 

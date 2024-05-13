@@ -1,13 +1,9 @@
-import { useDispatch, useSelector } from "react-redux";
-import SettingsMenu from "../settingsMenu";
+import { useSelector } from "react-redux";
 import SquareForEditor from "./squareForEditor";
-import { useState } from "react";
 
 const BoardEditor = () => {
-  const {editorConvertedBoard, } = useSelector((store) => store.boardEditor);
+  const {editorConvertedBoard} = useSelector((store) => store.boardEditor);
   const {playerColor} = useSelector((store) => store.settings);
-  const [playMenuOpen, settingsMenuOpen] = useState(false);
-  const dispatch = useDispatch();
   return(
     <div className="holder">
       <div className={`board boardHolder ${playerColor === 'white' ? '' : 'rotatedGameBoard'}`} >
