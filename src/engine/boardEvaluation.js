@@ -63,6 +63,16 @@ const minimax = (board, depth, maximizingPlayer) => {
   }
 };
 
+const minimaxAsync = (board, depth, maximizingPlayer) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const result = minimax(board, depth, maximizingPlayer);
+      resolve(result);
+    }, 100);
+  });
+};
+
 module.exports = { 
-  minimax
+  minimax,
+  minimaxAsync
 };

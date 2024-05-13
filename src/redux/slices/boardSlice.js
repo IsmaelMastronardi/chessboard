@@ -1,7 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { calculatePosibleMoves } from "../../gameLogic/generateMoves";
 import { convertToBoard, convertToFen, rowToLetters } from "../../gameLogic/helpers";
 import { finalizeMove } from "../../gameLogic/completeMove";
+import { minimax, minimaxAsync } from "../../engine/boardEvaluation";
 
 export const movePiece = (oldIndex, move, isPcMove) => (dispatch) => {
   dispatch(gameBoardSlice.actions.updateBoard({oldIndex, move, isPcMove}));
@@ -37,6 +38,38 @@ export const createNotation = (piece, from, move, turn) => (dispatch) => {
     dispatch(gameBoardSlice.actions.addNotation(result))
   };
 };
+export const makePcMove = createAsyncThunk(
+  'game/makePcMove',
+  async (_, { getState, dispatch }) => {
+    console.log('thunk')
+    const state = getState();
+    const { convertedBoard, waitingForPcMove } = state.gameBoard;
+
+    if (waitingForPcMove) {
+      console.log('here')
+      try {
+        const result = await minimaxAsync(convertedBoard, 3, false);
+
+        dispatch(updateSelectedMove({
+          piece: convertedBoard.pieces[result.piece[0]][result.piece[1]],
+          from: result.piece,
+          to: result.move,
+        }));
+  
+        dispatch(createNotation(
+          convertedBoard.pieces[result.piece[0]][result.piece[1]],
+          result.piece,
+          result.move,
+          convertedBoard.fullMove
+        ));
+  
+        dispatch(movePiece(result.piece, result.move, true));
+      } catch (error) {
+        console.error('Error in makePcMove:', error);
+      }
+    }
+  }
+);
 
 // const initalBoardPosition = "k7/7P/8/8/8/8/8/K7 w KQkq - 0 1";
 
@@ -105,6 +138,10 @@ const gameBoardSlice = createSlice({
       state.chessNotation.push(action.payload);
     },
   },
+  // extraReducers: (builder) => {
+  //   builder.addCase(fetchPcMove.fulfilled, (state, action) => {
+  //   });
+  // },
 });
 
 export const { updateBoard, updateSelectedPiece,updateSelectedMove, updatePosibleMoves, startGame, startFromPosition, endGame, returnToStart } = gameBoardSlice.actions;

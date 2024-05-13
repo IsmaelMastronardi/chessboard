@@ -5,7 +5,7 @@ import BoardChanger from "../components/boardChanger";
 import { useDispatch, useSelector } from "react-redux";
 import ChessNotation from "../components/chessNotation";
 import { minimax } from "../engine/boardEvaluation";
-import { createNotation, movePiece, updateSelectedMove } from "../redux/slices/boardSlice";
+import { createNotation, makePcMove, movePiece, updateSelectedMove } from "../redux/slices/boardSlice";
 
 const Home = () => {
   const {lastBoardStateIndex, pastBoardStates,gameHasStarted, waitingForPcMove, convertedBoard} = useSelector((store) => store.gameBoard);
@@ -16,23 +16,12 @@ const Home = () => {
     setStartGameMenu(!startGameMenu);
   }
 
+  console.log(waitingForPcMove)
+
   useEffect(() => {
-    if (waitingForPcMove) {
-      const result = minimax(convertedBoard, 3, false);
-      dispatch(updateSelectedMove({
-        piece: convertedBoard.pieces[[result.piece[0]]][result.piece[1]],
-        from: result.piece,
-        to: result.move,
-      }));
-      dispatch(createNotation(
-        convertedBoard.pieces[[result.piece[0]]][result.piece[1]],
-        result.piece,
-        result.move,
-        convertedBoard.fullMove
-      ))
-      dispatch(movePiece(result.piece, result.move, true));
-    }
-  });
+    dispatch(makePcMove());
+  }, [dispatch, convertedBoard]);
+
 
   const [boardStateIndex, setBoardStateIndex] = useState(lastBoardStateIndex);
 
