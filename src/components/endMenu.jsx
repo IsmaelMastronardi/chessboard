@@ -8,20 +8,18 @@ const EndMenu = ({changeBoardState, gameResult}) => {
   const dispatch = useDispatch();
 
   const getAutcome = () => {
-      if(gameResult === 'stalemate'){
-        return 'Stalemate';
-      }
-      if(gameResult === 'checkmate' && waitingForPcMove){
-        return 'GameOver, You Win';
-      }
-      return 'GameOver, You Lose';
+    if(gameResult === 'stalemate'){
+      return 'Stalemate';
+    }
+    if(gameResult === 'checkmate' && waitingForPcMove){
+      return 'You Won!';
+    }
+    return 'GameOver, You Lost';
   }
 
   const chooseColor = (color) => {
     dispatch(changePlayerColor(color));
   };
-
-
 
     return (
         <div className="text-white">
