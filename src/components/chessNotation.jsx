@@ -7,7 +7,7 @@ const ChessNotation = ({changeBoardState, boardStateIndex}) => {
   };
 
   return(
-    <div className="notationsContainer buttonHolder">
+    <div className="notationsContainer">
       {chessNotation.map((move, index) => (
         <button
         key={index}
