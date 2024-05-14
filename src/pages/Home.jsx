@@ -11,7 +11,6 @@ const Home = () => {
   const {pastBoardStates, gameHasStarted, convertedBoard, posibleMoves, waitingForPcMove} = useSelector((store) => store.gameBoard);
   const [startGameMenu, setStartGameMenu] = useState(false);
   const [boardStateIndex, setBoardStateIndex] = useState(pastBoardStates.length - 1);
-
   const dispatch = useDispatch();
 
   const toggleMenu = () => {
