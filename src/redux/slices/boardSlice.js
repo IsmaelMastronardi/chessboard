@@ -120,11 +120,17 @@ const gameBoardSlice = createSlice({
       state.waitingForPcMove = action.payload;
     },
     startFromPosition: (state, action) => {
-      state.convertedBoard = action.payload;
-      state.pastBoardStates = [action.payload];
-      state.fenBoard = convertToFen(action.payload);
-      state.posibleMoves = calculatePosibleMoves(action.payload, action.payload.turn === 'w' ? 'white' : 'black');
+      state.convertedBoard = action.payload[0];
+      state.pastBoardStates = [action.payload[0]];
+      state.fenBoard = convertToFen(action.payload[0]);
+      state.posibleMoves = calculatePosibleMoves(action.payload[0], action.payload[0].turn === 'w' ? 'white' : 'black');
       state.gameHasStarted = true;
+      if(action.payload[0].turn === 'b' && action.payload[1] === 'white'){
+        state.waitingForPcMove = true;
+      }
+      else if (action.payload[0].turn === 'w' && action.payload[1] === 'black'){
+        state.waitingForPcMove = true;
+      }
     },
     endGame: (state) => {
       state.gameHasStarted = false;

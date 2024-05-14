@@ -54,8 +54,7 @@ const EditorSettings = ({toggleMenu}) => {
 
   const handleTurnChange = (value) => {
     setCurrentTurn(value);
-    updateTurn(value);
-    console.log(currentTurn)
+    dispatch(updateTurn(value));
   };
 
   const handleCastleRightsChange = (value, index) => {

@@ -6,7 +6,7 @@ const BoardEditor = () => {
   const {playerColor} = useSelector((store) => store.settings);
   return(
     <div className="holder">
-      <div className={`board boardHolder ${playerColor === 'white' ? '' : 'rotatedGameBoard'}`} >
+      <div className={`board ${playerColor === 'white' ? 'boardHolder' : 'rotatedBoard rotatedHolder'}`} >
         {editorConvertedBoard.pieces.map((row, rowIndex) => {
           return row.map((square, colIndex) => {
             const isDark = (rowIndex + colIndex) % 2 === 1;

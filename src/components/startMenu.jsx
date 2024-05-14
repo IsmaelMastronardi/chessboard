@@ -67,7 +67,7 @@ const StartMenu = ({toggleMenu, startGameMenu, fromEditor = false}) => {
             onClick={
               () => {
                 if(fromEditor){
-                  dispatch(startFromPosition(editorConvertedBoard));
+                  dispatch(startFromPosition([editorConvertedBoard, playerColor]));
                   navigate('/');
                 }
                 else {
