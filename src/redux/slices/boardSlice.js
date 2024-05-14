@@ -134,6 +134,7 @@ const gameBoardSlice = createSlice({
     },
     endGame: (state) => {
       state.gameHasStarted = false;
+      state.posibleMoves = 'checkmate';
     },
     returnToStart: (state) => {
       state.fenBoard = initalBoardPosition;

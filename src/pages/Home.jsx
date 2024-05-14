@@ -4,7 +4,7 @@ import StartMenu from "../components/startMenu";
 import BoardChanger from "../components/boardChanger";
 import { useDispatch, useSelector } from "react-redux";
 import ChessNotation from "../components/chessNotation";
-import {makePcMove } from "../redux/slices/boardSlice";
+import {endGame, makePcMove } from "../redux/slices/boardSlice";
 import EndMenu from "../components/endMenu";
 
 const Home = () => {
@@ -15,6 +15,10 @@ const Home = () => {
 
   const toggleMenu = () => {
     setStartGameMenu(!startGameMenu);
+  }
+
+  const Resign = () => {
+    dispatch(endGame());
   }
 
   useEffect(() => {
@@ -48,7 +52,7 @@ const Home = () => {
           </button>
         )}
         {gameHasStarted && (
-          <button className="buttonBack boxAutoWH negMargin">
+          <button className="buttonBack boxAutoWH negMargin" onClick={Resign}>
             <span className="buttonShadow boxAutoWH">
               <span className="buttonFront buttonFront2 buttonFrontWithHover" >Resign</span> 
             </span> 
