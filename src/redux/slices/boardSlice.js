@@ -46,7 +46,6 @@ export const makePcMove = createAsyncThunk(
     if (waitingForPcMove) {
       try {
         const result = await minimaxAsync(convertedBoard, 3, false);
-        console.log(result)
         dispatch(updateSelectedMove({
           piece: convertedBoard.pieces[result.piece[0]][result.piece[1]],
           from: result.piece,

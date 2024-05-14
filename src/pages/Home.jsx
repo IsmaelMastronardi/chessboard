@@ -18,9 +18,9 @@ const Home = () => {
     setStartGameMenu(!startGameMenu);
   }
 
-  useEffect(() => {
-    dispatch(makePcMove());
-  }, [dispatch, convertedBoard, waitingForPcMove]);
+  // useEffect(() => {
+  //   dispatch(makePcMove());
+  // }, [dispatch, convertedBoard, waitingForPcMove]);
 
   useEffect(() => {
     setBoardStateIndex(pastBoardStates.length - 1);
