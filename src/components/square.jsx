@@ -43,8 +43,13 @@ const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => 
     else {
       dispatch(selectPiece(index));
     }
+  };
 
-  }
+  const playSoundEffect = () => {
+    const audioElement = new Audio('/sounds/move-self.mp3');
+    audioElement.play();
+  };
+
   const handleDrop = () => {
     if(!posibleMoves[`${selectedPiece[0]}${selectedPiece[1]}`]){
       return;
@@ -65,6 +70,7 @@ const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => 
         ));
         dispatch(movePiece(selectedPiece, selectedMove, false));
       }
+      playSoundEffect();
     }
   };
 
