@@ -131,6 +131,7 @@ const gameBoardSlice = createSlice({
       state.posibleMoves = calculatePosibleMoves(state.convertedBoard, 'white');
       state.pastBoardStates = [state.convertedBoard];
       state.waitingForPcMove = false;
+      state.chessNotation = [];
     },
     addNotation: (state, action) => {
       state.chessNotation.push(action.payload);
