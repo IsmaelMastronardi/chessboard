@@ -391,7 +391,7 @@ const knightMoves = (board, row, col) => {
       if (board.pieces[newRow][newCol] === '0') {
         result.push({move: [newRow, newCol]});
       }
-      if(getPieceColor(board.pieces[newRow][newCol]) !== color){
+      else if(getPieceColor(board.pieces[newRow][newCol]) !== color){
         result.push({move: [newRow, newCol], capture: true, capturedPiece: board.pieces[newRow][newCol]});
       }
     }
