@@ -32,7 +32,7 @@ describe('generates the attack board for a position with no pins', () => {
             ['0', '0', '0', '0', '0', '0', '0', '0'],
             ['0', '0', '0', '0', '0', '0', '0', '0'],
           ],
-          checkingPiecePosition: "",
+          checkingPiecePosition: [],
           pinnedPieces: {}
         },
       },
@@ -65,7 +65,7 @@ describe('generates the attack board for a position with no pins', () => {
             ['1', '0', '0', '0', '0', '0', '1', '0'],
             ['0', '0', '0', '0', '0', '0', '1', '0']
           ],
-          checkingPiecePosition: "",
+          checkingPiecePosition: [],
           pinnedPieces: {}
         },
       },
@@ -98,7 +98,7 @@ describe('generates the attack board for a position with no pins', () => {
             ['0', '0', '0', '0', '0', '1', '0', '0'],
             ['0', '0', '0', '0', '0', '0', '0', '0'],
           ],
-          checkingPiecePosition: "",
+          checkingPiecePosition: [],
           pinnedPieces: {}
         },
       },
@@ -131,7 +131,7 @@ describe('generates the attack board for a position with no pins', () => {
             ['0', '1', '0', '0', '0', '0', '0', '0'],
             ['0', '0', '0', '0', '0', '0', '0', '0'],
           ],
-          checkingPiecePosition: "",
+          checkingPiecePosition: [],
           pinnedPieces: {}
         },
       },
@@ -173,7 +173,7 @@ describe('generates the attack board for a position with no pins', () => {
             ['1', '1', '1', '1', '1', '1', '1', '1'],
             ['0', '1', '1', '1', '1', '1', '1', '0'],
           ],
-          checkingPiecePosition: "",
+          checkingPiecePosition: [],
           pinnedPieces: {}
         },
       },
@@ -206,7 +206,7 @@ describe('generates the attack board for a position with no pins', () => {
             ['1', '1', '1', '0', '0', '0', '1', '1'],
             ['1', '0', '1', '1', '1', '1', '1', '1'],
           ],
-          checkingPiecePosition: "",
+          checkingPiecePosition: [],
           pinnedPieces: {}
         },
       },
@@ -239,7 +239,7 @@ describe('generates the attack board for a position with no pins', () => {
             ['1', '1', '1', '1', '1', '1', '0', '1'],
             ['0', '1', '1', '1', '2', '1', '1', '0'],
           ],
-          checkingPiecePosition: "",
+          checkingPiecePosition: [],
           pinnedPieces: {}
         },
       },
@@ -272,7 +272,7 @@ describe('generates the attack board for a position with no pins', () => {
             ['1', '1', '1', '1', '1', '1', '1', '1'],
             ['1', '1', '1', '1', '1', '1', '2', '1'],
           ],
-          checkingPiecePosition: "",
+          checkingPiecePosition: [],
           pinnedPieces: {}
         },
       },
@@ -317,10 +317,10 @@ describe('generates the attack board for a position with pins', () => {
             ['0', '0', '0', '1', '0', '0', '0', '0'],
             ['0', '0', '0', '0', '0', '0', '0', '0'],
           ],
-          checkingPiecePosition: "",
+          checkingPiecePosition: [],
           pinnedPieces: {
             63: {
-              pinDirection: "10",
+              pinDirection: [1, 0],
             },
           }
         },
@@ -354,10 +354,10 @@ describe('generates the attack board for a position with pins', () => {
             ['0', '0', '0', '1', '0', '0', '0', '0'],
             ['0', '0', '0', '0', '0', '0', '0', '0'],
           ],
-          checkingPiecePosition: "",
+          checkingPiecePosition: [],
           pinnedPieces: {
             63: {
-              pinDirection: "1-1",
+              pinDirection: [1,-1]
             },
           }
         },
@@ -391,16 +391,16 @@ describe('generates the attack board for a position with pins', () => {
             ['0', '0', '0', '1', '1', '1', '0', '1'],
             ['0', '0', '0', '0', '0', '0', '0', '1'],
           ],
-          checkingPiecePosition: "",
+          checkingPiecePosition: [],
           pinnedPieces: {
             63: {
-              pinDirection: "11",
+              pinDirection: [1, 1],
               },
             64: {
-              pinDirection: "10",
+              pinDirection: [1, 0],
             },
             65: {
-              pinDirection: "1-1",
+              pinDirection: [1, -1],
             },
           }
         },
@@ -443,10 +443,10 @@ describe('generates the attack board for a position with pins', () => {
             ['0', '0', '0', '1', '1', '1', '1', '1'],
             ['1', '1', '1', '1', '0', '1', '1', '1'],
           ],
-          checkingPiecePosition: "",
+          checkingPiecePosition: [],
           pinnedPieces: {
             14: {
-              pinDirection: "-10",
+              pinDirection: [-1, 0],
             },
           }
         },
@@ -480,10 +480,10 @@ describe('generates the attack board for a position with pins', () => {
             ['0', '0', '0', '0', '0', '0', '1', '1'],
             ['0', '0', '0', '0', '0', '1', '1', '0'],
           ],
-          checkingPiecePosition: "",
+          checkingPiecePosition: [],
           pinnedPieces: {
             13: {
-              pinDirection: "-1-1",
+              pinDirection: [-1, -1],
             },
           }
         },
@@ -517,16 +517,16 @@ describe('generates the attack board for a position with pins', () => {
             ['1', '0', '1', '0', '1', '0', '1', '1'],
             ['1', '1', '1', '1', '0', '1', '1', '1'],
           ],
-          checkingPiecePosition: "",
+          checkingPiecePosition: [],
           pinnedPieces: {
             13: {
-              pinDirection: "-11",
+              pinDirection: [-1, 1],
             },
             14: {
-              pinDirection: "-10",
+              pinDirection: [-1, 0],
             },
             15: {
-              pinDirection: "-1-1",
+              pinDirection:[-1, -1],
             },
           }
         },
