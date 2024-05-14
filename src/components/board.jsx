@@ -2,10 +2,8 @@ import { useSelector } from "react-redux";
 import Square from "./square";
 
 const Board = ({boardStateIndex, lastBoardStateIndex}) => {
-  const {posibleMoves, selectedPiece, pastBoardStates, fenBoard } = useSelector((store) => store.gameBoard);
+  const {posibleMoves, selectedPiece, pastBoardStates } = useSelector((store) => store.gameBoard);
   const {playerColor} = useSelector((store) => store.settings);
-
-  console.log(fenBoard);
 
   return(
     <div className="holder holderLong">

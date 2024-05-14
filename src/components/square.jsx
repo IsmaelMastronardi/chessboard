@@ -45,8 +45,14 @@ const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => 
     }
   };
 
-  const playSoundEffect = () => {
-    const audioElement = new Audio('/sounds/move-self.mp3');
+  const playSoundEffect = (isCapture) => {
+    const audioElement = new Audio();
+    if(isCapture){
+      audioElement.src = '/sounds/capture.mp3';
+    }
+    else {
+      audioElement.src = '/sounds/move-self.mp3';
+    }
     audioElement.play();
   };
 
@@ -70,7 +76,7 @@ const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => 
         ));
         dispatch(movePiece(selectedPiece, selectedMove, false));
       }
-      playSoundEffect();
+      playSoundEffect(selectedMove.capture);
     }
   };
 

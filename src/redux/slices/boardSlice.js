@@ -60,7 +60,13 @@ export const makePcMove = createAsyncThunk(
         ));
         
         dispatch(movePiece(result.piece, result.move, true));
-        const audioElement = new Audio('/sounds/move-self.mp3');
+        const audioElement = new Audio();
+        if(result.move.capture){
+          audioElement.src = '/sounds/capture.mp3';
+        }
+        else {
+          audioElement.src = '/sounds/move-self.mp3';
+        }
         audioElement.play();
       } catch (error) {
         console.error('Error in makePcMove:', error);
