@@ -31,7 +31,7 @@ const minimax = (board, depth, maximizingPlayer) => {
     const moves = calculatePosibleMoves(board, board.turn === 'w' ? 'white' : 'black');
     if (moves === 'checkmate') {
       return {
-        value: board.turn !== 'w' ? -Infinity : Infinity,
+        value: board.turn !== 'b' ? -Infinity : Infinity,
       };
     }
     if (moves === 'stalemate') {
