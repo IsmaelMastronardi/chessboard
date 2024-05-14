@@ -26,20 +26,17 @@ const minimax = (board, depth, maximizingPlayer) => {
   if (depth === 0) {
     return {
       value: calculatePositionValue(board.pieces, board.turn === 'w' ? 'white' : 'black'),
-      move: null,
     };
   } else {
     const moves = calculatePosibleMoves(board, board.turn === 'w' ? 'white' : 'black');
     if (moves === 'checkmate') {
       return {
-        value: maximizingPlayer ? -Infinity : Infinity,
-        move: null,
+        value: board.turn !== 'w' ? -Infinity : Infinity,
       };
     }
     if (moves === 'stalemate') {
       return {
         value: 0,
-        move: null,
       };
     }
     let bestValue = maximizingPlayer ? -Infinity : Infinity;

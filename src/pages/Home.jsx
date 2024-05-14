@@ -8,7 +8,7 @@ import {makePcMove } from "../redux/slices/boardSlice";
 import EndMenu from "../components/endMenu";
 
 const Home = () => {
-  const {pastBoardStates, gameHasStarted, convertedBoard} = useSelector((store) => store.gameBoard);
+  const {pastBoardStates, gameHasStarted, convertedBoard, posibleMoves, waitingForPcMove} = useSelector((store) => store.gameBoard);
   const [startGameMenu, setStartGameMenu] = useState(false);
   const [boardStateIndex, setBoardStateIndex] = useState(pastBoardStates.length - 1);
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(makePcMove());
-  }, [dispatch, convertedBoard]);
+  }, [dispatch, convertedBoard, waitingForPcMove]);
 
   useEffect(() => {
     setBoardStateIndex(pastBoardStates.length - 1);
@@ -31,10 +31,13 @@ const Home = () => {
       setBoardStateIndex(newIndex);
     }
   };
+
   return(
     <section className="home">
       <StartMenu toggleMenu={toggleMenu} startGameMenu={startGameMenu}/>
-      <EndMenu changeBoardState={changeBoardState} />
+      {posibleMoves === 'checkmate' &&(
+        <EndMenu changeBoardState={changeBoardState} gameResult={posibleMoves} />
+      )}
       <Board boardStateIndex={boardStateIndex} lastBoardStateIndex={pastBoardStates.length - 1}/>
       <BoardChanger changeBoardState={changeBoardState} boardStateIndex={boardStateIndex}/>
       <div className="flex gap-20">

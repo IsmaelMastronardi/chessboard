@@ -71,7 +71,7 @@ const StartMenu = ({toggleMenu, startGameMenu, fromEditor = false}) => {
                   navigate('/');
                 }
                 else {
-                  dispatch(startGame(playerColor === 'black'));
+                  dispatch(startGame(playerColor !== 'white'));
                   toggleMenu();
                 }
               }}>

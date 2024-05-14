@@ -43,11 +43,10 @@ export const makePcMove = createAsyncThunk(
   async (_, { getState, dispatch }) => {
     const state = getState();
     const { convertedBoard, waitingForPcMove } = state.gameBoard;
-
     if (waitingForPcMove) {
       try {
-        const result = await minimaxAsync(convertedBoard, 3, false);
-
+        const result = await minimaxAsync(convertedBoard, 3, true);
+        console.log(result)
         dispatch(updateSelectedMove({
           piece: convertedBoard.pieces[result.piece[0]][result.piece[1]],
           from: result.piece,
@@ -60,7 +59,7 @@ export const makePcMove = createAsyncThunk(
           result.move,
           convertedBoard.fullMove
         ));
-  
+        
         dispatch(movePiece(result.piece, result.move, true));
       } catch (error) {
         console.error('Error in makePcMove:', error);
@@ -71,8 +70,8 @@ export const makePcMove = createAsyncThunk(
 
 // const initalBoardPosition = "k7/7P/8/8/8/8/8/K7 w KQkq - 0 1";
 // const initalBoardPosition = '1k6/5Q2/8/8/8/8/6Q1/1K6 w - - 0 1'
-// const initalBoardPosition = "1k6/5q2/8/8/8/8/6q1/1K6 w - - 0 1";
-const initalBoardPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+const initalBoardPosition = "1k6/5q2/8/8/8/8/6q1/1K6 w - - 0 1";
+// const initalBoardPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
 
 
