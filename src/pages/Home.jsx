@@ -5,10 +5,12 @@ import BoardChanger from "../components/boardChanger";
 import { useDispatch, useSelector } from "react-redux";
 import ChessNotation from "../components/chessNotation";
 import {makePcMove } from "../redux/slices/boardSlice";
+import EndMenu from "../components/endMenu";
 
 const Home = () => {
-  const {lastBoardStateIndex, pastBoardStates,gameHasStarted, convertedBoard} = useSelector((store) => store.gameBoard);
+  const {pastBoardStates, gameHasStarted, convertedBoard} = useSelector((store) => store.gameBoard);
   const [startGameMenu, setStartGameMenu] = useState(false);
+  const [boardStateIndex, setBoardStateIndex] = useState(pastBoardStates.length - 1);
   const dispatch = useDispatch();
 
   const toggleMenu = () => {
@@ -19,12 +21,9 @@ const Home = () => {
     dispatch(makePcMove());
   }, [dispatch, convertedBoard]);
 
-
-  const [boardStateIndex, setBoardStateIndex] = useState(lastBoardStateIndex);
-
   useEffect(() => {
-    setBoardStateIndex(lastBoardStateIndex);
-  }, [lastBoardStateIndex]);
+    setBoardStateIndex(pastBoardStates.length - 1);
+  }, [pastBoardStates]);
 
 
   const changeBoardState = (newIndex) => {
@@ -32,11 +31,11 @@ const Home = () => {
       setBoardStateIndex(newIndex);
     }
   };
-
   return(
     <section className="home">
       <StartMenu toggleMenu={toggleMenu} startGameMenu={startGameMenu}/>
-      <Board boardStateIndex={boardStateIndex} lastBoardStateIndex={lastBoardStateIndex}/>
+      <EndMenu changeBoardState={changeBoardState} />
+      <Board boardStateIndex={boardStateIndex} lastBoardStateIndex={pastBoardStates.length - 1}/>
       <BoardChanger changeBoardState={changeBoardState} boardStateIndex={boardStateIndex}/>
       <div className="flex gap-20">
         {!gameHasStarted && (

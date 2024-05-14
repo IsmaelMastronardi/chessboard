@@ -6,7 +6,7 @@ import Pieces from "./pieces";
 import { useState } from "react";
 
 const StartMenu = ({toggleMenu, startGameMenu, fromEditor = false}) => {
-  const {editorConvertedBoard, boardIsPlayable} = useSelector((store) => store.boardEditor);
+  const {editorConvertedBoard} = useSelector((store) => store.boardEditor);
   const {playerColor} = useSelector((store) => store.settings);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const StartMenu = ({toggleMenu, startGameMenu, fromEditor = false}) => {
   };
 
   const chooseColor = (color) => {
-    dispatch(changePlayerColor(color))
+    dispatch(changePlayerColor(color));
   };
 
   return (

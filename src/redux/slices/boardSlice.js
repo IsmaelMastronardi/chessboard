@@ -70,9 +70,10 @@ export const makePcMove = createAsyncThunk(
 );
 
 // const initalBoardPosition = "k7/7P/8/8/8/8/8/K7 w KQkq - 0 1";
-// const initalBoardPosition = '1k6/5Q2/8/8/8/8/6Q1/1K6 w - 0 1'
-
+// const initalBoardPosition = '1k6/5Q2/8/8/8/8/6Q1/1K6 w - - 0 1'
+// const initalBoardPosition = "1k6/5q2/8/8/8/8/6q1/1K6 w - - 0 1";
 const initalBoardPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+
 
 
 const initialState = {
@@ -85,7 +86,6 @@ const initialState = {
   playerColor: 'white',
   gameStarted: false,
   pastBoardStates: [convertToBoard(initalBoardPosition)],
-  lastBoardStateIndex: 0,
   gameHasStarted: false,
   chessNotation: [],
 };
@@ -102,7 +102,6 @@ const gameBoardSlice = createSlice({
       state.posibleMoves = moves;
       state.waitingForPcMove = !action.payload.isPcMove;
       state.pastBoardStates.push(state.convertedBoard);
-      state.lastBoardStateIndex +=1
     },
     updateSelectedPiece: (state, action) => {
       state.selectedPiece = action.payload;
@@ -124,14 +123,15 @@ const gameBoardSlice = createSlice({
       state.posibleMoves = calculatePosibleMoves(action.payload, action.payload.turn === 'w' ? 'white' : 'black');
       state.gameHasStarted = true;
     },
-    endGame: (state, action) => {
+    endGame: (state) => {
       state.gameHasStarted = false;
     },
     returnToStart: (state) => {
-      state.convertedBoard = state.pastBoardStates[0];
-      state.fenBoard = convertToFen(state.pastBoardStates[0]);
-      state.posibleMoves = calculatePosibleMoves(state.pastBoardStates[0], 'white');
-      state.lastBoardStateIndex = 0;
+      state.fenBoard = initalBoardPosition;
+      state.convertedBoard = convertToBoard(initalBoardPosition);
+      state.posibleMoves = calculatePosibleMoves(state.convertedBoard, 'white');
+      state.pastBoardStates = [state.convertedBoard];
+      state.waitingForPcMove = false;
     },
     addNotation: (state, action) => {
       state.chessNotation.push(action.payload);

@@ -2,13 +2,12 @@ import { useSelector } from "react-redux";
 import Square from "./square";
 
 const Board = ({boardStateIndex, lastBoardStateIndex}) => {
-  const {posibleMoves, selectedPiece, pastBoardStates} = useSelector((store) => store.gameBoard);
+  const {posibleMoves, selectedPiece, pastBoardStates } = useSelector((store) => store.gameBoard);
   const {playerColor} = useSelector((store) => store.settings);
-
 
   return(
     <div className="holder holderLong">
-      <div className={`board boardHolder ${playerColor === 'white' ? '' : 'rotatedGameBoard'}`} >
+      <div className={`board  ${playerColor === 'white' ? 'boardHolder' : 'rotatedBoard rotatedHolder'}`} >
       {pastBoardStates[boardStateIndex].pieces.map((row, rowIndex) => {
         return row.map((square, colIndex) => {
           const isDark = (rowIndex + colIndex) % 2 === 1;
