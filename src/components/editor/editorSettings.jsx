@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 
 const EditorSettings = ({toggleMenu}) => {
   const {editorConvertedBoard} = useSelector((store) => store.boardEditor);
-  const dispatch = useDispatch();
   const [currentTurn, setCurrentTurn] = useState(editorConvertedBoard.turn);
   const [castling, setCastling] = useState(['K', 'Q', 'k', 'q']);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     checkCastlingOnBoardChange();
@@ -73,36 +73,35 @@ const EditorSettings = ({toggleMenu}) => {
   };
 
 return(
-  <div className="holder">
-    <div>
-      <div>
-        <span className="buttonShadow straightBottomBorder">
-          <p className="buttonFront straightBottomBorder groupBottomFront">Turn:</p>
-        </span>
-        <div className="flex">
-          <button className="buttonBack boxFullWH" onClick={() => handleTurnChange('w')}>
-            <span className={`buttonShadow straightTopBorder ${currentTurn === 'w' ? 'blockButtonActive' : ''}`}>
-              <span
-              className={`buttonFront straightTopBorder ${currentTurn === 'w' ? 'blockButtonActive' : ''}`}>White</span> 
-            </span>
-          </button>
-          <button className="buttonBack boxFullWH" onClick={() => handleTurnChange('b')}>
-            <span className={`buttonShadow straightTopBorder ${currentTurn === 'b' ? 'blockButtonActive' : ''}`}>
-              <span className={`buttonFront straightTopBorder ${currentTurn === 'b' ? 'blockButtonActive' : ''}`}>Black</span> 
-            </span>
-          </button>
-        </div>
+  <div className="flex flex-col gap-4 holder">
+     <div className="flex flex-col">
+      <span className="buttonShadow straightBottomBorder">
+        <p className="buttonFront straightBottomBorder groupBottomFront">Turn:</p>
+      </span>
+      <div className="flex">
+        <button className="buttonBack boxFullWH" onClick={() => handleTurnChange('w')}>
+          <span className={`buttonShadow straightTopBorder ${currentTurn === 'w' ? 'blockButtonActive' : ''}`}>
+            <span
+            className={`buttonFront straightTopBorder ${currentTurn === 'w' ? 'blockButtonActive' : ''}`}>White</span> 
+          </span>
+        </button>
+        <button className="buttonBack boxFullWH" onClick={() => handleTurnChange('b')}>
+          <span className={`buttonShadow straightTopBorder ${currentTurn === 'b' ? 'blockButtonActive' : ''}`}>
+            <span className={`buttonFront straightTopBorder ${currentTurn === 'b' ? 'blockButtonActive' : ''}`}>Black</span> 
+          </span>
+        </button>
       </div>
+    </div>
+    <div className="flex gap-10">
       <div>
         <span className="mt-10 buttonShadow straightBottomBorder">
-          <p className="buttonFront straightBottomBorder groupBottomFront">Casteling:</p>
+          <p className="buttonFront straightBottomBorder groupBottomFront">White Casteling:</p>
         </span>
-
         <div className="flex justify-between">
-         <span className="buttonBack boxFullWH">
+        <span className="buttonBack boxFullWH">
             <span className={`buttonShadow straightTopBorder`}>
               <span
-              className={`buttonFront straightTopBorder groupBottomFront`}>White:</span> 
+              className={`buttonFront straightTopBorder`}>White:</span> 
             </span>
           </span>
           <button className="buttonBack boxFullWH" onClick={() => handleCastleRightsChange('K', 0)}>
@@ -117,12 +116,16 @@ return(
             </span>
           </button>
         </div>
-
+      </div>
+      <div>
+      <span className="mt-10 buttonShadow straightBottomBorder">
+          <p className="buttonFront straightBottomBorder groupBottomFront">Black Casteling:</p>
+        </span>
         <div className="flex justify-between">
-         <span className="buttonBack boxFullWH">
+        <span className="buttonBack boxFullWH">
             <span className={`buttonShadow straightTopBorder`}>
               <span
-              className={`buttonFront straightTopBorder`}>Black:</span> 
+              className={'buttonFront straightTopBorder'}>Black:</span> 
             </span>
           </span>
           <button className="buttonBack boxFullWH" onClick={() => handleCastleRightsChange('k', 2)}>
@@ -139,12 +142,18 @@ return(
         </div>
       </div>
     </div>
-    <div className="">
-      <div className="flex flex-col">
-        <button onClick={() => clear()}>Clear</button>
-        <button onClick={() => returnToInitialPosition()}>Initial Position</button>
-      </div>
-    </div>
+      <button className="buttonBack boxFullWH" onClick={() => clear()}>
+        <span className={`buttonShadow straightTopBorder`}>
+          <span
+          className={`buttonFront straightTopBorder`}>Clear</span> 
+        </span>
+      </button>
+    <button className="buttonBack boxFullWH" onClick={() => returnToInitialPosition()}>
+      <span className={`buttonShadow straightTopBorder`}>
+        <span
+        className={`buttonFront straightTopBorder`}>Initial Position</span> 
+      </span>
+    </button>
   </div>
 );
 };

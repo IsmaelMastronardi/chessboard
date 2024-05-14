@@ -17,7 +17,7 @@
   background-color: hsla(0, 0%, 13%, 0.25);
   outline-offset: 4px;
   border-radius: 0.2rem;
-  transition: all 0.1s ease-in-out;
+  transition: all 0.08s ease-in;
 }
 
 .buttonShadow {
@@ -27,7 +27,12 @@
   outline-offset: 4px;
   border-radius: 0.2rem;
   transform: translateY(-4px);
-  transition: all 0.1s ease-in-out;
+  transition: all 0.08s ease-in;
+}
+
+.buttonShadowDisabled {
+  background-color: #4e4c4c;
+  color: var(--secondary-purple);
 }
 
 .buttonFront {
@@ -37,7 +42,12 @@
   transform: translateY(-6px);
   border-radius: 0.2rem;
   font-size: 1.2rem;
-  transition: all 0.1s ease-in-out;
+  transition: all 0.08s ease-in;
+}
+
+.buttonFrontDisabled {
+  background-color: #adabab;
+  color: var(--secondary-purple);
 }
 
 .buttonFront2 {
