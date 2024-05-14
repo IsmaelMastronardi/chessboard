@@ -5,8 +5,8 @@ describe('return all posible, legal moves with no checks nor pins', () => {
     const initialBoard = 
     {
       pieces: [
-        ['r', 'n', 'b', 'q', 'k', 'b','n', 'r'],
-        ['p', 'p', 'p','p', 'p', 'p', 'p', 'p'],
+        ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'],
+        ['p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'],
         ['0', '0', '0', '0', '0', '0', '0', '0'],
         ['0', '0', '0', '0', '0', '0', '0', '0'],
         ['0', '0', '0', '0', '0', '0', '0', '0'],
@@ -21,16 +21,16 @@ describe('return all posible, legal moves with no checks nor pins', () => {
       fullMove: '1'
     };
     const expectedMoves = {
-      '60': [ [ 5, 0 ], [ 4, 0 ] ],
-      '61': [ [ 5, 1 ], [ 4, 1 ] ],
-      '62': [ [ 5, 2 ], [ 4, 2 ] ],
-      '63': [ [ 5, 3 ], [ 4, 3 ] ],
-      '64': [ [ 5, 4 ], [ 4, 4 ] ],
-      '65': [ [ 5, 5 ], [ 4, 5 ] ],
-      '66': [ [ 5, 6 ], [ 4, 6 ] ],
-      '67': [ [ 5, 7 ], [ 4, 7 ] ],
-      '71': [ [ 5, 2 ], [ 5, 0 ] ],
-      '76': [ [ 5, 7 ], [ 5, 5 ] ],
+      '60': [ {move: [ 5, 0 ]}, {move: [ 4, 0 ]} ],
+      '61': [ {move: [ 5, 1 ]}, {move: [ 4, 1 ]} ],
+      '62': [ {move: [ 5, 2 ]}, {move: [ 4, 2 ]} ],
+      '63': [ {move: [ 5, 3 ]}, {move: [ 4, 3 ]} ],
+      '64': [ {move: [ 5, 4 ]}, {move: [ 4, 4 ]} ],
+      '65': [ {move: [ 5, 5 ]}, {move: [ 4, 5 ]} ],
+      '66': [ {move: [ 5, 6 ]}, {move: [ 4, 6 ]} ],
+      '67': [ {move: [ 5, 7 ]}, {move: [ 4, 7 ]} ],
+      '71': [ {move: [ 5, 2 ]}, {move: [ 5, 0 ]} ],
+      '76': [ {move: [ 5, 7 ]}, {move: [ 5, 5 ]} ],
     }
     expect(calculatePosibleMoves(initialBoard, 'white')).toEqual(expectedMoves);
   });
