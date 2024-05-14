@@ -14,7 +14,7 @@ const EndMenu = ({changeBoardState, gameResult}) => {
     if(gameResult === 'checkmate' && waitingForPcMove){
       return 'You Won!';
     }
-    return 'GameOver, You Lost';
+    return 'You Lost';
   }
 
   const chooseColor = (color) => {
@@ -22,22 +22,23 @@ const EndMenu = ({changeBoardState, gameResult}) => {
   };
 
     return (
-        <div className="text-white">
+        <div className="endMenu">
             <p>
+              Game Over<br/>
               {getAutcome()}
             </p>
-            <button onClick={() =>{
+            <div>
+            <button className="startMenuButton" onClick={() =>{
               changeBoardState(0);
               dispatch(returnToStart());
-            }
-            }>Restart</button>
-            <button onClick={() =>{
+            }}>Restart</button>
+            <button className="startMenuButton" onClick={() =>{
               changeBoardState(0);
               dispatch(returnToStart());
               chooseColor(playerColor === 'white' ? 'black' : 'white');
               dispatch(startGame(playerColor === 'white'));
-            }
-            }>Rematch</button>
+            }}>Rematch</button>
+            </div>
         </div>
     );
 };
