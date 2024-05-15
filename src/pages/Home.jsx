@@ -12,7 +12,7 @@ const Home = () => {
   const [startGameMenu, setStartGameMenu] = useState(false);
   const [boardStateIndex, setBoardStateIndex] = useState(pastBoardStates.length - 1);
   const dispatch = useDispatch();
-  console.log(waitingForPcMove)
+
   const toggleMenu = () => {
     setStartGameMenu(!startGameMenu);
   }
@@ -40,7 +40,7 @@ const Home = () => {
       {startGameMenu && (
         <StartMenu toggleMenu={toggleMenu} startGameMenu={startGameMenu}/>
       )}
-      {posibleMoves === 'checkmate' &&(
+      {(posibleMoves === 'checkmate' || posibleMoves === 'stalemate') &&(
         <EndMenu changeBoardState={changeBoardState} gameResult={posibleMoves} />
       )}
       <Board boardStateIndex={boardStateIndex} lastBoardStateIndex={pastBoardStates.length - 1}/>

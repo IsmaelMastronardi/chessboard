@@ -43,7 +43,11 @@ export const makePcMove = createAsyncThunk(
   async (_, { getState, dispatch }) => {
     const state = getState();
     const { convertedBoard, waitingForPcMove, posibleMoves } = state.gameBoard;
-    if (waitingForPcMove && posibleMoves !== 'checkmate' && posibleMoves !== 'stalemate') {
+    if(posibleMoves === 'checkmate' || posibleMoves === 'stalemate'){
+      console.log(posibleMoves)
+      dispatch(endGame())
+    }
+    else if (waitingForPcMove) {
       try {
         const result = await minimaxAsync(convertedBoard, 3, false);
         dispatch(updateSelectedMove({
@@ -137,6 +141,7 @@ const gameBoardSlice = createSlice({
     endGame: (state) => {
       state.gameHasStarted = false;
       state.posibleMoves = 'checkmate';
+      state.waitingForPcMove = false;
     },
     returnToStart: (state) => {
       state.fenBoard = initalBoardPosition;
