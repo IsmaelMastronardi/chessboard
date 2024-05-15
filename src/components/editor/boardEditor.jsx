@@ -12,7 +12,7 @@ const BoardEditor = () => {
             const isDark = (rowIndex + colIndex) % 2 === 1;
             let highlighted = false;
             return (
-              <div key={`${rowIndex}-${colIndex}`} className="w-12 h-12 col-span-1">
+              <div key={`${rowIndex}-${colIndex}`} className="squareParent">
                 <SquareForEditor
                 value={square}
                 isDark={isDark}

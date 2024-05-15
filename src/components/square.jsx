@@ -109,7 +109,7 @@ const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => 
       {posibleSquare && (
         <div className="absolute top-0 bottom-0 left-0 right-0 w-6 h-6 m-auto bg-gray-300 rounded-full opacity-80"></div>
       )}
-      <div className="w-6 h-6" onDragStart={handleClick} ref={drag}>
+      <div className="pieceParent" onDragStart={handleClick} ref={drag}>
         <Pieces value={value} />
       </div>
     </div>
