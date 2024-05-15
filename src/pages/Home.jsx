@@ -22,6 +22,7 @@ const Home = () => {
   }
 
   useEffect(() => {
+    console.log('here')
     dispatch(makePcMove());
   }, [dispatch, convertedBoard, waitingForPcMove]);
 
@@ -37,7 +38,9 @@ const Home = () => {
 
   return(
     <section className="home">
-      <StartMenu toggleMenu={toggleMenu} startGameMenu={startGameMenu}/>
+      {startGameMenu && (
+        <StartMenu toggleMenu={toggleMenu} startGameMenu={startGameMenu}/>
+      )}
       {posibleMoves === 'checkmate' &&(
         <EndMenu changeBoardState={changeBoardState} gameResult={posibleMoves} />
       )}

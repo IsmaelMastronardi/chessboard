@@ -30,7 +30,9 @@ const Editor = () => {
         </button>
       </span>
       <EditorSettings toggleMenu={toggleMenu}/>
-      <StartMenu toggleMenu={toggleMenu} startGameMenu={startGameMenu} fromEditor={true}/>
+      {startGameMenu && (
+        <StartMenu toggleMenu={toggleMenu} startGameMenu={startGameMenu} fromEditor={true}/>
+      )}
     </div>
   )
 }

@@ -18,11 +18,6 @@ return (
           Editor
         </NavLink>
       </li>
-      <li className="links">
-        <NavLink to={'/Learn'} activeclassname="active">
-        Learn
-        </NavLink>
-      </li>
     </ul>
     <hr />
     <hr />

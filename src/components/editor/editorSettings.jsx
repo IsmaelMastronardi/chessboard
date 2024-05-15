@@ -73,7 +73,7 @@ const EditorSettings = ({toggleMenu}) => {
   };
 
 return(
-  <div className="flex flex-col gap-4 holder">
+  <div className="flex flex-col gap-7 holder">
      <div className="flex flex-col">
       <span className="buttonShadow straightBottomBorder">
         <p className="buttonFront straightBottomBorder groupBottomFront">Turn:</p>
@@ -94,7 +94,7 @@ return(
     </div>
     <div className="flex gap-10">
       <div>
-        <span className="mt-10 buttonShadow straightBottomBorder">
+        <span className="buttonShadow straightBottomBorder">
           <p className="buttonFront straightBottomBorder groupBottomFront">White Casteling:</p>
         </span>
         <div className="flex justify-between">
@@ -118,7 +118,7 @@ return(
         </div>
       </div>
       <div>
-      <span className="mt-10 buttonShadow straightBottomBorder">
+      <span className="buttonShadow straightBottomBorder">
           <p className="buttonFront straightBottomBorder groupBottomFront">Black Casteling:</p>
         </span>
         <div className="flex justify-between">

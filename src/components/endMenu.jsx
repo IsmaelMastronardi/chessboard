@@ -22,7 +22,7 @@ const EndMenu = ({changeBoardState, gameResult}) => {
   };
 
     return (
-        <div className="endMenu">
+        <div className="menu">
             <p>
               Game Over<br/>
               {getAutcome()}

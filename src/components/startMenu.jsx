@@ -22,12 +22,12 @@ const StartMenu = ({toggleMenu, startGameMenu, fromEditor = false}) => {
   };
 
   return (
-      <div className={`startMenu ${startGameMenu === true ? 'startMenuDeployed' : ''}`}>
-        <div className="startInside">
+      <div className='menu'>
+        <div className="">
           <div>
             <p>Choose Difficulty:</p>
           </div>
-          <ul className="">
+          <ul className="flex">
             <li>
               <button 
                 className={` ${chosenDifficulty === 1 ? 'startMenuButtonChoosen' : 'startMenuButton'} `}
@@ -54,10 +54,10 @@ const StartMenu = ({toggleMenu, startGameMenu, fromEditor = false}) => {
             <p>Choose Color:</p>
           </div>
           <div className="flex justify-around w-full h-20">
-            <button onClick={() => chooseColor('white')}>
+            <button onClick={() => chooseColor('white')} className="text-white">
               <Pieces value="K" />
             </button>
-            <button onClick={() => chooseColor('black')}>
+            <button onClick={() => chooseColor('black')} className="text-black">
               <Pieces value="k" />
             </button>
           </div>
