@@ -1,4 +1,8 @@
 nav {
+  width: 90%;
+  max-width: 44rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .nav ul {
@@ -12,6 +16,9 @@ nav {
   padding-top: 0.2rem;
   padding-bottom: 0.2rem;
   z-index: 20;
+  border-bottom: solid 2px var(--primary-yellow);
+  border-bottom-left-radius: 0.6rem;
+  border-bottom-right-radius: 0.6rem;
 }
 
 .nav > hr {

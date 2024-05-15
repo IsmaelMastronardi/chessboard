@@ -46,7 +46,7 @@ const SquareForEditor = ({value, isDark, index, posibleSquare, isCurrentBoardSta
         ref={drop}
         >
         <PositionIndicator row={index[0]} col={index[1]} />
-        <div className="w-8 h-8" ref={drag}>
+        <div className="pieceParent draggable" ref={drag}>
           <Pieces value={value} />
         </div>
       </div>

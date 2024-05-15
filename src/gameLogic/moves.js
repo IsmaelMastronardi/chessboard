@@ -291,7 +291,7 @@ const pawnMoves = (board, row, col, pinDirection = '') => {
     }
     if(targetSquare === '0' || getPieceColor(targetSquare) === color){
       if(pinDirection === '' && board.enPassant === `${row + rowDirection}${col + colDirection}`){
-        result.push({move: [row + rowDirection, col + colDirection], enPassant: true, enPassantIndex: [row + rowDirection, col + colDirection]});
+        result.push({move: [row + rowDirection, col + colDirection]});
       }
       return;
     }
@@ -359,11 +359,11 @@ const pawnMovesInCheck = (board, row, col, checkingPieceIndex, checkLine) => {
   
   if(board.pieces[row + direction][col] === '0'){
     if(checkLine.some(subArr => isInCheckline(subArr, row + direction, col))){
-    result.push({move: [row + direction, col], enPassant: true, enPassantIndex: [row + direction, col]});
+    result.push({move: [row + direction, col]});
     }
     if(((color === 'white' && row === 6) || (color === 'black' && row === 1)) && checkLine.some(subArr => isInCheckline(subArr, row + 2 * direction, col))){
       if(board.pieces[row + 2 * direction][col] === '0'){
-        result.push({move: [row + 2 * direction, col], enPassant: true, enPassantIndex: [row + 2 * direction, col]});
+        result.push({move: [row + 2 * direction, col]});
       }
     }
   }
@@ -391,7 +391,7 @@ const knightMoves = (board, row, col) => {
       if (board.pieces[newRow][newCol] === '0') {
         result.push({move: [newRow, newCol]});
       }
-      if(getPieceColor(board.pieces[newRow][newCol]) !== color){
+      else if(getPieceColor(board.pieces[newRow][newCol]) !== color){
         result.push({move: [newRow, newCol], capture: true, capturedPiece: board.pieces[newRow][newCol]});
       }
     }
@@ -422,7 +422,7 @@ const knightMovesInCheck = (board, row, col, checkingPieceIndex, checkLine) => {
         if(currentSquare === '0'){
           result.push({move: [newRow, newCol]});
         }
-        if(getPieceColor(currentSquare) !== color){
+        else if(getPieceColor(currentSquare) !== color){
           result.push({move: [newRow, newCol], capture: true, capturedPiece: currentSquare});
         }
       }

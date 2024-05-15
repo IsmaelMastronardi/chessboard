@@ -21,14 +21,18 @@ const Editor = () => {
       <PieceSelector pieces={blackPieces} />
       <BoardEditor />
       <PieceSelector pieces={whitePieces} />
-      <button
-        className={`${boardIsPlayable ? 'bg-green-500' : 'bg-red-500'}`}
-        onClick={() => { if(boardIsPlayable && !startGameMenu){toggleMenu()} }}
-        >
-          Play
+      <span className="flex gap-10 holder">
+        <button className="buttonBack boxAutoWH" onClick={() => { if(boardIsPlayable && !startGameMenu){toggleMenu()} }}>
+          <span className={`buttonShadow boxAutoWH ${boardIsPlayable ? '' : 'buttonShadowDisabled'}`}>
+            <span className={`buttonFront buttonFront2 buttonFrontWithHover ${boardIsPlayable ? '' : 'buttonFrontDisabled'}`}
+            >Play</span> 
+          </span>
         </button>
+      </span>
       <EditorSettings toggleMenu={toggleMenu}/>
-      <StartMenu toggleMenu={toggleMenu} startGameMenu={startGameMenu} fromEditor={true}/>
+      {startGameMenu && (
+        <StartMenu toggleMenu={toggleMenu} startGameMenu={startGameMenu} fromEditor={true}/>
+      )}
     </div>
   )
 }

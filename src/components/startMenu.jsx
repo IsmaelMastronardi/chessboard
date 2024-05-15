@@ -6,7 +6,7 @@ import Pieces from "./pieces";
 import { useState } from "react";
 
 const StartMenu = ({toggleMenu, startGameMenu, fromEditor = false}) => {
-  const {editorConvertedBoard, boardIsPlayable} = useSelector((store) => store.boardEditor);
+  const {editorConvertedBoard} = useSelector((store) => store.boardEditor);
   const {playerColor} = useSelector((store) => store.settings);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -18,16 +18,16 @@ const StartMenu = ({toggleMenu, startGameMenu, fromEditor = false}) => {
   };
 
   const chooseColor = (color) => {
-    dispatch(changePlayerColor(color))
+    dispatch(changePlayerColor(color));
   };
 
   return (
-      <div className={`startMenu ${startGameMenu === true ? 'startMenuDeployed' : ''}`}>
-        <div className="startInside">
+      <div className='menu'>
+        <div className="">
           <div>
             <p>Choose Difficulty:</p>
           </div>
-          <ul className="">
+          <ul className="flex">
             <li>
               <button 
                 className={` ${chosenDifficulty === 1 ? 'startMenuButtonChoosen' : 'startMenuButton'} `}
@@ -54,10 +54,10 @@ const StartMenu = ({toggleMenu, startGameMenu, fromEditor = false}) => {
             <p>Choose Color:</p>
           </div>
           <div className="flex justify-around w-full h-20">
-            <button onClick={() => chooseColor('white')}>
+            <button onClick={() => chooseColor('white')} className={` text-white ${playerColor === 'white' ? 'chosenColor': 'choseColorButton'}`}>
               <Pieces value="K" />
             </button>
-            <button onClick={() => chooseColor('black')}>
+            <button onClick={() => chooseColor('black')} className={` text-black ${playerColor === 'black' ? 'chosenColor': 'choseColorButton'}`}>
               <Pieces value="k" />
             </button>
           </div>
@@ -67,11 +67,11 @@ const StartMenu = ({toggleMenu, startGameMenu, fromEditor = false}) => {
             onClick={
               () => {
                 if(fromEditor){
-                  dispatch(startFromPosition(editorConvertedBoard));
+                  dispatch(startFromPosition([editorConvertedBoard, playerColor]));
                   navigate('/');
                 }
                 else {
-                  dispatch(startGame(playerColor === 'black'));
+                  dispatch(startGame(playerColor !== 'white'));
                   toggleMenu();
                 }
               }}>

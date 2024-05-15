@@ -1,7 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { calculatePosibleMoves } from "../../gameLogic/generateMoves";
 import { convertToBoard, convertToFen, rowToLetters } from "../../gameLogic/helpers";
 import { finalizeMove } from "../../gameLogic/completeMove";
+import { minimax, minimaxAsync } from "../../engine/boardEvaluation";
 
 export const movePiece = (oldIndex, move, isPcMove) => (dispatch) => {
   dispatch(gameBoardSlice.actions.updateBoard({oldIndex, move, isPcMove}));
@@ -37,10 +38,49 @@ export const createNotation = (piece, from, move, turn) => (dispatch) => {
     dispatch(gameBoardSlice.actions.addNotation(result))
   };
 };
-
-// const initalBoardPosition = "k7/7P/8/8/8/8/8/K7 w KQkq - 0 1";
+export const makePcMove = createAsyncThunk(
+  'game/makePcMove',
+  async (_, { getState, dispatch }) => {
+    const state = getState();
+    const { convertedBoard, waitingForPcMove, posibleMoves } = state.gameBoard;
+    if(posibleMoves === 'checkmate' || posibleMoves === 'stalemate'){
+      console.log(posibleMoves)
+      dispatch(endGame())
+    }
+    else if (waitingForPcMove) {
+      try {
+        const result = await minimaxAsync(convertedBoard, 3, false);
+        dispatch(updateSelectedMove({
+          piece: convertedBoard.pieces[result.piece[0]][result.piece[1]],
+          from: result.piece,
+          to: result.move,
+        }));
+  
+        dispatch(createNotation(
+          convertedBoard.pieces[result.piece[0]][result.piece[1]],
+          result.piece,
+          result.move,
+          convertedBoard.fullMove
+        ));
+        
+        dispatch(movePiece(result.piece, result.move, true));
+        const audioElement = new Audio();
+        if(result.move.capture){
+          audioElement.src = '/sounds/capture.mp3';
+        }
+        else {
+          audioElement.src = '/sounds/move-self.mp3';
+        }
+        audioElement.play();
+      } catch (error) {
+        console.error('Error in makePcMove:', error);
+      }
+    }
+  }
+);
 
 const initalBoardPosition = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+
 
 
 const initialState = {
@@ -53,7 +93,6 @@ const initialState = {
   playerColor: 'white',
   gameStarted: false,
   pastBoardStates: [convertToBoard(initalBoardPosition)],
-  lastBoardStateIndex: 0,
   gameHasStarted: false,
   chessNotation: [],
 };
@@ -70,7 +109,6 @@ const gameBoardSlice = createSlice({
       state.posibleMoves = moves;
       state.waitingForPcMove = !action.payload.isPcMove;
       state.pastBoardStates.push(state.convertedBoard);
-      state.lastBoardStateIndex +=1
     },
     updateSelectedPiece: (state, action) => {
       state.selectedPiece = action.payload;
@@ -86,20 +124,32 @@ const gameBoardSlice = createSlice({
       state.waitingForPcMove = action.payload;
     },
     startFromPosition: (state, action) => {
-      state.convertedBoard = action.payload;
-      state.pastBoardStates = [action.payload];
-      state.fenBoard = convertToFen(action.payload);
-      state.posibleMoves = calculatePosibleMoves(action.payload, action.payload.turn === 'w' ? 'white' : 'black');
+      console.log('staring from editor')
+      state.convertedBoard = action.payload[0];
+      state.chessNotation = [];
+      state.pastBoardStates = [action.payload[0]];
+      state.fenBoard = convertToFen(action.payload[0]);
+      state.posibleMoves = calculatePosibleMoves(action.payload[0], action.payload[0].turn === 'w' ? 'white' : 'black');
       state.gameHasStarted = true;
+      if(action.payload[0].turn === 'b' && action.payload[1] === 'white'){
+        state.waitingForPcMove = true;
+      }
+      else if (action.payload[0].turn === 'w' && action.payload[1] === 'black'){
+        state.waitingForPcMove = true;
+      }
     },
-    endGame: (state, action) => {
+    endGame: (state) => {
       state.gameHasStarted = false;
+      state.posibleMoves = 'checkmate';
+      state.waitingForPcMove = false;
     },
     returnToStart: (state) => {
-      state.convertedBoard = state.pastBoardStates[0];
-      state.fenBoard = convertToFen(state.pastBoardStates[0]);
-      state.posibleMoves = calculatePosibleMoves(state.pastBoardStates[0], 'white');
-      state.lastBoardStateIndex = 0;
+      state.fenBoard = initalBoardPosition;
+      state.convertedBoard = convertToBoard(initalBoardPosition);
+      state.posibleMoves = calculatePosibleMoves(state.convertedBoard, 'white');
+      state.pastBoardStates = [state.convertedBoard];
+      state.waitingForPcMove = false;
+      state.chessNotation = [];
     },
     addNotation: (state, action) => {
       state.chessNotation.push(action.payload);

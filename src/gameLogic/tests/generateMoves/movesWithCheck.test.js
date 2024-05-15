@@ -24,8 +24,8 @@ describe('return all posible, legal moves with a single check', () => {
             fullMove: '1'
           },
             expectedMoves: {
-            '77': [[ 6, 7 ], [ 7, 6 ]],
-            '16': [[6, 6], [1, 1]]
+              '77': [{move: [6, 7]}, {move: [7, 6]}],
+              '16': [{move: [6, 6]}, {capture: true, capturedPiece: 'q', move: [1, 1]}]
           }
         },
         {
@@ -48,8 +48,8 @@ describe('return all posible, legal moves with a single check', () => {
             fullMove: '1'
           },
             expectedMoves: {
-            '26': [[4, 4]],
-            '77': [[ 6, 7 ], [ 7, 6 ]]
+              '26': [{move: [4, 4]}],
+              '77': [{move: [6, 7]}, {move: [7, 6]}]
           }
         },
         {
@@ -72,8 +72,8 @@ describe('return all posible, legal moves with a single check', () => {
             fullMove: '1'
           },
             expectedMoves: {
-            '23': [[4, 4], [1, 1]],
-            '77': [[ 6, 7 ], [ 7, 6 ]]
+              '23': [{move: [4, 4]}, {capture: true, capturedPiece: 'q', move: [1, 1]}],
+              '77': [{move: [6, 7]}, {move: [7, 6]}]
           }
         },
         {
@@ -96,8 +96,8 @@ describe('return all posible, legal moves with a single check', () => {
             fullMove: '1'
           },
             expectedMoves: {
-            '61': [[1, 1], [6, 6]],
-            '77': [[ 6, 7 ], [ 7, 6 ]]
+              '61': [{capture: true, capturedPiece: 'q', move: [1, 1]}, {move: [6, 6]}],
+              '77': [{move: [6, 7]}, {move: [7, 6]}]          
           }
         },
         {
@@ -120,8 +120,8 @@ describe('return all posible, legal moves with a single check', () => {
             fullMove: '1'
           },
             expectedMoves: {
-            '54': [[4, 4]],
-            '77': [[ 6, 7 ], [ 7, 6 ]]
+              '54': [{move: [4, 4]}],
+              '77': [{move: [6, 7]}, {move: [7, 6]}]
           }
         },
         {
@@ -144,11 +144,11 @@ describe('return all posible, legal moves with a single check', () => {
             fullMove: '1'
           },
             expectedMoves: {
-            '03': [[2, 2], [1, 1]],
-            '15': [[3, 3]],
-            '54': [[4,4]],
-            '62': [[2, 2], [6, 6], [4, 4]],
-            '77': [[ 6, 7 ], [ 7, 6 ]]
+              '03': [{move: [2, 2]}, {capture: true, capturedPiece: 'q', move: [1, 1]}],
+              '15': [{move: [3, 3]}],
+              '54': [{move: [4, 4]}],
+              '62': [{move: [2, 2]}, {move: [6, 6]}, {move: [4, 4]}],
+              '77': [{move: [6, 7]}, {move: [7, 6]}]
           }
         },
       ];
@@ -180,7 +180,7 @@ describe('return all posible, legal moves with a single check', () => {
             fullMove: '1'
           },
             expectedMoves: {
-            '77': [[ 7, 6 ]],
+              '77': [{move: [7, 6]}]
           }
         },
         {
@@ -203,7 +203,7 @@ describe('return all posible, legal moves with a single check', () => {
             fullMove: '1'
           },
             expectedMoves: {
-            '71': [[ 7, 0 ]],
+              '71': [{move: [7, 0]}]
           }
         },
         {
@@ -226,7 +226,7 @@ describe('return all posible, legal moves with a single check', () => {
             fullMove: '1'
           },
             expectedMoves: {
-              '51': [[ 6, 0]],
+              '51': [{move: [6, 0]}]
             }
         },
         {
@@ -249,7 +249,7 @@ describe('return all posible, legal moves with a single check', () => {
             fullMove: '1'
           },
             expectedMoves: {
-              '66': [[7, 6], [7, 7], [6, 7], [5, 6], [5, 5], [7, 5] ],
+              '66': [{move: [7, 6]}, {move: [7, 7]}, {move: [6, 7]}, {move: [5, 6]}, {move: [5, 5]}, {move: [7, 5]}]
             }
         },
       ];
@@ -281,8 +281,8 @@ describe('return all posible, legal moves with a single check', () => {
             fullMove: '1'
           },
             expectedMoves: {
-              '65': [[4, 5]],
-              '66': [[ 5, 6 ]],
+              '65': [{move: [4, 5]}],
+              '66': [{move: [5, 6]}]
           }
         },
         {
@@ -305,7 +305,10 @@ describe('return all posible, legal moves with a single check', () => {
             fullMove: '1'
           },
             expectedMoves: {
-              '64': [[4, 5], [5, 6]],
+              '64': [
+                {move: [4, 5]},
+                {move: [5, 6]}
+            ]
           }
         },
       ];
@@ -337,7 +340,7 @@ describe('return all posible, legal moves with a single check', () => {
             fullMove: '1'
           },
             expectedMoves: {
-              '43': [[3, 4]],
+              '43': [{capture: true, capturedPiece: 'q', move: [3, 4]}]
           }
         },
         {
@@ -360,8 +363,8 @@ describe('return all posible, legal moves with a single check', () => {
             fullMove: '1'
           },
             expectedMoves: {
-              '53': [[4, 3]],
-              '54': [[4, 3]],
+              '53': [{capture: true, capturedPiece: 'r', move: [4, 3]}],
+              '54': [{capture: true, capturedPiece: 'r', move: [4, 3]}]
           }
         },
       ];
@@ -446,8 +449,8 @@ describe('return all posible, legal moves with a single check', () => {
             fullMove: '1'
           },
             expectedMoves: {
-            '00': [[1, 0], [0, 1]],
-            '61': [[ 1, 1 ], [ 6, 6 ]]
+              '00': [{move: [1, 0]}, {move: [0, 1]}],
+              '61': [{move: [1, 1]}, {capture: true, capturedPiece: 'Q',move: [6, 6]}]
           }
         },
         {
@@ -470,8 +473,8 @@ describe('return all posible, legal moves with a single check', () => {
             fullMove: '1'
           },
             expectedMoves: {
-            '00': [[1, 0], [0, 1]],
-            '51': [[ 3, 3 ]]
+              '00': [{move: [1, 0]}, {move: [0, 1]}],
+              '51': [{move: [3, 3]}]
           }
         },
         {
@@ -494,8 +497,8 @@ describe('return all posible, legal moves with a single check', () => {
             fullMove: '1'
           },
             expectedMoves: {
-            '00': [[1, 0], [0, 1]],
-            '45': [[ 6, 6 ], [3, 3 ]]
+              '00': [{move: [1, 0]}, {move: [0, 1]}],
+              '45': [{capture: true, capturedPiece: 'Q', move: [6, 6]}, {move: [3, 3]}]
           }
         },
         {
@@ -518,8 +521,8 @@ describe('return all posible, legal moves with a single check', () => {
             fullMove: '1'
           },
             expectedMoves: {
-            '00': [[1, 0], [0, 1]],
-            '16': [[ 6, 6 ], [1, 1 ]]
+              '00': [{move: [1, 0]}, {move: [0, 1]}],
+              '16': [{capture: true, capturedPiece: 'Q', move: [6, 6]}, {move: [1, 1]}]
           }
         },
         {
@@ -542,8 +545,8 @@ describe('return all posible, legal moves with a single check', () => {
             fullMove: '1'
           },
             expectedMoves: {
-            '00': [[1, 0], [0, 1]],
-            '12': [[ 2, 2 ]]
+              '00': [{move: [1, 0]}, {move: [0, 1]}],
+              '12': [{move: [2, 2]}]
           }
         },
         {
@@ -566,11 +569,11 @@ describe('return all posible, legal moves with a single check', () => {
             fullMove: '1'
           },
             expectedMoves: {
-            '00': [[1, 0], [0, 1]],
-            '15': [[5, 5], [1, 1], [3, 3]],
-            '34': [[4, 4]],
-            '62': [[4, 4]],
-            '74': [[5, 5], [6, 6]]
+              '00': [{move: [1, 0]}, {move: [0, 1]}],
+              '15': [{move: [5, 5]}, {move: [1, 1]}, {move: [3, 3]}],
+              '34': [{move: [4, 4]}],
+              '62': [{move: [4, 4]}],
+              '74': [{move: [5, 5]}, {capture: true, capturedPiece: 'Q', move: [6, 6]}]
           }
         },
       ];
@@ -602,7 +605,7 @@ describe('return all posible, legal moves with a single check', () => {
             fullMove: '1'
           },
             expectedMoves: {
-            '00': [[ 0, 1 ]],
+              '00': [{move: [0, 1]}]
           }
         },
         {
@@ -625,7 +628,7 @@ describe('return all posible, legal moves with a single check', () => {
             fullMove: '1'
           },
             expectedMoves: {
-            '16': [[2, 6], [1, 7], [0, 5]],
+              '16': [{move: [2, 6]}, {move: [1, 7]}, {move: [0, 5]}]
           }
         },
         {
@@ -648,7 +651,13 @@ describe('return all posible, legal moves with a single check', () => {
             fullMove: '1'
           },
             expectedMoves: {
-              '26': [[2, 7], [1, 7], [1, 6], [1, 5], [2, 5]],
+              '26': [
+                {move: [2, 7]},
+                {move: [1, 7]},
+                {move: [1, 6]},
+                {move: [1, 5]},
+                {move: [2, 5]}
+            ]
             }
         },
         {
@@ -671,7 +680,10 @@ describe('return all posible, legal moves with a single check', () => {
             fullMove: '1'
           },
             expectedMoves: {
-              '33': [[ 4, 3], [2, 3]],
+              '33': [
+                {move: [4, 3]},
+                {move: [2, 3]}
+            ]
             }
         },
       ];
@@ -703,8 +715,8 @@ describe('return all posible, legal moves with a single check', () => {
             fullMove: '1'
           },
             expectedMoves: {
-              '15': [[3, 5]],
-              '16': [[ 2, 6 ]],
+              '15': [{move: [3, 5]}],
+              '16': [{move: [2, 6]}]
           }
         },
         {
@@ -727,7 +739,10 @@ describe('return all posible, legal moves with a single check', () => {
             fullMove: '1'
           },
             expectedMoves: {
-              '14': [[3, 5], [2, 6]],
+              '14': [
+                {move: [3, 5]},
+                {move: [2, 6]}
+            ]
           }
         },
       ];
@@ -759,7 +774,7 @@ describe('return all posible, legal moves with a single check', () => {
             fullMove: '1'
           },
             expectedMoves: {
-              '33': [[4, 4]],
+              '33': [{capture: true, capturedPiece: 'Q', move: [4, 4]}]
           }
         },
         {
@@ -782,8 +797,8 @@ describe('return all posible, legal moves with a single check', () => {
             fullMove: '1'
           },
             expectedMoves: {
-              '23': [[3, 3]],
-              '24': [[3, 3]],
+              '23': [{capture: true, capturedPiece: 'R', move: [3, 3]}],
+              '24': [{capture: true, capturedPiece: 'R', move: [3, 3]}]
           }
         },
       ];
@@ -847,8 +862,8 @@ describe('return all posible, legal moves with a single check', () => {
             fullMove: '1'
           },
             expectedMoves: {
-              '32': [[2, 1], [2, 2]],
-              '70': [[7, 1], [6, 1], [6, 0]],
+              '32': [{move: [2, 1]}, {move: [2, 2]}],
+              '70': [{move: [7, 1]}, {move: [6, 1]}, {move: [6, 0]}]
             }
         },
       ];

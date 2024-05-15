@@ -22,7 +22,8 @@ const calculatePosibleMoves = (board, allyColor) => {
   let checkingPiecePosition = attacksAndPins.checkingPiecePosition;
   let moves = [];
   let kingPosition = searchKing(board.pieces, allyColor);
-  if(kingPosition.length === 0){
+  let enemyKingPosition = searchKing(board.pieces, allyColor === 'white' ? 'black' : 'white');
+  if(kingPosition.length === 0 || enemyKingPosition.length === 0){
     return 'no king found';
   };
   if(attackBaord[kingPosition[0]][kingPosition[1]] === '2'){

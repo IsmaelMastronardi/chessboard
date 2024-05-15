@@ -3,9 +3,9 @@
   height: auto;
 }
 
-.box3WH {
-  width: 3rem;
-  height: 3rem;
+.boxFixedWH {
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
 .boxFullWH {
@@ -17,7 +17,7 @@
   background-color: hsla(0, 0%, 13%, 0.25);
   outline-offset: 4px;
   border-radius: 0.2rem;
-  transition: all 0.1s ease-in-out;
+  transition: all 0.08s ease-in;
 }
 
 .buttonShadow {
@@ -27,7 +27,12 @@
   outline-offset: 4px;
   border-radius: 0.2rem;
   transform: translateY(-4px);
-  transition: all 0.1s ease-in-out;
+  transition: all 0.08s ease-in;
+}
+
+.buttonShadowDisabled {
+  background-color: #4e4c4c;
+  color: var(--secondary-purple);
 }
 
 .buttonFront {
@@ -37,7 +42,12 @@
   transform: translateY(-6px);
   border-radius: 0.2rem;
   font-size: 1.2rem;
-  transition: all 0.1s ease-in-out;
+  transition: all 0.08s ease-in;
+}
+
+.buttonFrontDisabled {
+  background-color: #adabab;
+  color: var(--secondary-purple);
 }
 
 .buttonFront2 {
@@ -71,7 +81,7 @@
   border-bottom: 12px solid #48348a;
 }
 
-.startButton {
+.negMargin {
   margin-top: -134px;
   margin-bottom: 86px;
 }
@@ -104,6 +114,41 @@
   transform: translateY(-1px);
 }
 
+.choseColorButton {
+  border: solid 2px transparent;
+  padding: 0.4rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.chosenColor {
+  border: solid 2px var(--primary-yellow);
+  padding: 0.4rem;
+  border-radius: 0.4rem;
+  transition: all 0.2s ease-in-out;
+}
+
+
+@media screen and (min-width: 640px){
+  .boxFixedWH {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+@media screen and (min-width: 768px){
+  .boxFixedWH {
+    width: 3.9rem;
+    height: 3.9rem;
+  }
+}
+@media screen and (min-width: 1024px){
+  
+}
+@media screen and (min-width: 1280px){
+  
+}
+@media screen and (min-width: 1536px){
+  
+}
 
 
 

@@ -17,17 +17,16 @@ const finalizeMove = (board, oldIndex, move) => {
       castlingToRemove.add('Q');
     }
     if(movingPiece === 'R'){
-      if(previousSquare[0] === 7 && previousSquare[1] === 0){
+      if(oldIndex[0] === 7 && oldIndex[1] === 0){
         castlingToRemove.add('Q');
       }
-      if(previousSquare[0] === 7 && previousSquare[1] === 7){
+      if(oldIndex[0] === 7 && oldIndex[1] === 7){
         castlingToRemove.add('K');
       }
     }
 
-
     // Handle opponent lossing casteling rights 
-    if(move.move[0] === 7){
+    if(move.move[0] === 0){
       if(move.move[1] === 0){
         castlingToRemove.add('q');
       }
@@ -71,16 +70,16 @@ const finalizeMove = (board, oldIndex, move) => {
       castlingToRemove.add('q');
     }
     if(movingPiece === 'r'){
-      if(previousSquare[0] === 0 && previousSquare[1] === 0){
+      if(oldIndex[0] === 0 && oldIndex[1] === 0){
         castlingToRemove.add('q');
       }
-      if(previousSquare[0] === 0 && previousSquare[1] === 7){
+      if(oldIndex[0] === 0 && oldIndex[1] === 7){
         castlingToRemove.add('k');
       }
     }
 
     // Handle opponent lossing casteling rights 
-    if(move.move[0] === 0){
+    if(move.move[0] === 7){
       if(move.move[1] === 0){
         castlingToRemove.add('Q');
       }
@@ -115,8 +114,12 @@ const finalizeMove = (board, oldIndex, move) => {
   }
 
   castlingToRemove.forEach(right => {
-    board.castling.replace(new RegExp(right, 'g'), '');
-});
+    board.castling = board.castling.replace(new RegExp(right, 'g'), '');
+  });
+
+  if(board.castling === ''){
+    board.castling = '-';
+  }
 
   // If you take En Passant, remove the taken pawn
   if((movingPiece === 'P' || movingPiece === 'p') && move.move[0] === Number(board.enPassant[0]) && move.move[1] === Number(board.enPassant[1])){

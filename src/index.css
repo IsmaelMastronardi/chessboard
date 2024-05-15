@@ -26,18 +26,34 @@ main {
   @apply flex flex-col items-center justify-center gap-4;
 }
 
-.editor,
-.home {
-  @apply flex flex-col items-center justify-center gap-16 pt-20;
-}
-
-.editor {
-  padding-top: 2rem;
-  gap: 2rem;
-}
-
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  color: var(--primary-yellow);
+  background-color: var(--primary-purple);
+  top: 12.1rem;
+  z-index: 10;
+  border-radius: 0.2rem;
+  padding: 2.2rem 2.6rem;
+  gap: 1rem;
+  text-align: center;
+}
+
+.menu > p {
+  font-size: x-large;
+}
+
+.menu > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }

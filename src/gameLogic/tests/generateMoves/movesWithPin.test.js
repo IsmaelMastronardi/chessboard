@@ -23,7 +23,7 @@ describe('return all posible, legal moves with a pin',() => {
           fullMove: '1'
         },
           expectedMoves: {
-          '77': [ [ 6, 7 ], [ 7, 6 ] ]
+          '77': [ {move: [ 6, 7 ]}, {move: [ 7, 6 ]}]
         }
       },
       {
@@ -46,7 +46,7 @@ describe('return all posible, legal moves with a pin',() => {
           fullMove: '1'
         },
           expectedMoves: {
-          '77': [ [ 6, 7 ], [ 7, 6 ] ]
+          '77': [{move: [6, 7]}, {move: [7, 6]}],
         }
       },
       {
@@ -69,8 +69,8 @@ describe('return all posible, legal moves with a pin',() => {
           fullMove: '1'
         },
           expectedMoves: {
-          '55': [[4, 4]],
-          '66': [[ 7, 6 ], [ 7, 7 ], [ 6, 7 ], [ 5, 7 ], [ 5, 6 ], [ 6, 5 ], [ 7, 5 ]]
+            '55': [{capture: true, capturedPiece: "q", move: [4, 4]}],
+            '66': [{move: [7, 6]}, {move: [7, 7]}, {move: [6, 7]}, {move: [5, 7]}, {move: [5, 6]}, {move: [6, 5]}, {move: [7, 5]}]
         }
       },
       {
@@ -93,8 +93,8 @@ describe('return all posible, legal moves with a pin',() => {
           fullMove: '1'
         },
           expectedMoves: {
-          '55': [[6, 6], [4, 4], [3, 3], [2, 2], [1, 1]],
-          '77': [[6, 7], [ 6, 6 ], [ 7, 6 ] ]
+            '55': [{move: [6, 6]}, {move: [4, 4]}, {move: [3, 3]}, {move: [2, 2]}, {capture: true, capturedPiece: 'q' ,move: [1, 1]}],
+            '77': [{move: [6, 7]}, {move: [6, 6]}, {move: [7, 6]}]
         }
       },
       {
@@ -117,8 +117,8 @@ describe('return all posible, legal moves with a pin',() => {
           fullMove: '1'
         },
           expectedMoves: {
-          '55': [[6, 6], [4, 4], [3, 3], [2, 2], [1, 1]],
-          '77': [[6, 7], [ 6, 6 ], [ 7, 6 ] ]
+            '55': [{move: [6, 6]}, {move: [4, 4]}, {move: [3, 3]}, {move: [2, 2]}, {capture: true, capturedPiece: 'q', move: [1, 1]}],
+            '77': [{move: [6, 7]}, {move: [6, 6]}, {move: [7, 6]}]
         }
       },
       {
@@ -141,8 +141,8 @@ describe('return all posible, legal moves with a pin',() => {
           fullMove: '1'
         },
           expectedMoves: {
-          '15': [[1, 6], [1, 4], [1, 3], [1, 2], [1, 1]],
-          '17': [[2, 7], [ 0, 7 ], [0, 6], [ 1, 6 ], [2, 6] ]
+            '15': [{move: [1, 6]}, {move: [1, 4]}, {move: [1, 3]}, {move: [1, 2]}, {capture: true, capturedPiece: 'q', move: [1, 1]}],
+            '17': [{move: [2, 7]}, {move: [0, 7]}, {move: [0, 6]}, {move: [1, 6]}, {move: [2, 6]}]
         }
       },
     ]
@@ -174,7 +174,7 @@ describe('return all posible, legal moves with a pin',() => {
           fullMove: '1'
         },
           expectedMoves: {
-          '00': [ [ 1, 0 ], [ 0, 1 ] ]
+            '00': [{move: [1, 0]}, {move: [0, 1]}]
         }
       },
       {
@@ -197,7 +197,7 @@ describe('return all posible, legal moves with a pin',() => {
           fullMove: '1'
         },
           expectedMoves: {
-          '00': [ [ 1, 0 ], [ 0, 1 ] ]
+            '00': [{move: [1, 0]}, {move: [0, 1]}]
         }
       },
       {
@@ -220,8 +220,8 @@ describe('return all posible, legal moves with a pin',() => {
           fullMove: '1'
         },
           expectedMoves: {
-          '11': [[2, 1], [1, 2], [0, 2],[0, 1], [0, 0], [1, 0] , [2, 0]],
-          '22': [[3, 3]],
+            '11': [{move: [2, 1]}, {move: [1, 2]}, {move: [0, 2]}, {move: [0, 1]}, {move: [0, 0]}, {move: [1, 0]}, {move: [2, 0]}],
+            '22': [{capture: true, capturedPiece: 'Q', move: [3, 3]}]
         }
       },
       {
@@ -244,8 +244,8 @@ describe('return all posible, legal moves with a pin',() => {
           fullMove: '1'
         },
           expectedMoves: {
-          '00': [[1, 0], [1, 1], [0, 1]],
-          '22': [[1, 1], [3, 3], [4, 4], [5, 5], [6, 6]]
+            '00': [{move: [1, 0]}, {move: [1, 1]}, {move: [0, 1]}],
+            '22': [{move: [1, 1]}, {move: [3, 3]}, {move: [4, 4]}, {move: [5, 5],}, { capture: true, capturedPiece: 'Q', move: [6, 6]}]
         }
       },
       {
@@ -268,8 +268,8 @@ describe('return all posible, legal moves with a pin',() => {
           fullMove: '1'
         },
           expectedMoves: {
-          '00': [[1, 0], [1, 1], [0, 1]],
-          '22': [[1, 1], [3, 3], [4, 4], [5, 5], [6, 6]]
+            '00': [{move: [1, 0]}, {move: [1, 1]}, {move: [0, 1]}],
+            '22': [{move: [1, 1]}, {move: [3, 3]}, {move: [4, 4]}, {move: [5, 5],}, { capture: true, capturedPiece: 'Q', move: [6, 6]}]
         }
       },
       {
@@ -292,8 +292,8 @@ describe('return all posible, legal moves with a pin',() => {
           fullMove: '1'
         },
           expectedMoves: {
-          '10': [[2, 0], [2, 1], [1, 1],[0, 1], [0, 0], ],
-          '12': [[1, 1], [1, 3], [1, 4], [1, 5], [1, 6]]
+            '10': [{move: [2, 0]}, {move: [2, 1]}, {move: [1, 1]}, {move: [0, 1]}, {move: [0, 0]}],
+            '12': [{move: [1, 1]}, {move: [1, 3]}, {move: [1, 4]}, {move: [1, 5]}, {capture: true, capturedPiece: 'Q', move: [1, 6]}]
         }
       },
     ]

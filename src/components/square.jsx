@@ -1,5 +1,5 @@
 import { useDrag, useDrop } from "react-dnd";
-import { addNotation, createNotation, movePiece, selectPiece, startGame, updateSelectedMove } from "../redux/slices/boardSlice";
+import { createNotation, movePiece, selectPiece } from "../redux/slices/boardSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import PositionIndicator from "./positionIndicator";
@@ -27,7 +27,6 @@ const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => 
     setSelectedMove(undefined);
     togglePromotionMenu();
     const move = posibleMoves[`${selectedMove.from[0]}${selectedMove.from[1]}`].find(obj => obj.move && obj.move[0] === selectedMove.to[0] && obj.move[1] === selectedMove.to[1] && obj.promotionPiece === promotionPiece);
-    console.log(move);
     dispatch(movePiece(selectedMove.from, move, false));
   }
   const findMove = (arr, move) => {
@@ -44,14 +43,26 @@ const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => 
     else {
       dispatch(selectPiece(index));
     }
+  };
 
-  }
-  const handleDrop = (a,b,c) => {
+  const playSoundEffect = (isCapture) => {
+    const audioElement = new Audio();
+    if(isCapture){
+      audioElement.src = '/sounds/capture.mp3';
+    }
+    else {
+      audioElement.src = '/sounds/move-self.mp3';
+    }
+    audioElement.play();
+  };
+
+  const handleDrop = () => {
     if(!posibleMoves[`${selectedPiece[0]}${selectedPiece[1]}`]){
       return;
     }
     const selectedMove = findMove(posibleMoves[`${selectedPiece[0]}${selectedPiece[1]}`], index);
     if(selectedMove){
+  
       if(selectedMove.promotion){
         saveMove(selectedPiece, index);
         togglePromotionMenu();
@@ -65,6 +76,7 @@ const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => 
         ));
         dispatch(movePiece(selectedPiece, selectedMove, false));
       }
+      playSoundEffect(selectedMove.capture);
     }
   };
 
@@ -78,7 +90,7 @@ const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => 
 
   const [, drop] = useDrop({
     accept: 'PIECE',
-    drop: (item) => {
+    drop: () => {
       if(!isCurrentBoardState){return;}
       handleDrop();
     } 
@@ -97,8 +109,8 @@ const Square = ({value, isDark, index, posibleSquare, isCurrentBoardState }) => 
       {posibleSquare && (
         <div className="absolute top-0 bottom-0 left-0 right-0 w-6 h-6 m-auto bg-gray-300 rounded-full opacity-80"></div>
       )}
-      <div className="w-6 h-6" onDragStart={handleClick} ref={drag}>
-        <Pieces value={value} />
+      <div className="pieceParent draggable" onDragStart={handleClick} ref={drag}>
+        <Pieces value={value}/>
       </div>
     </div>
     {promotionMenu && (

@@ -2,12 +2,13 @@ import { useSelector } from "react-redux";
 
 const ChessNotation = ({changeBoardState, boardStateIndex}) => {
   const {chessNotation} = useSelector((store) => store.gameBoard);
-  console.log(boardStateIndex);
+
   if (chessNotation.length === 0){
     return null;
   };
+
   return(
-    <div className="notationsContainer buttonHolder">
+    <div className="notationsContainer negMargin">
       {chessNotation.map((move, index) => (
         <button
         key={index}
