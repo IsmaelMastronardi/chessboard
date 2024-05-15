@@ -78,6 +78,14 @@
   height: 1.4rem;
 }
 
+.draggable {
+  transform: translate(0, 0);
+}
+
+.pieceShadow {
+  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+}
+
 @media screen and (min-width: 640px){
   .squareParent{
     width: 3rem;
