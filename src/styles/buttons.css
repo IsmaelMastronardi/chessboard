@@ -114,6 +114,19 @@
   transform: translateY(-1px);
 }
 
+.choseColorButton {
+  border: solid 2px transparent;
+  padding: 0.4rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.chosenColor {
+  border: solid 2px var(--primary-yellow);
+  padding: 0.4rem;
+  border-radius: 0.4rem;
+  transition: all 0.2s ease-in-out;
+}
+
 
 
 

@@ -12,7 +12,7 @@ const Home = () => {
   const [startGameMenu, setStartGameMenu] = useState(false);
   const [boardStateIndex, setBoardStateIndex] = useState(pastBoardStates.length - 1);
   const dispatch = useDispatch();
-
+  console.log(waitingForPcMove)
   const toggleMenu = () => {
     setStartGameMenu(!startGameMenu);
   }
@@ -22,7 +22,6 @@ const Home = () => {
   }
 
   useEffect(() => {
-    console.log('here')
     dispatch(makePcMove());
   }, [dispatch, convertedBoard, waitingForPcMove]);
 

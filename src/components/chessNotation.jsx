@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 
 const ChessNotation = ({changeBoardState, boardStateIndex}) => {
   const {chessNotation} = useSelector((store) => store.gameBoard);
+
   if (chessNotation.length === 0){
     return null;
   };

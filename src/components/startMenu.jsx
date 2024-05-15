@@ -54,10 +54,10 @@ const StartMenu = ({toggleMenu, startGameMenu, fromEditor = false}) => {
             <p>Choose Color:</p>
           </div>
           <div className="flex justify-around w-full h-20">
-            <button onClick={() => chooseColor('white')} className="text-white">
+            <button onClick={() => chooseColor('white')} className={` text-white ${playerColor === 'white' ? 'chosenColor': 'choseColorButton'}`}>
               <Pieces value="K" />
             </button>
-            <button onClick={() => chooseColor('black')} className="text-black">
+            <button onClick={() => chooseColor('black')} className={` text-black ${playerColor === 'black' ? 'chosenColor': 'choseColorButton'}`}>
               <Pieces value="k" />
             </button>
           </div>

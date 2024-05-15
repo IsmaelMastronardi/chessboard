@@ -42,8 +42,8 @@ export const makePcMove = createAsyncThunk(
   'game/makePcMove',
   async (_, { getState, dispatch }) => {
     const state = getState();
-    const { convertedBoard, waitingForPcMove } = state.gameBoard;
-    if (waitingForPcMove) {
+    const { convertedBoard, waitingForPcMove, posibleMoves } = state.gameBoard;
+    if (waitingForPcMove && posibleMoves !== 'checkmate' && posibleMoves !== 'stalemate') {
       try {
         const result = await minimaxAsync(convertedBoard, 3, false);
         dispatch(updateSelectedMove({
@@ -120,7 +120,9 @@ const gameBoardSlice = createSlice({
       state.waitingForPcMove = action.payload;
     },
     startFromPosition: (state, action) => {
+      console.log('staring from editor')
       state.convertedBoard = action.payload[0];
+      state.chessNotation = [];
       state.pastBoardStates = [action.payload[0]];
       state.fenBoard = convertToFen(action.payload[0]);
       state.posibleMoves = calculatePosibleMoves(action.payload[0], action.payload[0].turn === 'w' ? 'white' : 'black');
