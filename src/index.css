@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-yellow: #FFDB99;
+  --secondary-yellow: #685a40;
+  --primary-purple: #48348a;
+  --secondary-purple: #1F0F53;
+}
+
+body {
+  margin: 0;
+  padding-bottom: 2rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(22, 20, 20);
+  font-family: "Aldrich", sans-serif;
+
+}
+
+main {
+  @apply flex flex-col items-center justify-center gap-4;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  color: var(--primary-yellow);
+  background-color: var(--primary-purple);
+  top: 12.1rem;
+  z-index: 10;
+  border-radius: 0.2rem;
+  padding: 2.2rem 2.6rem;
+  gap: 1rem;
+  text-align: center;
+}
+
+.menu > p {
+  font-size: x-large;
+}
+
+.menu > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}

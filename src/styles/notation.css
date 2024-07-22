@@ -1,0 +1,88 @@
+.notationsContainer {
+  width: 70%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  justify-items: center;
+  color: var(--primary-purple);
+  padding: 1rem 1rem 0.4rem 1rem;
+}
+
+.notationsContainer > * {
+  width: 100%;
+  background-color: #34295a;
+  border: 2px solid var(--primary-purple);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.notation {
+  background-color: var(--primary-yellow);
+}
+
+.notationBack {
+  background-color: hsla(0, 0%, 13%, 0.25);
+  cursor: pointer;
+  width: 7rem;
+  height: auto;
+  outline-offset: 4px;
+  border-radius: 0.4rem;
+  transition: all 0.1s ease-in-out;
+}
+
+.notationShadow {
+  background-color: #685a40;
+  position: relative;
+  display: block;
+  cursor: pointer;
+  width: auto;
+  height: auto;
+  outline-offset: 4px;
+  border-radius: 0.2rem;
+  transform: translateY(-4px);
+  transition: all 0.1s ease-in-out;
+}
+
+.notationFront {
+  position: relative;
+  display: block;
+  background-color: #FFDB99;
+  transform: translateY(-1px);
+  border-radius: 0.2rem;
+  transition: all 0.1s ease-in-out;
+  font-size: 1rem;
+  padding: 0 0.8rem;
+}
+
+.notationBack:active .notationShadow {
+  transform: translateY(-8px);
+}
+
+.notationBack:active .notationFront {
+  transform: translateY(-1px);
+}
+
+.notationFront:hover{
+  transform: translateY(-8px);
+}
+
+.notationShadow:hover {
+  transform: translateY(-8px);
+}
+
+.notationActiveShadow {
+  transform: translateY(-8px);
+}
+
+.notationActiveFront {
+  transform: translateY(-6px);
+  color: rgb(26, 14, 14);
+}
+
+.notationsContainer > :nth-child(4n + 1) {
+
+}
+.notationsContainer > :nth-child(4n + 2) {
+  
+} 
+

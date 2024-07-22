@@ -1,0 +1,128 @@
+.editor,
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+  padding-top: 2rem;
+}
+
+.editor {
+  padding-top: 2rem;
+  gap: 2rem;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  overflow: hidden;
+  border-radius: 0.2rem;
+  padding: 0rem 0.2rem 0 0.2rem;
+  background-color: var(--primary-yellow);
+  transform: translateY(-4px);
+}
+
+.rotatedBoard {
+  transform: rotate(180deg) translateY(4px);
+}
+
+.boardHolder{
+  border-radius: 0.2rem;
+  border-bottom: 4px solid var(--primary-yellow);
+  box-shadow: 0 6px 0px var(--secondary-yellow);
+}
+
+.rotatedHolder {
+  border-radius: 0.2rem;
+  border-top: 4px solid var(--primary-yellow);
+  box-shadow: 0 -6px 0px var(--secondary-yellow);
+}
+
+.squareParent {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.square {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  text-align: center;
+  user-select: none;
+}
+
+.rotatedSquare {
+  transform: rotate(180deg);
+}
+
+.pieceSelector > ul > li {
+  border-left: 1px solid #48348a;
+  border-right: 1px solid #48348a;
+}
+
+.pieceSelector > ul > li:first-child {
+  border-left: 0px;
+
+}
+.pieceSelector > ul > li:last-child {
+  border-right: 0px;
+}
+
+.pieceParent {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.draggable {
+  transform: translate(0, 0);
+}
+
+.pieceShadow {
+  text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+}
+
+@media screen and (min-width: 640px){
+  .squareParent{
+    width: 3rem;
+    height: 3rem;
+  }
+  .pieceParent {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+}
+
+@media screen and (min-width: 768px){
+  .squareParent{
+    width: 4rem;
+    height: 4rem;
+  }
+  .pieceParent {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+@media screen and (min-width: 1024px){
+  .squareParent{
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+  .pieceParent {
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+}
+
+@media screen and (min-width: 1280px){
+
+}
+
+@media screen and (min-width: 1536px){
+
+}

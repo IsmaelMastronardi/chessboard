@@ -1,0 +1,154 @@
+.boxAutoWH {
+  width: auto;
+  height: auto;
+}
+
+.boxFixedWH {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.boxFullWH {
+  width: 100%;
+  height: 100%;
+}
+
+.buttonBack {
+  background-color: hsla(0, 0%, 13%, 0.25);
+  outline-offset: 4px;
+  border-radius: 0.2rem;
+  transition: all 0.08s ease-in;
+}
+
+.buttonShadow {
+  background-color: #685a40;
+  position: relative;
+  display: block;
+  outline-offset: 4px;
+  border-radius: 0.2rem;
+  transform: translateY(-4px);
+  transition: all 0.08s ease-in;
+}
+
+.buttonShadowDisabled {
+  background-color: #4e4c4c;
+  color: var(--secondary-purple);
+}
+
+.buttonFront {
+  position: relative;
+  display: block;
+  background-color: #FFDB99;
+  transform: translateY(-6px);
+  border-radius: 0.2rem;
+  font-size: 1.2rem;
+  transition: all 0.08s ease-in;
+}
+
+.buttonFrontDisabled {
+  background-color: #adabab;
+  color: var(--secondary-purple);
+}
+
+.buttonFront2 {
+  padding: 1.1rem 0.8rem
+}
+
+.buttonFront3 {
+  font-size: 1rem;
+  padding: 0 0.8rem;
+}
+
+.buttonBack:active .buttonShadow,
+.buttonBack:active .buttonFront {
+  transform: translateY(-1px);
+}
+
+.buttonFrontWithHover:hover{
+  transform: translateY(-8px);
+}
+
+.holder {
+  background-color: var(--primary-purple);
+  border-radius: 0.2rem;
+  border-bottom: 6px solid #48348a;
+  border-right: 10px solid #48348a;
+  border-left: 10px solid #48348a;
+  box-shadow: 0px 10px 0px #1F0F53;
+}
+
+.holderLong {
+  border-bottom: 12px solid #48348a;
+}
+
+.negMargin {
+  margin-top: -134px;
+  margin-bottom: 86px;
+}
+
+.boardChanger {
+  display: flex;
+  width: 90%;
+  justify-content:space-between;
+  background-color: #48348a
+}
+
+.straightBottomBorder {
+  border-radius: 0.2rem 0.2rem 0 0;
+}
+
+.straightTopBorder {
+  border-radius: 0 0 0.2rem 0.2rem;
+}
+
+.buttonBlockBack {
+  margin-bottom: -1px;
+}
+
+.groupBottomFront{
+  border-bottom: 4px solid var(--secondary-yellow);
+  margin-bottom: -2px;
+}
+
+.blockButtonActive {
+  transform: translateY(-1px);
+}
+
+.choseColorButton {
+  border: solid 2px transparent;
+  padding: 0.4rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.chosenColor {
+  border: solid 2px var(--primary-yellow);
+  padding: 0.4rem;
+  border-radius: 0.4rem;
+  transition: all 0.2s ease-in-out;
+}
+
+
+@media screen and (min-width: 640px){
+  .boxFixedWH {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+@media screen and (min-width: 768px){
+  .boxFixedWH {
+    width: 3.9rem;
+    height: 3.9rem;
+  }
+}
+@media screen and (min-width: 1024px){
+  
+}
+@media screen and (min-width: 1280px){
+  
+}
+@media screen and (min-width: 1536px){
+  
+}
+
+
+
