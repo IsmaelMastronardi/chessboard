@@ -1,7 +1,7 @@
 import BoardEditor from "../components/editor/boardEditor";
 import PieceSelector from "../components/editor/pieceSelector";
 import EditorSettings from "../components/editor/editorSettings";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import StartMenu from "../components/startMenu";
 import { useSelector } from "react-redux";
 
@@ -15,22 +15,6 @@ const Editor = () => {
   const toggleMenu = () => {
     setStartGameMenu(!startGameMenu);
   }
-
-  useEffect(() => {
-    if (!document.querySelector('script[data-sparkloop]')) {
-      const sparkloopScript = document.createElement('script');
-      sparkloopScript.src = 'https://c-js.sparkloop.app/c.js';
-      sparkloopScript.setAttribute('data-sparkloop', '');
-      document.head.appendChild(sparkloopScript);
-    }
-
-    if (!document.querySelector('#sparkloop-conversion-offer-b6bb617fc8ec')) {
-      const conversionScript = document.createElement('script');
-      conversionScript.id = 'sparkloop-conversion-offer-b6bb617fc8ec';
-      conversionScript.text = 'SparkLoop.trackConversion("offer_b6bb617fc8ec")';
-      document.head.appendChild(conversionScript);
-    }
-  }, []);
 
   return(
     <div className="editor">

@@ -26,15 +26,6 @@ const Home = () => {
   }, [dispatch, convertedBoard, waitingForPcMove]);
 
   useEffect(() => {
-    if (!document.querySelector('script[data-sparkloop]')) {
-      const sparkloopScript = document.createElement('script');
-      sparkloopScript.src = 'https://c-js.sparkloop.app/c.js';
-      sparkloopScript.setAttribute('data-sparkloop', '');
-      document.head.appendChild(sparkloopScript);
-    }
-  }, []);
-
-  useEffect(() => {
     setBoardStateIndex(pastBoardStates.length - 1);
   }, [pastBoardStates]);
 
